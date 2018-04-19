@@ -1,5 +1,9 @@
 # ngx-cron
 
+🕒 User-friendly cron input...
+
+![](https://content.screencast.com/users/hypercubed/folders/Snagit/media/6ae021c1-738b-4744-a1d1-654578400844/2018-04-19_15-33-16.png)
+
 ## Development server
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
