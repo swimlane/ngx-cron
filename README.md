@@ -10,11 +10,10 @@ Run `npm run build` to build the project. The package artifacts will be stored i
 
 ## Release
 
+* `npm run lint`
+* `npm run build`
 * `npm version {{-version here-}}`
-* `git commit -am {VERSION NUMBER}`
-* `git tag {VERSION NUMBER}`
 * `git push --tags`
-* `npm run build:package`
 * `cd dist`
 * `npm publish`
 
