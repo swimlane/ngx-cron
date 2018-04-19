@@ -42,3 +42,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# packager
+.ng_pkg_build/
+dist.tgz

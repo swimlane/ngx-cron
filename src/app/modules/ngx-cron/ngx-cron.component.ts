@@ -24,8 +24,8 @@ export class NgxCronComponent {
     return this._allowedPeriods;
   }
   set allowedPeriods(val) {
-    this._allowedPeriods = val.filter(p => this.periods.includes(p));
-    if (!this._allowedPeriods.includes(this.period)) {
+    this._allowedPeriods = val.filter(p => this.periods.indexOf(p) > -1);
+    if (!(this._allowedPeriods.indexOf(this.period) > -1)) {
       this.period = val[0];
       this._cron = this.getCron();
       this.setDescription(this._cron);
