@@ -3,7 +3,8 @@
     <ng-container *ngFor="let key of allowedPeriods">
       <ngx-button class="btn"
         [class.btn-primary]="period === key"
-        (click)="period = key; changed()">
+        (click)="period = key; changed()"
+        [disabled]="disabled">
         {{key}}
       </ngx-button>
     </ng-container>
@@ -13,7 +14,8 @@
     <span *ngIf="period === 'Custom'">
       <ngx-input
         [(ngModel)]="cron"
-        [hint]="description">
+        [hint]="description"
+        [disabled]="disabled">
       </ngx-input>
     </span>
 
@@ -24,7 +26,8 @@
         [(ngModel)]="min"
         (change)="changed()"
         min="0"
-        max="59">
+        max="59"
+        [disabled]="disabled">
       </ngx-input>
       <span [ngPlural]="min">
         <ng-template ngPluralCase="=1">minute</ng-template>
@@ -40,7 +43,8 @@
         (ngModelChange)="secondInterval = +$event"
         (change)="changed()"
         min="1"
-        max="9999">
+        max="9999"
+        [disabled]="disabled">
       </ngx-input>
       <span [ngPlural]="secondInterval">
         <ng-template ngPluralCase="=1">second</ng-template>
@@ -56,7 +60,8 @@
         (ngModelChange)="minInterval = +$event"
         (change)="changed()"
         min="1"
-        max="9999">
+        max="9999"
+        [disabled]="disabled">
       </ngx-input>
       <span [ngPlural]="minInterval">
         <ng-template ngPluralCase="=1">minute</ng-template>
@@ -69,7 +74,8 @@
       <ngx-date-time
         [(ngModel)]="time"
         (change)="changed()"
-        inputType="time">
+        inputType="time"
+        [disabled]="disabled">
       </ngx-date-time>
     </span>
 
@@ -80,21 +86,32 @@
         [(ngModel)]="day"
         (change)="changed()"
         min="1"
-        [max]="period === 'Yearly' ? daysMax : 31">
+        [max]="period === 'Yearly' ? daysMax : 31"
+        [disabled]="disabled">
       </ngx-input>
       of the month
     </span>
 
     <span *ngIf="period === 'Yearly'">
       , only in
-      <ngx-select [filterable]="false" [ngModel]="[month]" (change)="month = $event[0]; changed()" [allowClear]="false">
+      <ngx-select
+        [filterable]="false"
+        [ngModel]="[month]"
+        [disabled]="disabled"
+        (change)="month = $event[0]; changed()"
+        [allowClear]="false">
         <ngx-select-option *ngFor="let month of months" [name]="month" [value]="month"></ngx-select-option>
       </ngx-select>
     </span>
 
     <span *ngIf="period === 'Weekly'">
       , only on
-      <ngx-select [filterable]="false" [ngModel]="[dow]" (change)="dow = $event[0]; changed()" [allowClear]="false">
+      <ngx-select
+        [filterable]="false"
+        [ngModel]="[dow]"
+        (change)="dow = $event[0]; changed()"
+        [allowClear]="false"
+        [disabled]="disabled">
         <ngx-select-option *ngFor="let day of dows" [name]="day" [value]="day"></ngx-select-option>
       </ngx-select>
     </span>

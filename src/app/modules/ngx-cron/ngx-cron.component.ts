@@ -32,6 +32,15 @@ export class NgxCronComponent {
     }
   }
 
+  @HostBinding('attr.disabled')
+  @Input()
+  get disabled() {
+    return this._disabled ? true : null;
+  }
+  set disabled(val) {
+    this._disabled = val;
+  }
+
   periods = Object.keys(CronParser.PERIODS);
   dows = CronParser.DOWS;
   months = CronParser.MONTHS;
@@ -57,6 +66,7 @@ export class NgxCronComponent {
 
   private _cron = '0 * * * *';
   private _allowedPeriods = Object.keys(CronParser.PERIODS);
+  private _disabled = false;
 
   changed() {
     this._cron = this.getCron();
