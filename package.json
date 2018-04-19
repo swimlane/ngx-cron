@@ -12,7 +12,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "peerDependencies": {
     "@angular/core": "^5.2.0",
     "@angular/forms": "^5.2.0",
