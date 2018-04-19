@@ -1,27 +1,22 @@
-# NgxCron
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
+# ngx-cron
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `npm run build` to build the project. The package artifacts will be stored in the `dist/` directory. Demo will be generated in the `docs/` folder.
 
-## Running unit tests
+## Release
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* `npm version {{-version here-}}`
+* `git commit -am {VERSION NUMBER}`
+* `git tag {VERSION NUMBER}`
+* `git push --tags`
+* `npm run build:package`
+* `cd dist`
+* `npm publish`
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Credits
+`ngx-dnd` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.

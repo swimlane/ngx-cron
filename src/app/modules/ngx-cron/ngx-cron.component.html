@@ -1,0 +1,102 @@
+<div>
+  <div *ngIf="allowedPeriods.length > 1">
+    <ng-container *ngFor="let key of allowedPeriods">
+      <ngx-button class="btn"
+        [class.btn-primary]="period === key"
+        (click)="period = key; changed()">
+        {{key}}
+      </ngx-button>
+    </ng-container>
+  </div>
+
+  <div class="selections">
+    <span *ngIf="period === 'Custom'">
+      <ngx-input
+        [(ngModel)]="cron"
+        [hint]="description">
+      </ngx-input>
+    </span>
+
+    <span *ngIf="period === 'Hourly'">
+      At
+      <ngx-input
+        type="number"
+        [(ngModel)]="min"
+        (change)="changed()"
+        min="0"
+        max="59">
+      </ngx-input>
+      <span [ngPlural]="min">
+        <ng-template ngPluralCase="=1">minute</ng-template>
+        <ng-template ngPluralCase="other">minutes</ng-template>
+      </span> past the hour
+    </span>
+
+    <span class="every" *ngIf="period === 'Secondly'">
+      Every 
+      <ngx-input
+        type="number"
+        [ngModel]="secondInterval"
+        (ngModelChange)="secondInterval = +$event"
+        (change)="changed()"
+        min="1"
+        max="9999">
+      </ngx-input>
+      <span [ngPlural]="secondInterval">
+        <ng-template ngPluralCase="=1">second</ng-template>
+        <ng-template ngPluralCase="other">seconds</ng-template>
+      </span>
+    </span>
+
+    <span class="every" *ngIf="period === 'Minutely'">
+      Every 
+      <ngx-input
+        type="number"
+        [ngModel]="minInterval"
+        (ngModelChange)="minInterval = +$event"
+        (change)="changed()"
+        min="1"
+        max="9999">
+      </ngx-input>
+      <span [ngPlural]="minInterval">
+        <ng-template ngPluralCase="=1">minute</ng-template>
+        <ng-template ngPluralCase="other">minutes</ng-template>
+      </span>
+    </span>
+
+    <span *ngIf="period === 'Daily' || period === 'Weekly' || period === 'Monthly' || period === 'Yearly'">
+      At
+      <ngx-date-time
+        [(ngModel)]="time"
+        (change)="changed()"
+        inputType="time">
+      </ngx-date-time>
+    </span>
+
+    <span *ngIf="period === 'Monthly' || period === 'Yearly'">
+      , on day 
+      <ngx-input
+        type="number"
+        [(ngModel)]="day"
+        (change)="changed()"
+        min="1"
+        [max]="period === 'Yearly' ? daysMax : 31">
+      </ngx-input>
+      of the month
+    </span>
+
+    <span *ngIf="period === 'Yearly'">
+      , only in
+      <ngx-select [filterable]="false" [ngModel]="[month]" (change)="month = $event[0]; changed()" [allowClear]="false">
+        <ngx-select-option *ngFor="let month of months" [name]="month" [value]="month"></ngx-select-option>
+      </ngx-select>
+    </span>
+
+    <span *ngIf="period === 'Weekly'">
+      , only on
+      <ngx-select [filterable]="false" [ngModel]="[dow]" (change)="dow = $event[0]; changed()" [allowClear]="false">
+        <ngx-select-option *ngFor="let day of dows" [name]="day" [value]="day"></ngx-select-option>
+      </ngx-select>
+    </span>
+  </div>
+</div>

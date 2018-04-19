@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  background: #1c2029;
+  color: #cfcfcf;
+  font-family: Lato;
+  padding: 10px;
+  margin: 10px;
+}
+
