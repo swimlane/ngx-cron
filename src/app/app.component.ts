@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { CronParser } from './modules/ngx-cron/cron';
+import { CronService } from './modules/ngx-cron/ngx-cron.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,6 @@ import { CronParser } from './modules/ngx-cron/cron';
 })
 export class AppComponent {
   cron = '* * * * *';
-  periods = Object.keys(CronParser.PERIODS);
-  allowedPeriods = Object.keys(CronParser.PERIODS);
+  periods = Object.keys(CronService.PERIODS);
+  allowedPeriods = Object.keys(CronService.PERIODS);
 }

@@ -1,6 +1,6 @@
 <div>
-  <div *ngIf="allowedPeriods.length > 1">
-    <ng-container *ngFor="let key of allowedPeriods">
+  <div *ngIf="_allowedPeriods.length > 1">
+    <ng-container *ngFor="let key of _allowedPeriods">
       <ngx-button class="btn"
         [class.btn-primary]="period === key"
         (click)="period = key; changed()"

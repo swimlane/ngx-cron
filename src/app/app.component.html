@@ -23,6 +23,11 @@
     #disabledToggle
     label="Disabled">
   </ngx-toggle>
+
+  <ngx-toggle
+    #disabledQuartz
+    label="Disable Quartz">
+  </ngx-toggle>
 </section>
 
 <section>
@@ -31,7 +36,8 @@
     #cronComp
     [(cron)]="cron"
     [allowedPeriods]="allowedPeriods"
-    [disabled]="disabledToggle.value"></ngx-cron-input>
+    [disabled]="disabledToggle.value"
+    [allowQuartz]="!disabledQuartz.value"></ngx-cron-input>
 </section>
 
 <section>
