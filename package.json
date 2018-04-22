@@ -10,7 +10,8 @@
     "build:package": "ng-packagr -p ng-package.json",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "version": "chg release -y && git add -A CHANGELOG.md"
   },
   "peerDependencies": {
     "@angular/core": "^5.2.0",
@@ -45,6 +46,7 @@
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
+    "chg": "^0.3.3",
     "codelyzer": "^4.0.1",
     "core-js": "^2.5.5",
     "cronstrue": "^1.2.0",

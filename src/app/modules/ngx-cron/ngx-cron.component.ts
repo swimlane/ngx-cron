@@ -68,7 +68,7 @@ export class NgxCronComponent {
     return this.cronData.description;
   }
 
-  protected _allowedPeriods = Object.keys(CronService.PERIODS);
+  _allowedPeriods = Object.keys(CronService.PERIODS);
 
   private _cron = '0 * * * *';
   private _disabled = false;

@@ -20,6 +20,7 @@ export interface ICronData {
   dow?: string;
 }
 
+// @dynamic
 @Injectable()
 export class CronService {
   static DOWS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
