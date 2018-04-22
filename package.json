@@ -11,7 +11,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "version": "chg release -y && git add -A CHANGELOG.md"
+    "changelog": "chg release -y && git add -A CHANGELOG.md",
+    "version": "npm-run-all changelog build"
   },
   "peerDependencies": {
     "@angular/core": "^5.2.0",
