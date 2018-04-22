@@ -1,6 +1,25 @@
 import { Injectable } from '@angular/core';
 import { default as ExpressionDescriptor } from 'cronstrue';
 
+export interface ICronData {
+  expression?: string;
+  period: string;
+  description: string;
+  isQuartz: boolean;
+  valid: boolean;
+
+  seconds?: number;
+  secondInterval?: number;
+  min?: number;
+  minInterval?: number;
+  hour?: number;
+  day?: number;
+  month?: string;
+  daysMax?: number;
+  time?: Date;
+  dow?: string;
+}
+
 @Injectable()
 export class CronService {
   static DOWS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -39,48 +58,46 @@ export class CronService {
     }
   }
 
-  getCronData(cron: string): any {
+  getCronData(cron: string): ICronData {
     const e: any = new ExpressionDescriptor(
       cron, 
       this.expressionDescriptorOptions
     );
 
-    const data: any = {};
+    let data: ICronData;
 
     try {
-      data.description = e.getFullDescription();  // for side effects
-      data.valid = true;
+      data = {
+        description: e.getFullDescription(),
+        period: this.getPeriod(e.expression),
+        valid: true,
+        isQuartz: e.expressionParts[0] !== '',
+      };
     } catch (err) {
-      data.description = err || e.i18n.anErrorOccuredWhenGeneratingTheExpressionD();
-      data.valid = false;
+      return { 
+        description: err || e.i18n.anErrorOccuredWhenGeneratingTheExpressionD(),
+        period: 'Custom',
+        valid: false,
+        isQuartz: false,
+      };
     }
 
-    data.period = this.getPeriod(e.expression);
-
-    if (data.valid) {
-      data.seconds = this.getSeconds(e.expressionParts);
-      data.secondInterval = this.getSecondInterval(e.expressionParts);
-      data.min = this.getMin(e.expressionParts);
-      data.minInterval = this.getMinInterval(e.expressionParts);
-      data.hour = this.getHour(e.expressionParts);
-      data.day = this.getDay(e.expressionParts);
-      data.month = this.getMonth(e.expressionParts);
-      data.daysMax = this.getDaysMax(e.expressionParts);
-      data.time = this.getTime(e.expressionParts);
-      data.isQuartz = e.expressionParts[0] !== '';
-      data.valid = this.validate(data);
-
-      for (const key of Object.keys(data)) {
-        if (data[key] === undefined || data[key] === null) {
-          delete data[key];
-        }
-      }
-    }
+    data.seconds = this.getSeconds(e.expressionParts);
+    data.secondInterval = this.getSecondInterval(e.expressionParts);
+    data.min = this.getMin(e.expressionParts);
+    data.minInterval = this.getMinInterval(e.expressionParts);
+    data.hour = this.getHour(e.expressionParts);
+    data.day = this.getDay(e.expressionParts);
+    data.month = this.getMonth(e.expressionParts);
+    data.daysMax = this.getDaysMax(e.expressionParts);
+    data.time = this.getTime(e.expressionParts);
+    data.isQuartz = e.expressionParts[0] !== '';
+    data.valid = this.validate(data);
 
     return data;
   }
 
-  getCronFromCronData(cron: any): string {
+  getCronFromCronData(cron: ICronData): string {
     let r: Array<string | number> = ['', '*', '*', '*', '*', '*'];
     let [seconds, min, hour, day, month, dow]: Array<string | number> = r;
     switch (cron.period) {
@@ -109,7 +126,7 @@ export class CronService {
         day  = cron.day;
         break;
       default:
-        return cron.cron;
+        return cron.expression;
     }
     r = [min, hour, day, month, dow];
     if (seconds) {

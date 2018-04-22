@@ -4,7 +4,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 
-import { CronService } from './ngx-cron.service';
+import { CronService, ICronData } from './ngx-cron.service';
 
 @Component({
   selector: 'ngx-cron-input',
@@ -17,6 +17,7 @@ export class NgxCronComponent {
   set cron(val: string) {
     this.setCron(val);
     this._cron = val;
+    this.cronChange.emit(this._cron);
   }
   get cron(): string {
     return this._cron;
@@ -42,23 +43,30 @@ export class NgxCronComponent {
   months = CronService.MONTHS;
   predefined = CronService.PERIODS;
 
-  period = this.periods[0];
-  seconds = 0;
-  secondInterval = 1;
-  min = 0;
-  minInterval = 1;
-  dow = this.dows[0];
-  day = 1;
-  month = this.months[0];
-  time = CronService.MIDNIGHT;
-  description: string = this.cronService.toString('0 * * * *');
-
-  daysMax = 31;
+  cronData: ICronData = {
+    description: this.cronService.toString('0 * * * *'),
+    period: this.periods[0],
+    valid: true,
+    seconds: 0,
+    secondInterval: 1,
+    min: 0,
+    minInterval: 1,
+    dow: this.dows[0],
+    day: 1,
+    month: this.months[0],
+    time: CronService.MIDNIGHT,
+    isQuartz: false,
+    daysMax: 31
+  };
 
   @HostBinding('class.invalid')
   invalid = false;
 
   @Output() cronChange: EventEmitter<any> = new EventEmitter();
+
+  get description() {
+    return this.cronData.description;
+  }
 
   protected _allowedPeriods = Object.keys(CronService.PERIODS);
 
@@ -78,15 +86,15 @@ export class NgxCronComponent {
       });
       
       // if current period no missing, pick first
-      if (!(this._allowedPeriods.indexOf(this.period) > -1)) {
-        this.period = this._allowedPeriods[0];
+      if (!(this._allowedPeriods.indexOf(this.cronData.period) > -1)) {
+        this.cronData.period = this._allowedPeriods[0];
         this._cron = this.getCron();
         this.setDescription(this._cron);
       }
     }
   }
 
-  changed() {
+  cronDataChanged() {
     this._cron = this.getCron();
     this.setDescription(this._cron);
     this.cronChange.emit(this._cron);
@@ -95,8 +103,8 @@ export class NgxCronComponent {
   private setDescription(cron: string) {
     const c = this.cronService.getCronData(cron);
 
-    if (this.period !== 'Custom') {
-      this.period = c.period;
+    if (this.cronData.period !== 'Custom') {
+      this.cronData.period = c.period;
     }
 
     if (c.isQuartz && !this.allowQuartz) {
@@ -104,9 +112,11 @@ export class NgxCronComponent {
       c.description = 'Quartz not allowed';
     }
 
-    this.description = c.description;
+    this.cronData.description = c.description;
+    this.cronData.valid = c.valid;
+    this.cronData.daysMax = c.daysMax || this.cronData.daysMax;
+
     this.invalid = !c.valid;
-    this.daysMax = c.daysMax || this.daysMax;
   }
 
   /**
@@ -114,8 +124,8 @@ export class NgxCronComponent {
    */
   private setCron(cron: string) {
     const data = this.cronService.getCronData(cron);
-    if (this.period !== 'Custom') {
-      this.period = data.period;
+    if (this.cronData.period !== 'Custom') {
+      this.cronData.period = data.period;
     }
 
     if (data.isQuartz && !this.allowQuartz) {
@@ -124,7 +134,13 @@ export class NgxCronComponent {
     }
 
     // copy only defined to local state
-    Object.assign(this, data);
+    for (const key of Object.keys(data)) {
+      if (data[key] !== undefined && data[key] !== null) {
+        this.cronData[key] = data[key];
+      }
+    }
+
+    this.invalid = !data.valid;
   }
 
   /**
@@ -132,6 +148,6 @@ export class NgxCronComponent {
    * Only used for non-custome periods
    */
   private getCron(): string {
-    return this.cronService.getCronFromCronData(this);
+    return this.cronService.getCronFromCronData({...this.cronData, expression: this.cron});
   }
 }
