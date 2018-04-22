@@ -67,5 +67,22 @@
     "tslint-config-swimlane": "^3.0.4",
     "typescript": "~2.5.3",
     "zone.js": "^0.8.19"
-  }
+  },
+  "description": "User-friendly cron input",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swimlane/ngx-cron.git"
+  },
+  "keywords": [
+    "cron"
+  ],
+  "author": "J. Harshbarger",
+  "bugs": {
+    "url": "https://github.com/swimlane/ngx-cron/issues"
+  },
+  "homepage": "https://github.com/swimlane/ngx-cron#readme"
 }
