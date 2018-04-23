@@ -46,3 +46,4 @@ Thumbs.db
 # packager
 .ng_pkg_build/
 dist.tgz
+package.tgz

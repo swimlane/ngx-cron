@@ -1,32 +1,66 @@
 import { Injectable } from '@angular/core';
 import { default as ExpressionDescriptor } from 'cronstrue';
 
+export enum Period {
+  Secondly = 'Secondly',
+  Minutely = 'Minutely',
+  Hourly = 'Hourly',
+  Daily = 'Daily',
+  Weekly = 'Weekly',
+  Monthly = 'Monthly',
+  Yearly = 'Yearly',
+  Custom = 'Custom'
+}
+
+export enum Weekday {
+  Sunday,
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday
+}
+
+export enum Month {
+  January,
+  February,
+  March,
+  April,
+  May,
+  June,
+  July,
+  August,
+  September,
+  October,
+  November,
+  December
+}
+
 export interface ICronData {
   expression?: string;
-  period: string;
+  period: Period;
   description: string;
   isQuartz: boolean;
   valid: boolean;
 
   seconds?: number;
   secondInterval?: number;
-  min?: number;
-  minInterval?: number;
+  minute?: number;
+  minuteInterval?: number;
   hour?: number;
   day?: number;
-  month?: string;
+  month?: keyof typeof Month;
   daysMax?: number;
   time?: Date;
-  dow?: string;
+  weekday?: keyof typeof Weekday;
 }
 
 // @dynamic
 @Injectable()
 export class CronService {
-  static DOWS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  static MONTHS = ['January', 'February', 'March', 'April',
-                'May', 'June', 'July', 'August',
-                'September', 'October', 'November', 'December'];
+  static DOWS = Array.from({ length: 7 }, (_, i) => Weekday[i]) as Array<keyof typeof Weekday>;
+  static MONTHS = Array.from({ length: 12 }, (_, i) => Month[i])as Array<keyof typeof Month>;
 
   static PERIODS = {
     Secondly: {cron: '* * * * * *', regex: /^\*(\/\d+)?(\s\*){5}$/, quartz: true },
@@ -38,6 +72,8 @@ export class CronService {
     Yearly: {cron: '0 0 1 1 *', regex: /^(\d{1,2}\s){4,5}\*$/, quartz: false },
     Custom: {cron: '* * * * *', regex: /^.*$/, quartz: false }
   };
+
+  static PERIODKEYS = Object.keys(Period) as Period[];
 
   static MIDNIGHT = new Date(1990, 1, 1, 0, 0);
 
@@ -75,9 +111,9 @@ export class CronService {
         isQuartz: e.expressionParts[0] !== '',
       };
     } catch (err) {
-      return { 
+      return {
         description: err || e.i18n.anErrorOccuredWhenGeneratingTheExpressionD(),
-        period: 'Custom',
+        period: Period.Custom,
         valid: false,
         isQuartz: false,
       };
@@ -85,8 +121,8 @@ export class CronService {
 
     data.seconds = this.getSeconds(e.expressionParts);
     data.secondInterval = this.getSecondInterval(e.expressionParts);
-    data.min = this.getMin(e.expressionParts);
-    data.minInterval = this.getMinInterval(e.expressionParts);
+    data.minute = this.getMin(e.expressionParts);
+    data.minuteInterval = this.getMinInterval(e.expressionParts);
     data.hour = this.getHour(e.expressionParts);
     data.day = this.getDay(e.expressionParts);
     data.month = this.getMonth(e.expressionParts);
@@ -106,21 +142,22 @@ export class CronService {
         seconds = cron.secondInterval === 1 ? '*' : `*/${cron.secondInterval}`;
         break;
       case 'Minutely':
-        if (+cron.minInterval !== 1) {
-          min = `*/${cron.minInterval}`;
+        if (+cron.minuteInterval !== 1) {
+          min = `*/${cron.minuteInterval}`;
         }
         break;
       case 'Hourly':
-        min = cron.min;
+        min = cron.minute;
         break;
       case 'Weekly':
-        dow  = CronService.DOWS.indexOf(cron.dow);
+        dow  = Weekday[cron.weekday];
       case 'Daily':
+        cron.time = cron.time || CronService.MIDNIGHT;
         min  = cron.time.getMinutes();
         hour = cron.time.getHours();
         break;
       case 'Yearly':
-        month = CronService.MONTHS.indexOf(cron.month) + 1;
+        month = Month[cron.month] + 1;
       case 'Monthly':
         min  = cron.time.getMinutes();
         hour = cron.time.getHours();
@@ -136,7 +173,7 @@ export class CronService {
     return r.join(' ');
   }
 
-  private validate(data: any) {
+  private validate(data: any): boolean {
     if (data.min > 59) { return false; }
     if (data.hour > 24) { return false; }
     const daysMax = data.daysMax;
@@ -144,11 +181,11 @@ export class CronService {
     return true;
   }
 
-  private getPeriod(expression: string): string {
+  private getPeriod(expression: string): Period {
     for (const [key, value] of (Object as any).entries(CronService.PERIODS)) {
       if (value.regex.test(expression)) { return key; }
     }
-    return 'Custom';
+    return Period.Custom;
   }
 
   private getSeconds(expressionParts: string[]): number {
@@ -188,9 +225,9 @@ export class CronService {
     return (typeof h === 'number' && typeof m === 'number') ? new Date(1990, 1, 1, h, m, s || 0) : null;
   }
 
-  private getMonth(expressionParts: string[]): string {
+  private getMonth(expressionParts: string[]): keyof typeof Month {
     const v = this.getSegment(expressionParts[4])[0][0];
-    return typeof v === 'number' ? CronService.MONTHS[v - 1] : null;
+    return typeof v === 'number' ? (Month[v - 1] as keyof typeof Month) : null;
   }
 
   private getDaysMax(expressionParts: string[]): number {
@@ -198,12 +235,12 @@ export class CronService {
     return typeof v === 'number' ? new Date(2008, v, 0).getDate() : null;
   }
 
-  private getDow(expressionParts: string[]): string {
+  private getDow(expressionParts: string[]): typeof Weekday[0] {
     const v = this.getSegment(expressionParts[5])[0][0];
-    return typeof v === 'number' ? CronService.DOWS[v] : null;
+    return typeof v === 'number' ? Weekday[v] : null;
   }
 
-  private getSegment(value: string) {
+  private getSegment(value: string): Array<Array<string | number>> {
     if (value === undefined) { value = '*'; }
     return value.split(',').map(s => {
       if (s === undefined) { s = '*'; }

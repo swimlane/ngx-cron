@@ -9,6 +9,7 @@
     "build:demo": "ng build --prod -op docs",
     "build:package": "ng-packagr -p ng-package.json",
     "test": "ng test",
+    "test:ci": "ng test --single-run --no-progress --browser=ChromeNoSandbox",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "changelog": "chg release -y && git add -A CHANGELOG.md",

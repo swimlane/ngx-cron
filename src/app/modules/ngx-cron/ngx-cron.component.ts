@@ -4,7 +4,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 
-import { CronService, ICronData } from './ngx-cron.service';
+import { CronService, ICronData, Period, Weekday, Month } from './ngx-cron.service';
 
 @Component({
   selector: 'ngx-cron-input',
@@ -24,7 +24,7 @@ export class NgxCronComponent {
   }
 
   @Input()
-  allowedPeriods = Object.keys(CronService.PERIODS);
+  allowedPeriods = CronService.PERIODKEYS;
 
   @Input()
   allowQuartz = true;
@@ -38,22 +38,22 @@ export class NgxCronComponent {
     this._disabled = val;
   }
 
-  periods = Object.keys(CronService.PERIODS);
+  periods = CronService.PERIODKEYS;
   dows = CronService.DOWS;
   months = CronService.MONTHS;
   predefined = CronService.PERIODS;
 
   cronData: ICronData = {
     description: this.cronService.toString('0 * * * *'),
-    period: this.periods[0],
+    period: Period.Custom,
     valid: true,
     seconds: 0,
     secondInterval: 1,
-    min: 0,
-    minInterval: 1,
-    dow: this.dows[0],
+    minute: 0,
+    minuteInterval: 1,
+    weekday: 'Sunday',
     day: 1,
-    month: this.months[0],
+    month: 'January',
     time: CronService.MIDNIGHT,
     isQuartz: false,
     daysMax: 31
@@ -68,7 +68,9 @@ export class NgxCronComponent {
     return this.cronData.description;
   }
 
-  _allowedPeriods = Object.keys(CronService.PERIODS);
+  _allowedPeriods: Period[] = CronService.PERIODKEYS;
+
+  disableCustomInput = false;
 
   private _cron = '0 * * * *';
   private _disabled = false;
@@ -83,18 +85,21 @@ export class NgxCronComponent {
         if (i < 0) { return false; }
         if (!this.allowQuartz && this.predefined[k].quartz) { return false; }
         return true;
-      });
+      }) as Period[];
       
       // if current period no missing, pick first
-      if (!(this._allowedPeriods.indexOf(this.cronData.period) > -1)) {
+      if (this.cronData.period !== Period.Custom && !(this._allowedPeriods.indexOf(this.cronData.period) > -1)) {
         this.cronData.period = this._allowedPeriods[0];
         this._cron = this.getCron();
         this.setDescription(this._cron);
       }
+
+      this.disableCustomInput = this._allowedPeriods.indexOf(Period.Custom) < 0;
     }
   }
 
   cronDataChanged() {
+    this.cronData.time = this.cronData.time || CronService.MIDNIGHT;
     this._cron = this.getCron();
     this.setDescription(this._cron);
     this.cronChange.emit(this._cron);

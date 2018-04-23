@@ -15,7 +15,7 @@
       <ngx-input
         [(ngModel)]="cron"
         [hint]="cronData.description"
-        [disabled]="disabled">
+        [disabled]="disabled || disableCustomInput">
       </ngx-input>
     </span>
 
@@ -23,13 +23,13 @@
       At
       <ngx-input
         type="number"
-        [(ngModel)]="cronData.min"
+        [(ngModel)]="cronData.minute"
         (change)="cronDataChanged()"
         min="0"
         max="59"
         [disabled]="disabled">
       </ngx-input>
-      <span [ngPlural]="cronData.min">
+      <span [ngPlural]="cronData.minute">
         <ng-template ngPluralCase="=1">minute</ng-template>
         <ng-template ngPluralCase="other">minutes</ng-template>
       </span> past the hour
@@ -56,14 +56,14 @@
       Every 
       <ngx-input
         type="number"
-        [ngModel]="cronData.minInterval"
-        (ngModelChange)="cronData.minInterval = +$event"
+        [ngModel]="cronData.minuteInterval"
+        (ngModelChange)="cronData.minuteInterval = +$event"
         (change)="cronDataChanged()"
         min="1"
         max="9999"
         [disabled]="disabled">
       </ngx-input>
-      <span [ngPlural]="cronData.minInterval">
+      <span [ngPlural]="cronData.minuteInterval">
         <ng-template ngPluralCase="=1">minute</ng-template>
         <ng-template ngPluralCase="other">minutes</ng-template>
       </span>
@@ -108,8 +108,8 @@
       , only on
       <ngx-select
         [filterable]="false"
-        [ngModel]="[cronData.dow]"
-        (change)="cronData.dow = $event[0]; cronDataChanged()"
+        [ngModel]="[cronData.weekday]"
+        (change)="cronData.weekday = $event[0]; cronDataChanged()"
         [allowClear]="false"
         [disabled]="disabled">
         <ngx-select-option *ngFor="let day of dows" [name]="day" [value]="day"></ngx-select-option>
