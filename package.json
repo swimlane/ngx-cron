@@ -14,8 +14,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "changelog": "chg release -y && git add -A CHANGELOG.md",
-    "preversion": "npm-run-all build lint test:single",
-    "version": "npm-run-all changelog"
+    "preversion": "npm-run-all lint test:single",
+    "version": "npm-run-all build changelog"
   },
   "peerDependencies": {
     "@angular/core": "^5.2.0",
