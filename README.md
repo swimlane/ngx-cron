@@ -45,9 +45,8 @@ Run `npm run build` to build the project. The package artifacts will be stored i
 
 ## Release
 
-* `npm run lint`
 * `npm version {{-version here-}}`
-* `git add -A -- docs\`
+* `git add -A -- docs\ dist\`
 * `git push --tags`
 * `cd dist`
 * `npm publish`

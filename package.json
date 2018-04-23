@@ -9,11 +9,13 @@
     "build:demo": "ng build --prod -op docs",
     "build:package": "ng-packagr -p ng-package.json",
     "test": "ng test",
+    "test:single": "ng test --single-run",
     "test:ci": "ng test --single-run --no-progress --browser=ChromeNoSandbox",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "changelog": "chg release -y && git add -A CHANGELOG.md",
-    "version": "npm-run-all changelog build"
+    "preversion": "npm-run-all build lint test:single",
+    "version": "npm-run-all changelog"
   },
   "peerDependencies": {
     "@angular/core": "^5.2.0",
