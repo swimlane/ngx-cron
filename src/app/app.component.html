@@ -1,0 +1,92 @@
+<ngx-section
+  #inputsSection
+  class="shadow"
+  [sectionTitle]="'Inputs'"
+  [sectionCollapsed]="true"
+>
+  <ngx-input
+    *ngIf="!inputsSection.sectionCollapsed"
+    #cronInput
+    type="text"
+    label="CRON Input"
+    [autofocus]="true"
+    [(ngModel)]="cron"
+  >
+  </ngx-input>
+
+  <ngx-select
+    [filterable]="false"
+    [allowClear]="true"
+    [multiple]="true"
+    label="Available Periods"
+    [(ngModel)]="allowedPeriods"
+  >
+    <ngx-select-option
+      [name]="period"
+      [value]="period"
+      *ngFor="let period of periods"
+    ></ngx-select-option>
+  </ngx-select>
+
+  <ngx-toggle #disabledToggle label="Disabled"> </ngx-toggle>
+
+  <ngx-toggle #disabledQuartz label="Disable Quartz"> </ngx-toggle>
+</ngx-section>
+
+<section class="component">
+  <ngx-cron-input
+    #cronComp
+    [(cron)]="cron"
+    [allowedPeriods]="allowedPeriods"
+    [disabled]="disabledToggle?.value"
+    [allowQuartz]="!disabledQuartz?.value"
+  ></ngx-cron-input>
+</section>
+
+<section>
+  <label>Output</label>
+
+  <pre><code>
+  {{cron}}
+  {{cronComp.description}}
+</code></pre>
+</section>
+
+<ngx-tabs>
+  <ngx-tab title="Markup">
+    <ngx-codemirror mode="htmlmixed" readOnly="true" ngNonBindable>
+      <![CDATA[
+      <ngx-cron-input
+        #cronComp
+        [(cron)]="cron"
+        [allowedPeriods]="allowedPeriods"
+        [disabled]="disabled"
+        [allowQuartz]="allowQuartz">
+      </ngx-cron-input>
+
+      {{cron}}
+      {{cronComp.description}}
+      ]]>
+    </ngx-codemirror>
+  </ngx-tab>
+  <ngx-tab title="TypeScript">
+    <ngx-codemirror mode="javascript" readOnly="true" ngNonBindable>
+    <![CDATA[
+    import {Component} from '@angular/core';
+    import { CronService } from './ngx-cron.service';
+
+    @Component({
+      selector: 'cron-example',
+      templateUrl: 'cron-example.html',
+      styleUrls: ['cron-example.css'],
+    })
+    export class CronExample {
+      cron = '* * * * *';
+      allowedPeriods = CronService.PERIODS;
+      disabled = false;
+      allowQuartz = true;
+    }
+    ]]>
+    </ngx-codemirror>
+  </ngx-tab>
+</ngx-tabs>
