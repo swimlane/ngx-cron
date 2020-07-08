@@ -9,7 +9,7 @@ export enum Period {
   Weekly = 'Weekly',
   Monthly = 'Monthly',
   Yearly = 'Yearly',
-  Custom = 'Custom',
+  Custom = 'Custom'
 }
 
 export enum Weekday {
@@ -19,7 +19,7 @@ export enum Weekday {
   Wednesday,
   Thursday,
   Friday,
-  Saturday,
+  Saturday
 }
 
 export enum Month {
@@ -34,7 +34,7 @@ export enum Month {
   September,
   October,
   November,
-  December,
+  December
 }
 
 export interface ICronData {
@@ -59,46 +59,42 @@ export interface ICronData {
 // @dynamic
 @Injectable()
 export class NgxCronService {
-  static DOWS = Array.from({ length: 7 }, (_, i) => Weekday[i]) as Array<
-    keyof typeof Weekday
-  >;
-  static MONTHS = Array.from({ length: 12 }, (_, i) => Month[i]) as Array<
-    keyof typeof Month
-  >;
+  static DOWS = Array.from({ length: 7 }, (_, i) => Weekday[i]) as Array<keyof typeof Weekday>;
+  static MONTHS = Array.from({ length: 12 }, (_, i) => Month[i]) as Array<keyof typeof Month>;
 
   static PERIODS = {
     Secondly: {
       cron: '* * * * * *',
       regex: /^\*(\/\d+)?(\s\*){5}$/,
-      quartz: true,
+      quartz: true
     },
     Minutely: {
       cron: '* * * * *',
       regex: /^\*(\/\d+)?(\s\*){4}$/,
-      quartz: false,
+      quartz: false
     },
     Hourly: {
       cron: '0 * * * *',
       regex: /^\d{1,2}\s(\*\s){3}\*$/,
-      quartz: false,
+      quartz: false
     },
     Daily: {
       cron: '0 0 * * *',
       regex: /^(\d{1,2}\s){2,3}(\*\s){2}\*$/,
-      quartz: false,
+      quartz: false
     },
     Weekly: {
       cron: '0 0 * * 0',
       regex: /^(\d{1,2}\s){2,3}(\*\s){2}\d{1,2}$/,
-      quartz: false,
+      quartz: false
     },
     Monthly: {
       cron: '0 0 1 * *',
       regex: /^(\d{1,2}\s){3,4}\*\s\*$/,
-      quartz: false,
+      quartz: false
     },
     Yearly: { cron: '0 0 1 1 *', regex: /^(\d{1,2}\s){4,5}\*$/, quartz: false },
-    Custom: { cron: '* * * * *', regex: /^.*$/, quartz: false },
+    Custom: { cron: '* * * * *', regex: /^.*$/, quartz: false }
   };
 
   static PERIODKEYS = Object.keys(Period) as Period[];
@@ -107,14 +103,11 @@ export class NgxCronService {
 
   private expressionDescriptorOptions = {
     locale: 'en',
-    throwExceptionOnParseError: true,
+    throwExceptionOnParseError: true
   };
 
   toString(cron: string) {
-    const e: any = new ExpressionDescriptor(
-      cron,
-      this.expressionDescriptorOptions
-    );
+    const e: any = new ExpressionDescriptor(cron, this.expressionDescriptorOptions);
 
     try {
       return e.getFullDescription();
@@ -124,10 +117,7 @@ export class NgxCronService {
   }
 
   getCronData(cron: string): ICronData {
-    const e: any = new ExpressionDescriptor(
-      cron,
-      this.expressionDescriptorOptions
-    );
+    const e: any = new ExpressionDescriptor(cron, this.expressionDescriptorOptions);
 
     let data: ICronData;
 
@@ -136,14 +126,14 @@ export class NgxCronService {
         description: e.getFullDescription(),
         period: this.getPeriod(e.expression),
         valid: true,
-        isQuartz: e.expressionParts[0] !== '',
+        isQuartz: e.expressionParts[0] !== ''
       };
     } catch (err) {
       return {
         description: err || e.i18n.anErrorOccuredWhenGeneratingTheExpressionD(),
         period: Period.Custom,
         valid: false,
-        isQuartz: false,
+        isQuartz: false
       };
     }
 
@@ -218,9 +208,7 @@ export class NgxCronService {
   }
 
   private getPeriod(expression: string): Period {
-    for (const [key, value] of (Object as any).entries(
-      NgxCronService.PERIODS
-    )) {
+    for (const [key, value] of (Object as any).entries(NgxCronService.PERIODS)) {
       if (value.regex.test(expression)) {
         return key;
       }
@@ -262,9 +250,7 @@ export class NgxCronService {
     const s = this.getSeconds(expressionParts);
     const h = this.getHour(expressionParts);
     const m = this.getMin(expressionParts);
-    return typeof h === 'number' && typeof m === 'number'
-      ? new Date(1990, 1, 1, h, m, s || 0)
-      : null;
+    return typeof h === 'number' && typeof m === 'number' ? new Date(1990, 1, 1, h, m, s || 0) : null;
   }
 
   private getMonth(expressionParts: string[]): keyof typeof Month {
@@ -286,11 +272,11 @@ export class NgxCronService {
     if (value === undefined) {
       value = '*';
     }
-    return value.split(',').map((s) => {
+    return value.split(',').map(s => {
       if (s === undefined) {
         s = '*';
       }
-      return s.split('/').map((p) => {
+      return s.split('/').map(p => {
         const v = parseInt(p, 10);
         return isNaN(v) ? p : v;
       });

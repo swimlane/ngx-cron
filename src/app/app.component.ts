@@ -6,7 +6,7 @@ import { NgxCronService } from 'projects/swimlane/ngx-cron/src/public-api';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
   cron = '* * * * *';

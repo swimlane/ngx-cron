@@ -8,6 +8,6 @@ import { NgxUIModule } from '@swimlane/ngx-ui';
   imports: [CommonModule, NgxUIModule],
   providers: [NgxCronService],
   declarations: [NgxCronComponent],
-  exports: [NgxCronComponent],
+  exports: [NgxCronComponent]
 })
 export class NgxCronModule {}

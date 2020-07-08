@@ -3,11 +3,20 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "start": "ng serve --port 4200",
+    "build": "npm run build:lib && ng build --prod",
+    "build:demo": "npm run build:lib && cross-env NODE_ENV=production ng build --prod --base-href=\"/ngx-cron/\"",
+    "build:lib": "ng build @swimlane/ngx-cron --prod",
+    "copy-files": "cp README.md dist/swimlane/ngx-cron/README.md && cp LICENSE dist/swimlane/ngx-cron/LICENSE",
+    "package": "npm run build:lib",
+    "predeploy": "npm run build:demo",
+    "deploy": "angular-cli-ghpages --dir ./dist/ngx-cron --name=Swimlane --email=developer@swimlane.com",
+    "prepublish:lib": "npm run package",
+    "publish:lib": "npm publish ./dist/swimlane/ngx-cron",
+    "prepack": "npm run package",
+    "pack": "npm pack ./dist/swimlane/ngx-cron",
+    "prettier": "prettier --write \"{src,projects}/**/*.{js,ts,scss,css,md,json}\"",
+    "prettier:ci": "prettier --check  \"{src,projects}/**/*.{js,ts,scss,css,md,json}\""
   },
   "private": true,
   "dependencies": {
@@ -36,9 +45,11 @@
     "@angular/cli": "~9.1.4",
     "@angular/compiler-cli": "~9.1.4",
     "@angular/language-service": "~9.1.4",
-    "@types/node": "^12.11.1",
+    "@swimlane/prettier-config-swimlane": "^3.0.3",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
+    "angular-cli-ghpages": "^0.6.2",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -48,9 +59,14 @@
     "karma-jasmine": "~3.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "ng-packagr": "^9.0.0",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-security": "^1.16.0",
+    "tslint-config-swimlane": "^5.0.0",
     "typescript": "~3.8.3"
   }
 }

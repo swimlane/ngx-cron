@@ -6,23 +6,17 @@ import {
   EventEmitter,
   Output,
   HostBinding,
-  SimpleChanges,
+  SimpleChanges
 } from '@angular/core';
 
-import {
-  NgxCronService,
-  ICronData,
-  Period,
-  Weekday,
-  Month,
-} from './ngx-cron.service';
+import { NgxCronService, ICronData, Period, Weekday, Month } from './ngx-cron.service';
 
 @Component({
   // tslint:disable-next-line: component-selector
   selector: 'ngx-cron-input',
   templateUrl: './ngx-cron.component.html',
   styleUrls: ['./ngx-cron.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class NgxCronComponent implements OnChanges {
   @Input()
@@ -68,7 +62,7 @@ export class NgxCronComponent implements OnChanges {
     month: 'January',
     time: NgxCronService.MIDNIGHT,
     isQuartz: false,
-    daysMax: 31,
+    daysMax: 31
   };
 
   @HostBinding('class.invalid')
@@ -94,7 +88,7 @@ export class NgxCronComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if ('allowedPeriods' in changes || 'allowQuartz' in changes) {
-      this._allowedPeriods = this.allowedPeriods.filter((k) => {
+      this._allowedPeriods = this.allowedPeriods.filter(k => {
         const i = this.periods.indexOf(k);
         if (i < 0) {
           return false;
@@ -106,10 +100,7 @@ export class NgxCronComponent implements OnChanges {
       }) as Period[];
 
       // if current period no missing, pick first
-      if (
-        this.cronData.period !== Period.Custom &&
-        !(this._allowedPeriods.indexOf(this.cronData.period) > -1)
-      ) {
+      if (this.cronData.period !== Period.Custom && !(this._allowedPeriods.indexOf(this.cronData.period) > -1)) {
         this.cronData.period = this._allowedPeriods[0];
         this._cron = this.getCron();
         this.setDescription(this._cron);
@@ -176,7 +167,7 @@ export class NgxCronComponent implements OnChanges {
   private getCron(): string {
     return this.cronService.getCronFromCronData({
       ...this.cronData,
-      expression: this.cron,
+      expression: this.cron
     });
   }
 }
