@@ -10,6 +10,6 @@ import { NgxUIModule } from '@swimlane/ngx-ui';
   declarations: [AppComponent],
   imports: [BrowserModule, BrowserAnimationsModule, NgxCronModule, NgxUIModule],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

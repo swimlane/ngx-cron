@@ -3,5 +3,6 @@
   "dest": "../../../dist/swimlane/ngx-cron",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": ["cronstrue"]
 }
