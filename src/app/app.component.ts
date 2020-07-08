@@ -1,14 +1,15 @@
+/* tslint:disable: template-no-call-expression */
 import { Component, ViewEncapsulation } from '@angular/core';
-import { CronService } from './modules/ngx-cron/ngx-cron.service';
+import { NgxCronService } from 'projects/swimlane/ngx-cron/src/public-api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
   cron = '* * * * *';
-  periods = Object.keys(CronService.PERIODS);
-  allowedPeriods = Object.keys(CronService.PERIODS);
+  periods = Object.keys(NgxCronService.PERIODS);
+  allowedPeriods = Object.keys(NgxCronService.PERIODS);
 }

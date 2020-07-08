@@ -1,55 +1,27 @@
-# ngx-cron
+# NgxCron
 
-🕒 User-friendly cron input...
-
-![](https://content.screencast.com/users/hypercubed/folders/Snagit/media/6ae021c1-738b-4744-a1d1-654578400844/2018-04-19_15-33-16.png)
-
-## Installation instructions
-
-Install `@swimlane/ngx-cron` and peers from `npm`:
-
-```bash
-npm install @swimlane/ngx-cron @swimlane/ngx-ui cronstrue --save
-```
-
-Add needed the `NgxCronModule` package to imports:
-
-```ts
-import { NgxCronModule } from '@swimlane/ngx-cron';
-
-@NgModule({
-  ...
-  imports: [NgxCronModule]
-  ...
-})
-```
-
-Add the `ngx-cron` component to your page:
-
-```html
-<ngx-cron-input
-  [(cron)]="cron"
-  [allowedPeriods]="allowedPeriods"
-  [disabled]="disabled"
-  [allowQuartz]="allowQuartz">
-</ngx-cron-input>
-```
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
 
 ## Development server
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
-Run `npm run build` to build the project. The package artifacts will be stored in the `dist/` directory. Demo will be generated in the `docs/` folder.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Release
+## Running unit tests
 
-* `npm version {{-version here-}}`
-* `git add -A -- docs/`
-* `git push --tags`
-* `cd dist`
-* `npm publish`
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Credits
-`ngx-dnd` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
