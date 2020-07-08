@@ -6,6 +6,7 @@
     "no-any": false,
     "typedef": true,
     "no-floating-promises": false,
-    "array-type": [true, "array-simple"]
+    "array-type": [true, "array-simple"],
+    "tsr-detect-unsafe-regexp": false
   }
 }

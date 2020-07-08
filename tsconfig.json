@@ -14,15 +14,13 @@
     "target": "es5",
     "lib": ["es2018", "dom"],
     "paths": {
-      "@swimlane/ngx-cron": [
-        "dist/swimlane/ngx-cron/swimlane-ngx-cron",
-        "dist/swimlane/ngx-cron"
-      ]
+      "@swimlane/ngx-cron": ["dist/swimlane/ngx-cron/swimlane-ngx-cron", "dist/swimlane/ngx-cron"]
     }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "preserveWhitespaces": true
+    "preserveWhitespaces": true,
+    "enableIvy": false
   }
 }

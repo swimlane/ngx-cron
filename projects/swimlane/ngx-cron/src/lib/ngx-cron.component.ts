@@ -12,7 +12,6 @@ import {
 import { NgxCronService, ICronData, Period, Weekday, Month } from './ngx-cron.service';
 
 @Component({
-  // tslint:disable-next-line: component-selector
   selector: 'ngx-cron-input',
   templateUrl: './ngx-cron.component.html',
   styleUrls: ['./ngx-cron.component.scss'],
@@ -74,14 +73,11 @@ export class NgxCronComponent implements OnChanges {
     return this.cronData.description;
   }
 
-  // tslint:disable-next-line: variable-name
   _allowedPeriods: Period[] = NgxCronService.PERIODKEYS;
 
   disableCustomInput = false;
 
-  // tslint:disable-next-line: variable-name
   private _cron = '0 * * * *';
-  // tslint:disable-next-line: variable-name
   private _disabled = false;
 
   constructor(public cronService: NgxCronService) {}

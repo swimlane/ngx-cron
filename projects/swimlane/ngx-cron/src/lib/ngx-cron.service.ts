@@ -169,7 +169,6 @@ export class NgxCronService {
         break;
       case 'Weekly':
         dow = Weekday[cron.weekday];
-      // tslint:disable-next-line: no-switch-case-fall-through
       case 'Daily':
         cron.time = cron.time || NgxCronService.MIDNIGHT;
         min = cron.time.getMinutes();
@@ -177,7 +176,6 @@ export class NgxCronService {
         break;
       case 'Yearly':
         month = Month[cron.month] + 1;
-      // tslint:disable-next-line: no-switch-case-fall-through
       case 'Monthly':
         min = cron.time.getMinutes();
         hour = cron.time.getHours();

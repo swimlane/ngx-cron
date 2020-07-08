@@ -1,4 +1,3 @@
-/* tslint:disable: template-no-call-expression */
 import { Component, ViewEncapsulation } from '@angular/core';
 import { NgxCronService } from 'projects/swimlane/ngx-cron/src/public-api';
 
