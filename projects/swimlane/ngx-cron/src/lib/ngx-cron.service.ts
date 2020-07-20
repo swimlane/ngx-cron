@@ -206,7 +206,6 @@ export class NgxCronService {
   }
 
   private validate(data: any): boolean {
-    console.log('data: ', data);
     if (data.min || data.minuteInterval > 59 || data.minuteInterval === 0) {
       return false;
     }
