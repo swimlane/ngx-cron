@@ -14,11 +14,7 @@
 
   <div class="selections">
     <span *ngIf="cronData.period === 'Custom'">
-      <ngx-input
-        [(ngModel)]="cron"
-        [hint]="cronData.description"
-        [disabled]="disabled || disableCustomInput"
-      >
+      <ngx-input [(ngModel)]="cron" [hint]="cronData.description" [disabled]="disabled || disableCustomInput">
       </ngx-input>
     </span>
     <span *ngIf="cronData.period === 'Hourly'">
@@ -26,6 +22,7 @@
       <ngx-input
         type="number"
         [(ngModel)]="cronData.minute"
+        (ngModelChange)="cronData.minute = +$event"
         (change)="cronDataChanged()"
         min="0"
         max="59"
@@ -47,7 +44,7 @@
         (ngModelChange)="cronData.secondInterval = +$event"
         (change)="cronDataChanged()"
         min="1"
-        max="9999"
+        max="59"
         [disabled]="disabled"
       >
       </ngx-input>
@@ -64,7 +61,7 @@
         (ngModelChange)="cronData.minuteInterval = +$event"
         (change)="cronDataChanged()"
         min="1"
-        max="9999"
+        max="59"
         [disabled]="disabled"
       >
       </ngx-input>
@@ -82,15 +79,11 @@
       "
     >
       At
-      <ngx-date-time
-        [(ngModel)]="cronData.time"
-        (change)="cronDataChanged()"
-        inputType="time"
-        [disabled]="disabled"
-      >
+      <ngx-date-time [(ngModel)]="cronData.time" (change)="cronDataChanged()" inputType="time" [disabled]="disabled">
       </ngx-date-time>
     </span>
-    <span *ngIf="cronData.period === 'Monthly' || cronData.period === 'Yearly'">, on day
+    <span *ngIf="cronData.period === 'Monthly' || cronData.period === 'Yearly'"
+      >, on day
       <ngx-input
         type="number"
         [(ngModel)]="cronData.day"
@@ -102,7 +95,8 @@
       </ngx-input>
       of the month
     </span>
-    <span *ngIf="cronData.period === 'Yearly'">, only in
+    <span *ngIf="cronData.period === 'Yearly'"
+      >, only in
       <ngx-select
         [filterable]="false"
         [ngModel]="[cronData.month]"
@@ -110,11 +104,7 @@
         (change)="cronData.month = $event[0]; cronDataChanged()"
         [allowClear]="false"
       >
-        <ngx-select-option
-          *ngFor="let month of months"
-          [name]="month"
-          [value]="month"
-        ></ngx-select-option>
+        <ngx-select-option *ngFor="let month of months" [name]="month" [value]="month"></ngx-select-option>
       </ngx-select>
     </span>
     <span *ngIf="cronData.period === 'Weekly'">
@@ -126,12 +116,9 @@
         [allowClear]="false"
         [disabled]="disabled"
       >
-        <ngx-select-option
-          *ngFor="let day of dows"
-          [name]="day"
-          [value]="day"
-        ></ngx-select-option>
+        <ngx-select-option *ngFor="let day of dows" [name]="day" [value]="day"></ngx-select-option>
       </ngx-select>
     </span>
+    <p class="invalid-expression" *ngIf="!cronData.valid && cronData.period !== 'Custom'">{{ cronData.description }}</p>
   </div>
 </div>

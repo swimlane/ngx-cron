@@ -75,7 +75,7 @@ export class NgxCronService {
     },
     Hourly: {
       cron: '0 * * * *',
-      regex: /^\d{1,2}\s(\*\s){3}\*$/,
+      regex: /^\d+\s(\*\s){3}\*$/,
       quartz: false
     },
     Daily: {
@@ -90,10 +90,10 @@ export class NgxCronService {
     },
     Monthly: {
       cron: '0 0 1 * *',
-      regex: /^(\d{1,2}\s){3,4}\*\s\*$/,
+      regex: /^(\d+\s){3,4}\*\s\*$/,
       quartz: false
     },
-    Yearly: { cron: '0 0 1 1 *', regex: /^(\d{1,2}\s){4,5}\*$/, quartz: false },
+    Yearly: { cron: '0 0 1 1 *', regex: /^(\d+\s){4,5}\*$/, quartz: false },
     Custom: { cron: '* * * * *', regex: /^.*$/, quartz: false }
   };
 
@@ -116,7 +116,7 @@ export class NgxCronService {
     }
   }
 
-  getCronData(cron: string): ICronData {
+  getCronData(cron: string, period: Period): ICronData {
     const e: any = new ExpressionDescriptor(cron, this.expressionDescriptorOptions);
 
     let data: ICronData;
@@ -124,7 +124,7 @@ export class NgxCronService {
     try {
       data = {
         description: e.getFullDescription(),
-        period: this.getPeriod(e.expression),
+        period: period === Period.Custom ? Period.Custom : this.getPeriod(e.expression),
         valid: true,
         isQuartz: e.expressionParts[0] !== ''
       };
@@ -144,10 +144,15 @@ export class NgxCronService {
     data.hour = this.getHour(e.expressionParts);
     data.day = this.getDay(e.expressionParts);
     data.month = this.getMonth(e.expressionParts);
+    data.weekday = this.getDow(e.expressionParts);
     data.daysMax = this.getDaysMax(e.expressionParts);
     data.time = this.getTime(e.expressionParts);
     data.isQuartz = e.expressionParts[0] !== '';
     data.valid = this.validate(data);
+
+    if (!data.valid) {
+      data.description = `${data.description} - Invalid expression`;
+    }
 
     return data;
   }
@@ -165,6 +170,9 @@ export class NgxCronService {
         }
         break;
       case 'Hourly':
+        if (cron.minute == null) {
+          cron.minute = 0;
+        }
         min = cron.minute;
         break;
       case 'Weekly':
@@ -176,9 +184,15 @@ export class NgxCronService {
         break;
       case 'Yearly':
         month = Month[cron.month] + 1;
+        if (cron.month === undefined) {
+          month = Month.January;
+        }
       case 'Monthly':
         min = cron.time.getMinutes();
         hour = cron.time.getHours();
+        if (cron.day == null) {
+          cron.day = 0;
+        }
         day = cron.day;
         break;
       default:
@@ -192,14 +206,32 @@ export class NgxCronService {
   }
 
   private validate(data: any): boolean {
-    if (data.min > 59) {
+    console.log('data: ', data);
+    if (data.min || data.minuteInterval > 59 || data.minuteInterval === 0) {
       return false;
     }
     if (data.hour > 24) {
       return false;
     }
+
+    if (data.secondInterval > 59 || data.secondInterval === 0) {
+      return false;
+    }
+
+    if (data.minute > 59) {
+      return false;
+    }
+
+    if (data.weekday === undefined) {
+      return false;
+    }
+
+    if (data.month === undefined) {
+      return false;
+    }
+
     const daysMax = data.daysMax;
-    if (daysMax !== null && data.day > daysMax) {
+    if ((daysMax !== null && data.day > daysMax) || data.day > 31 || data.day === 0) {
       return false;
     }
     return true;
@@ -261,9 +293,10 @@ export class NgxCronService {
     return typeof v === 'number' ? new Date(2008, v, 0).getDate() : null;
   }
 
-  private getDow(expressionParts: string[]): typeof Weekday[0] {
+  private getDow(expressionParts: string[]): keyof typeof Weekday {
     const v = this.getSegment(expressionParts[5])[0][0];
-    return typeof v === 'number' ? Weekday[v] : null;
+
+    return typeof v === 'number' ? (Weekday[v] as keyof typeof Weekday) : null;
   }
 
   private getSegment(value: string): Array<Array<string | number>> {
