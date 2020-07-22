@@ -50,7 +50,7 @@ export class NgxCronComponent implements OnChanges {
 
   cronData: ICronData = {
     description: this.cronService.toString('0 * * * *'),
-    period: Period.Custom,
+    period: undefined,
     valid: true,
     seconds: 0,
     secondInterval: 1,
@@ -95,9 +95,9 @@ export class NgxCronComponent implements OnChanges {
         return true;
       }) as Period[];
 
-      // if current period no missing, pick first
+      // if current period is not one of the allowed periods, set period to custom
       if (this.cronData.period !== Period.Custom && !(this._allowedPeriods.indexOf(this.cronData.period) > -1)) {
-        this.cronData.period = this._allowedPeriods[0];
+        this.cronData.period = Period.Custom;
         this._cron = this.getCron();
         this.setDescription(this._cron);
       }
@@ -114,7 +114,7 @@ export class NgxCronComponent implements OnChanges {
   }
 
   private setDescription(cron: string) {
-    const c = this.cronService.getCronData(cron);
+    const c = this.cronService.getCronData(cron, this.cronData.period);
 
     if (this.cronData.period !== 'Custom') {
       this.cronData.period = c.period;
@@ -136,7 +136,8 @@ export class NgxCronComponent implements OnChanges {
    * Set the component state based on the cron
    */
   private setCron(cron: string) {
-    const data = this.cronService.getCronData(cron);
+    const data = this.cronService.getCronData(cron, this.cronData.period);
+
     if (this.cronData.period !== 'Custom') {
       this.cronData.period = data.period;
     }

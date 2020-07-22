@@ -65,4 +65,9 @@ ngx-cron-input {
   &.invalid {
     border: 1px solid red;
   }
+  p.invalid-expression {
+    font-size: 12px;
+    color: #909cb4;
+    font-weight: 100;
+  }
 }
