@@ -35,6 +35,21 @@ Add the `ngx-cron` component to your page:
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Release
+
+- Checkout master (`git checkout master`)
+- Pull master (`git pull`)
+- Run tests (`npm test`)
+- Examine log to determine next version (X.Y.Z)
+- Run `git checkout -b release/X.Y.Z`
+- Update version in `projects/swimlane/ngx-cron/package.json`
+- Run `git commit -am "(release): X.Y.Z"`
+- Run `git tag X.Y.Z`
+- Run `git push origin HEAD --tags`
+- Run `npm run publish:lib`
+- Run `npm run deploy`
+- Submit PR
+
 ## Credits
 
 `ngx-cron` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
