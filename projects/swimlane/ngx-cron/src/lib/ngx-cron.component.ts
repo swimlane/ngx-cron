@@ -23,6 +23,7 @@ export class NgxCronComponent implements OnChanges {
     this.setCron(val);
     this._cron = val;
     this.cronChange.emit(this._cron);
+    this.invalidState.emit(this.invalid);
   }
   get cron(): string {
     return this._cron;
@@ -68,6 +69,7 @@ export class NgxCronComponent implements OnChanges {
   invalid = false;
 
   @Output() cronChange: EventEmitter<any> = new EventEmitter();
+  @Output() invalidState: EventEmitter<any> = new EventEmitter();
 
   get description() {
     return this.cronData.description;
@@ -111,6 +113,7 @@ export class NgxCronComponent implements OnChanges {
     this._cron = this.getCron();
     this.setDescription(this._cron);
     this.cronChange.emit(this._cron);
+    this.invalidState.emit(this.invalid);
   }
 
   private setDescription(cron: string) {
