@@ -44,6 +44,9 @@ export class NgxCronComponent implements OnChanges {
     this._disabled = val;
   }
 
+  @Input()
+  timezone = 'utc';
+
   periods = NgxCronService.PERIODKEYS;
   dows = NgxCronService.DOWS;
   months = NgxCronService.MONTHS;
