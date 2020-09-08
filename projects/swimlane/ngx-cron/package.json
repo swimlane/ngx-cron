@@ -2,8 +2,8 @@
   "name": "@swimlane/ngx-cron",
   "version": "1.2.2",
   "peerDependencies": {
-    "@angular/common": ">9.1.11",
-    "@angular/core": ">9.1.11",
+    "@angular/common": ">=10.0.0",
+    "@angular/core": ">=10.0.0",
     "@swimlane/ngx-ui": ">29.1.0"
   },
   "dependencies": {
