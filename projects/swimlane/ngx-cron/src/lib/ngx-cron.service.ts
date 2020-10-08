@@ -100,12 +100,16 @@ export class NgxCronService {
 
   static PERIODKEYS = Object.keys(Period) as Period[];
 
-  static MIDNIGHT = moment.utc([1990, 0, 1, 0, 0, 0]);
-
   private expressionDescriptorOptions = {
     locale: 'en',
     throwExceptionOnParseError: true
   };
+
+  private timezone = 'utc';
+
+  getMidnight() {
+    return moment.tz([1990, 0, 1, 0, 0, 0], this.timezone);
+  }
 
   toString(cron: string) {
     const e: any = new ExpressionDescriptor(cron, this.expressionDescriptorOptions);
@@ -179,7 +183,7 @@ export class NgxCronService {
       case 'Weekly':
         dow = Weekday[cron.weekday];
       case 'Daily':
-        cron.time = cron.time || NgxCronService.MIDNIGHT;
+        cron.time = cron.time || this.getMidnight();
         min = cron.time.minutes();
         hour = cron.time.hours();
         break;
@@ -204,6 +208,10 @@ export class NgxCronService {
       r.unshift(seconds);
     }
     return r.join(' ');
+  }
+
+  setTimezone(timezone: string) {
+    this.timezone = timezone;
   }
 
   private validate(data: any): boolean {
@@ -280,7 +288,7 @@ export class NgxCronService {
     const s = this.getSeconds(expressionParts);
     const h = this.getHour(expressionParts);
     const m = this.getMin(expressionParts);
-    return typeof h === 'number' && typeof m === 'number' ? moment.utc([1990, 1, 1, h, m, s || 0]) : null;
+    return typeof h === 'number' && typeof m === 'number' ? moment.tz([1990, 1, 1, h, m, s || 0], this.timezone) : null;
   }
 
   private getMonth(expressionParts: string[]): keyof typeof Month {
