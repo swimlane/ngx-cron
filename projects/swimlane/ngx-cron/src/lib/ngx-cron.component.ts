@@ -9,6 +9,8 @@ import {
   SimpleChanges
 } from '@angular/core';
 
+import moment from 'moment-timezone';
+
 import { NgxCronService, ICronData, Period, Weekday, Month } from './ngx-cron.service';
 
 @Component({
@@ -112,7 +114,7 @@ export class NgxCronComponent implements OnChanges {
   }
 
   cronDataChanged() {
-    this.cronData.time = this.cronData.time || NgxCronService.MIDNIGHT;
+    this.cronData.time = moment.utc(this.cronData.time) || NgxCronService.MIDNIGHT;
     this._cron = this.getCron();
     this.setDescription(this._cron);
     this.cronChange.emit(this._cron);

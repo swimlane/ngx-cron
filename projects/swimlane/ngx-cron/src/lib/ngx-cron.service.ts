@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { default as ExpressionDescriptor } from 'cronstrue';
+import moment from 'moment-timezone';
 
 export enum Period {
   Secondly = 'Secondly',
@@ -52,7 +53,7 @@ export interface ICronData {
   day?: number;
   month?: keyof typeof Month;
   daysMax?: number;
-  time?: Date;
+  time?: moment.Moment;
   weekday?: keyof typeof Weekday;
 }
 
@@ -99,7 +100,7 @@ export class NgxCronService {
 
   static PERIODKEYS = Object.keys(Period) as Period[];
 
-  static MIDNIGHT = new Date(1990, 1, 1, 0, 0);
+  static MIDNIGHT = moment.utc([1990, 0, 1, 0, 0, 0]);
 
   private expressionDescriptorOptions = {
     locale: 'en',
@@ -179,8 +180,8 @@ export class NgxCronService {
         dow = Weekday[cron.weekday];
       case 'Daily':
         cron.time = cron.time || NgxCronService.MIDNIGHT;
-        min = cron.time.getMinutes();
-        hour = cron.time.getHours();
+        min = cron.time.minutes();
+        hour = cron.time.hours();
         break;
       case 'Yearly':
         month = Month[cron.month] + 1;
@@ -188,8 +189,8 @@ export class NgxCronService {
           month = Month.January;
         }
       case 'Monthly':
-        min = cron.time.getMinutes();
-        hour = cron.time.getHours();
+        min = cron.time.minutes();
+        hour = cron.time.hours();
         if (cron.day == null) {
           cron.day = 0;
         }
@@ -275,11 +276,11 @@ export class NgxCronService {
     return typeof v === 'number' ? v : null;
   }
 
-  private getTime(expressionParts: string[]): Date {
+  private getTime(expressionParts: string[]): moment.Moment {
     const s = this.getSeconds(expressionParts);
     const h = this.getHour(expressionParts);
     const m = this.getMin(expressionParts);
-    return typeof h === 'number' && typeof m === 'number' ? new Date(1990, 1, 1, h, m, s || 0) : null;
+    return typeof h === 'number' && typeof m === 'number' ? moment.utc([1990, 1, 1, h, m, s || 0]) : null;
   }
 
   private getMonth(expressionParts: string[]): keyof typeof Month {
