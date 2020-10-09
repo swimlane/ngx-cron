@@ -43,6 +43,7 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app 
 - Examine log to determine next version (X.Y.Z)
 - Run `git checkout -b release/X.Y.Z`
 - Update version in `projects/swimlane/ngx-cron/package.json`
+- Update changelog in `projects/swimlane/ngx-cron/CHANGELOG.md`
 - Run `git commit -am "(release): X.Y.Z"`
 - Run `git tag X.Y.Z`
 - Run `git push origin HEAD --tags`
