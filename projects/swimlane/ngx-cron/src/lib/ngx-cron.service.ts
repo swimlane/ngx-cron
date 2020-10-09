@@ -100,6 +100,7 @@ export class NgxCronService {
 
   static PERIODKEYS = Object.keys(Period) as Period[];
 
+  static TIMEZONES = moment.tz.names();
   private expressionDescriptorOptions = {
     locale: 'en',
     throwExceptionOnParseError: true
