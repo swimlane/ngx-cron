@@ -21,7 +21,7 @@ ngx-cron-input {
   }
 
   .ngx-select-dropdown {
-    min-width: 300px;
+    min-width: 200px;
   }
 
   ngx-date-time {
@@ -69,5 +69,18 @@ ngx-cron-input {
     font-size: 12px;
     color: #909cb4;
     font-weight: 100;
+  }
+
+  .languages-container {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    .ngx-toggle {
+      margin: 0;
+      padding-bottom: 1rem;
+    }
+    .ngx-select {
+      padding-left: 1rem;
+    }
   }
 }

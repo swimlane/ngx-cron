@@ -8,7 +8,7 @@ import { NgxCronService } from 'projects/swimlane/ngx-cron/src/public-api';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  cron = '* * * * *';
+  cron = undefined;
   periods = Object.keys(NgxCronService.PERIODS);
   allowedPeriods = Object.keys(NgxCronService.PERIODS);
 }

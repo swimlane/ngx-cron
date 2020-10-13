@@ -1,4 +1,16 @@
 <div>
+  <div *ngIf="allowLanguages" class="languages-container">
+    <ngx-toggle [(ngModel)]="enableLanguages" label="Display cron descriptions in other language:"> </ngx-toggle>
+    <ngx-select
+      *ngIf="enableLanguages"
+      class="ngx-scroll"
+      [ngModel]="[lang]"
+      (change)="lang = $event[0]; cronDataChanged()"
+      [allowClear]="false"
+    >
+      <ngx-select-option *ngFor="let lang of languages" [name]="lang.name" [value]="lang.value"> </ngx-select-option>
+    </ngx-select>
+  </div>
   <div *ngIf="_allowedPeriods.length > 1">
     <ng-container *ngFor="let key of _allowedPeriods">
       <ngx-button
@@ -98,6 +110,7 @@
     <span *ngIf="cronData.period === 'Yearly'"
       >, only in
       <ngx-select
+        class="ngx-scroll"
         [filterable]="false"
         [ngModel]="[cronData.month]"
         [disabled]="disabled"
@@ -119,6 +132,15 @@
         <ngx-select-option *ngFor="let day of dows" [name]="day" [value]="day"></ngx-select-option>
       </ngx-select>
     </span>
-    <p class="invalid-expression" *ngIf="!cronData.valid && cronData.period !== 'Custom'">{{ cronData.description }}</p>
+    <p class="invalid-expression" *ngIf="!cronData.valid && cronData.period !== 'Custom'">
+      {{ cronData.description }}
+    </p>
+
+    <p
+      class="invalid-expression"
+      *ngIf="allowLanguages && enableLanguages && cronData.valid && cronData.period !== 'Custom'"
+    >
+      {{ cronData.description }}
+    </p>
   </div>
 </div>
