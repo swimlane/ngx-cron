@@ -93,6 +93,9 @@ export class NgxCronComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if ('timezone' in changes) {
+      this.cronService.setTimezone(this.timezone);
+    }
     if ('allowedPeriods' in changes || 'allowQuartz' in changes) {
       this._allowedPeriods = this.allowedPeriods.filter(k => {
         const i = this.periods.indexOf(k);
