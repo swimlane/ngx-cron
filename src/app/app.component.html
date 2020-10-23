@@ -1,4 +1,9 @@
-<ngx-section #inputsSection class="shadow" [sectionTitle]="'Inputs'" [sectionCollapsed]="true">
+<ngx-section
+  #inputsSection
+  class="shadow"
+  [sectionTitle]="'Inputs'"
+  [sectionCollapsed]="true"
+>
   <ngx-input
     *ngIf="!inputsSection.sectionCollapsed"
     #cronInput
@@ -16,16 +21,20 @@
     label="Available Periods"
     [(ngModel)]="allowedPeriods"
   >
-    <ngx-select-option [name]="period" [value]="period" *ngFor="let period of periods"></ngx-select-option>
+    <ngx-select-option
+      [name]="period"
+      [value]="period"
+      *ngFor="let period of periods"
+    ></ngx-select-option>
+  </ngx-select>
+
+  <ngx-select label="Available Timezones" [ngModel]="[timezone]" (ngModelChange)="timezone = $event[0]">
+    <ngx-select-option [name]="tz" [value]="tz" *ngFor="let tz of allowedTimezones"></ngx-select-option>
   </ngx-select>
 
   <ngx-toggle #disabledToggle label="Disabled"> </ngx-toggle>
 
   <ngx-toggle #disabledQuartz label="Disable Quartz"> </ngx-toggle>
-
-  <ngx-select label="Available Timezones" [ngModel]="[timezone]" (ngModelChange)="timezone = $event[0]">
-    <ngx-select-option [name]="tz" [value]="tz" *ngFor="let tz of allowedTimezones"></ngx-select-option>
-  </ngx-select>
 </ngx-section>
 
 <section class="component">
@@ -35,7 +44,6 @@
     [allowedPeriods]="allowedPeriods"
     [disabled]="disabledToggle?.value"
     [allowQuartz]="!disabledQuartz?.value"
-    [timezone]="timezone"
   ></ngx-cron-input>
 </section>
 
@@ -51,20 +59,40 @@
 <ngx-tabs>
   <ngx-tab title="Markup">
     <ngx-codemirror mode="htmlmixed" readOnly="true" ngNonBindable>
-      <![CDATA[ <ngx-cron-input #cronComp [(cron)]="cron" [allowedPeriods]="allowedPeriods" [disabled]="disabled"
-      [allowQuartz]="allowQuartz"> </ngx-cron-input>
+      <![CDATA[
+      <ngx-cron-input
+        #cronComp
+        [(cron)]="cron"
+        [allowedPeriods]="allowedPeriods"
+        [disabled]="disabled"
+        [allowQuartz]="allowQuartz"
+        [timezone]="timezone">
+      </ngx-cron-input>
 
-      {{ cron }}
-      {{ cronComp.description }}
+      {{cron}}
+      {{cronComp.description}}
       ]]>
     </ngx-codemirror>
   </ngx-tab>
   <ngx-tab title="TypeScript">
     <ngx-codemirror mode="javascript" readOnly="true" ngNonBindable>
-      <![CDATA[ import {Component} from '@angular/core'; import { CronService } from './ngx-cron.service'; @Component({
-      selector: 'cron-example', templateUrl: 'cron-example.html', styleUrls: ['cron-example.css'], }) export class
-      CronExample { cron = '* * * * *'; allowedPeriods = CronService.PERIODS; disabled = false; allowQuartz = true; }
-      ]]>
+    <![CDATA[
+    import {Component} from '@angular/core';
+    import { CronService } from './ngx-cron.service';
+
+    @Component({
+      selector: 'cron-example',
+      templateUrl: 'cron-example.html',
+      styleUrls: ['cron-example.css'],
+    })
+    export class CronExample {
+      cron = '* * * * *';
+      allowedPeriods = CronService.PERIODS;
+      disabled = false;
+      allowQuartz = true;
+      timezone = 'UTC';
+    }
+    ]]>
     </ngx-codemirror>
   </ngx-tab>
 </ngx-tabs>
