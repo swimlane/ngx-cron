@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { default as ExpressionDescriptor } from 'cronstrue';
+import { default as ExpressionDescriptor } from 'cronstrue/i18n';
+import { default as CronValidate } from 'cron-validate';
+import { cronValidateConfig } from './cron-validate-config';
 
 export enum Period {
   Secondly = 'Secondly',
@@ -97,6 +99,35 @@ export class NgxCronService {
     Custom: { cron: '* * * * *', regex: /^.*$/, quartz: false }
   };
 
+  static LANGUAGES = [
+    { name: 'English', value: 'en' },
+    { name: 'Spanish', value: 'es' },
+    { name: 'Catalan', value: 'ca' },
+    { name: 'Czech', value: 'cs' },
+    { name: 'Danish', value: 'da' },
+    { name: 'German', value: 'de' },
+    { name: 'Finnish', value: 'fi' },
+    { name: 'Farsi', value: 'fa' },
+    { name: 'Hebrew', value: 'he' },
+    { name: 'Italian', value: 'it' },
+    { name: 'Japanese', value: 'ja' },
+    { name: 'Korean', value: 'ko' },
+    { name: 'Norwegian', value: 'nb' },
+    { name: 'Dutch', value: 'nl' },
+    { name: 'Polish', value: 'pl' },
+    { name: 'Portuguese Brazil', value: 'pt_BR' },
+    { name: 'Romanian', value: 'ro' },
+    { name: 'Russian', value: 'ru' },
+    { name: 'Slovakian', value: 'sk' },
+    { name: 'Sloveanian', value: 'sl' },
+    { name: 'Swahili', value: 'sw' },
+    { name: 'Swedish', value: 'sv' },
+    { name: 'Turkish', value: 'tr' },
+    { name: 'Ukranian', value: 'uk' },
+    { name: 'Chinese (Simplified)', value: 'zh_CN' },
+    { name: 'Chinese (Traditional)', value: 'zh_TW' }
+  ];
+
   static PERIODKEYS = Object.keys(Period) as Period[];
 
   static MIDNIGHT = new Date(1990, 1, 1, 0, 0);
@@ -116,7 +147,8 @@ export class NgxCronService {
     }
   }
 
-  getCronData(cron: string, period: Period): ICronData {
+  getCronData(cron: string, period: Period, lang): ICronData {
+    this.expressionDescriptorOptions.locale = lang || 'en';
     const e: any = new ExpressionDescriptor(cron, this.expressionDescriptorOptions);
 
     let data: ICronData;
@@ -129,8 +161,9 @@ export class NgxCronService {
         isQuartz: e.expressionParts[0] !== ''
       };
     } catch (err) {
+      const { error: _err } = this.validateCronExpression(cron, false);
       return {
-        description: err || e.i18n.anErrorOccuredWhenGeneratingTheExpressionD(),
+        description: _err || e.i18n.anErrorOccuredWhenGeneratingTheExpressionD(),
         period: Period.Custom,
         valid: false,
         isQuartz: false
@@ -148,10 +181,11 @@ export class NgxCronService {
     data.daysMax = this.getDaysMax(e.expressionParts);
     data.time = this.getTime(e.expressionParts);
     data.isQuartz = e.expressionParts[0] !== '';
-    data.valid = this.validate(data);
+    const { isValid, error } = this.validate(data, e.expression);
+    data.valid = isValid;
 
     if (!data.valid) {
-      data.description = `${data.description} - Invalid expression`;
+      data.description = error;
     }
 
     return data;
@@ -205,35 +239,48 @@ export class NgxCronService {
     return r.join(' ');
   }
 
-  private validate(data: any): boolean {
-    if (data.min || data.minuteInterval > 59 || data.minuteInterval === 0) {
-      return false;
+  validateCronExpression(cron, isQuartz) {
+    const config = { ...cronValidateConfig };
+    config.override.useSeconds = isQuartz;
+
+    // coerce cron to string when undefined or null to prevent CronValidate from failing
+    if (cron == null) {
+      cron = '';
     }
-    if (data.hour > 24) {
-      return false;
+
+    const cronResult = CronValidate(cron, config);
+
+    if (cronResult.isError()) {
+      const [error] = cronResult.getError();
+      return { isValid: false, error };
+    }
+  }
+
+  private validate(data: any, cron) {
+    const err = this.validateCronExpression(cron, data.isQuartz);
+    if (err) return err;
+
+    if (data.minuteInterval > 59 || data.minuteInterval === 0 || data.minute > 59) {
+      const error = this.errorDescription('minutes', cron);
+      return { isValid: false, error };
     }
 
     if (data.secondInterval > 59 || data.secondInterval === 0) {
-      return false;
-    }
-
-    if (data.minute > 59) {
-      return false;
-    }
-
-    if (data.weekday === undefined) {
-      return false;
-    }
-
-    if (data.month === undefined) {
-      return false;
+      const error = this.errorDescription('seconds', cron);
+      return { isValid: false, error };
     }
 
     const daysMax = data.daysMax;
     if ((daysMax !== null && data.day > daysMax) || data.day > 31 || data.day === 0) {
-      return false;
+      const error = `Day of the month does not exist for current month selected (Input cron: ${cron})`;
+      return { isValid: false, error };
     }
-    return true;
+
+    return { isValid: true, error: null };
+  }
+
+  private errorDescription(period, cron) {
+    return `Number of ${period} should be between 1 and 59 (Input cron: ${cron})`;
   }
 
   private getPeriod(expression: string): Period {

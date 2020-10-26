@@ -1,9 +1,4 @@
-<ngx-section
-  #inputsSection
-  class="shadow"
-  [sectionTitle]="'Inputs'"
-  [sectionCollapsed]="true"
->
+<ngx-section #inputsSection class="shadow" [sectionTitle]="'Inputs'" [sectionCollapsed]="true">
   <ngx-input
     *ngIf="!inputsSection.sectionCollapsed"
     #cronInput
@@ -21,16 +16,21 @@
     label="Available Periods"
     [(ngModel)]="allowedPeriods"
   >
-    <ngx-select-option
-      [name]="period"
-      [value]="period"
-      *ngFor="let period of periods"
-    ></ngx-select-option>
+    <ngx-select-option [name]="period" [value]="period" *ngFor="let period of periods"></ngx-select-option>
   </ngx-select>
 
   <ngx-toggle #disabledToggle label="Disabled"> </ngx-toggle>
 
   <ngx-toggle #disabledQuartz label="Disable Quartz"> </ngx-toggle>
+
+  <ngx-select
+    class="ngx-scroll"
+    [ngModel]="[language]"
+    (change)="language = $event[0]"
+    [allowClear]="false"
+>
+  <ngx-select-option *ngFor="let lang of languages" [name]="lang.name" [value]="lang.value"> </ngx-select-option>
+</ngx-select>
 </ngx-section>
 
 <section class="component">
@@ -40,6 +40,7 @@
     [allowedPeriods]="allowedPeriods"
     [disabled]="disabledToggle?.value"
     [allowQuartz]="!disabledQuartz?.value"
+    [language]="language"
   ></ngx-cron-input>
 </section>
 
@@ -61,7 +62,8 @@
         [(cron)]="cron"
         [allowedPeriods]="allowedPeriods"
         [disabled]="disabled"
-        [allowQuartz]="allowQuartz">
+        [allowQuartz]="allowQuartz"
+        [language]="language">
       </ngx-cron-input>
 
       {{cron}}
@@ -85,6 +87,7 @@
       allowedPeriods = CronService.PERIODS;
       disabled = false;
       allowQuartz = true;
+      language = 'es';
     }
     ]]>
     </ngx-codemirror>

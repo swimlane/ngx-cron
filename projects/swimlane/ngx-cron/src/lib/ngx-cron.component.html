@@ -98,6 +98,7 @@
     <span *ngIf="cronData.period === 'Yearly'"
       >, only in
       <ngx-select
+        class="ngx-scroll"
         [filterable]="false"
         [ngModel]="[cronData.month]"
         [disabled]="disabled"
@@ -119,6 +120,15 @@
         <ngx-select-option *ngFor="let day of dows" [name]="day" [value]="day"></ngx-select-option>
       </ngx-select>
     </span>
-    <p class="invalid-expression" *ngIf="!cronData.valid && cronData.period !== 'Custom'">{{ cronData.description }}</p>
+    <p class="invalid-expression" *ngIf="!cronData.valid && cronData.period !== 'Custom'">
+      {{ cronData.description }}
+    </p>
+
+    <p
+      class="language-expression"
+      *ngIf="language !== 'en' && cronData.valid && cronData.period !== 'Custom'"
+    >
+      {{ cronData.description }}
+    </p>
   </div>
 </div>

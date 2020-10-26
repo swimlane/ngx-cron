@@ -11,4 +11,6 @@ export class AppComponent {
   cron = '* * * * *';
   periods = Object.keys(NgxCronService.PERIODS);
   allowedPeriods = Object.keys(NgxCronService.PERIODS);
+  languages = NgxCronService.LANGUAGES;
+  language = 'es';
 }

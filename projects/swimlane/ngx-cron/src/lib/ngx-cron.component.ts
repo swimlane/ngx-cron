@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 
 import { NgxCronService, ICronData, Period, Weekday, Month } from './ngx-cron.service';
+import { default as CronValidate } from 'cron-validate';
+import { cronValidateConfig } from './cron-validate-config';
 
 @Component({
   selector: 'ngx-cron-input',
@@ -34,6 +36,9 @@ export class NgxCronComponent implements OnChanges {
 
   @Input()
   allowQuartz = true;
+
+  @Input()
+  language = 'en';
 
   @HostBinding('attr.disabled')
   @Input()
@@ -85,7 +90,10 @@ export class NgxCronComponent implements OnChanges {
   constructor(public cronService: NgxCronService) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if ('allowedPeriods' in changes || 'allowQuartz' in changes) {
+    this._cron = this.getCron();
+    this.setDescription(this._cron);
+
+    if ('allowedPeriods' in changes || 'allowQuartz' in changes || 'language' in changes) {
       this._allowedPeriods = this.allowedPeriods.filter(k => {
         const i = this.periods.indexOf(k);
         if (i < 0) {
@@ -117,15 +125,15 @@ export class NgxCronComponent implements OnChanges {
   }
 
   private setDescription(cron: string) {
-    const c = this.cronService.getCronData(cron, this.cronData.period);
+    const c = this.cronService.getCronData(cron, this.cronData.period, this.language);
 
     if (this.cronData.period !== 'Custom') {
       this.cronData.period = c.period;
     }
 
     if (c.isQuartz && !this.allowQuartz) {
+      c.description = `Expected 5 values, but got 6. (Input cron: ${cron})`;
       c.valid = false;
-      c.description = 'Quartz not allowed';
     }
 
     this.cronData.description = c.description;
@@ -139,15 +147,15 @@ export class NgxCronComponent implements OnChanges {
    * Set the component state based on the cron
    */
   private setCron(cron: string) {
-    const data = this.cronService.getCronData(cron, this.cronData.period);
+    const data = this.cronService.getCronData(cron, this.cronData.period, this.language);
 
     if (this.cronData.period !== 'Custom') {
       this.cronData.period = data.period;
     }
 
     if (data.isQuartz && !this.allowQuartz) {
+      data.description = `Expected 5 values, but got 6. (Input cron: ${cron})`;
       data.valid = false;
-      data.description = 'Quartz not allowed';
     }
 
     // copy only defined to local state
