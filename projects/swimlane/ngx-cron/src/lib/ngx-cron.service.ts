@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { default as ExpressionDescriptor } from 'cronstrue/i18n';
 import { default as CronValidate } from 'cron-validate';
-import { cronValidateConfig } from './cron-validate-config';
 
 export enum Period {
   Secondly = 'Secondly',
@@ -128,6 +127,22 @@ export class NgxCronService {
     { name: 'Chinese (Traditional)', value: 'zh_TW' }
   ];
 
+  private cronValidateConfig = {
+    preset: 'default',
+    override: {
+      useSeconds: false
+    }
+  };
+
+  static CRON_VALIDATE_CONFIG_OVERRIDES = {
+    useLastDayOfMonth: true,
+    useLastDayOfWeek: true,
+    useAliases: true,
+    useNthWeekdayOfMonth: true,
+    useNearestWeekday: true,
+    useBlankDay: true
+  };
+
   static PERIODKEYS = Object.keys(Period) as Period[];
 
   static MIDNIGHT = new Date(1990, 1, 1, 0, 0);
@@ -147,7 +162,7 @@ export class NgxCronService {
     }
   }
 
-  getCronData(cron: string, period: Period, lang): ICronData {
+  getCronData(cron: string, period: Period, lang, configOverrides): ICronData {
     this.expressionDescriptorOptions.locale = lang || 'en';
     const e: any = new ExpressionDescriptor(cron, this.expressionDescriptorOptions);
 
@@ -161,7 +176,7 @@ export class NgxCronService {
         isQuartz: e.expressionParts[0] !== ''
       };
     } catch (err) {
-      const { error: _err } = this.validateCronExpression(cron, false);
+      const { error: _err } = this.validateCronExpression(cron, false, configOverrides);
       return {
         description: _err || e.i18n.anErrorOccuredWhenGeneratingTheExpressionD(),
         period: Period.Custom,
@@ -181,7 +196,7 @@ export class NgxCronService {
     data.daysMax = this.getDaysMax(e.expressionParts);
     data.time = this.getTime(e.expressionParts);
     data.isQuartz = e.expressionParts[0] !== '';
-    const { isValid, error } = this.validate(data, e.expression);
+    const { isValid, error } = this.validate(data, e.expression, configOverrides);
     data.valid = isValid;
 
     if (!data.valid) {
@@ -239,9 +254,10 @@ export class NgxCronService {
     return r.join(' ');
   }
 
-  validateCronExpression(cron, isQuartz) {
-    const config = { ...cronValidateConfig };
-    config.override.useSeconds = isQuartz;
+  validateCronExpression(cron, isQuartz, configOverrides) {
+    const config = this.cronValidateConfig;
+
+    config.override = { useSeconds: isQuartz, ...NgxCronService.CRON_VALIDATE_CONFIG_OVERRIDES, ...configOverrides };
 
     // coerce cron to string when undefined or null to prevent CronValidate from failing
     if (cron == null) {
@@ -256,8 +272,8 @@ export class NgxCronService {
     }
   }
 
-  private validate(data: any, cron) {
-    const err = this.validateCronExpression(cron, data.isQuartz);
+  private validate(data: any, cron, configOverrides) {
+    const err = this.validateCronExpression(cron, data.isQuartz, configOverrides);
     if (err) return err;
 
     if (data.minuteInterval > 59 || data.minuteInterval === 0 || data.minute > 59) {

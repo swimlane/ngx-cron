@@ -13,4 +13,5 @@ export class AppComponent {
   allowedPeriods = Object.keys(NgxCronService.PERIODS);
   languages = NgxCronService.LANGUAGES;
   language = 'es';
+  cronValidateConfigOverrides = NgxCronService.CRON_VALIDATE_CONFIG_OVERRIDES;
 }

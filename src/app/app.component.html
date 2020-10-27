@@ -41,6 +41,7 @@
     [disabled]="disabledToggle?.value"
     [allowQuartz]="!disabledQuartz?.value"
     [language]="language"
+    [cronValidateConfigOverrides]="cronValidateConfigOverrides"
   ></ngx-cron-input>
 </section>
 
@@ -63,7 +64,8 @@
         [allowedPeriods]="allowedPeriods"
         [disabled]="disabled"
         [allowQuartz]="allowQuartz"
-        [language]="language">
+        [language]="language"
+        [cronValidateConfigOverrides]="cronValidateConfigOverrides">
       </ngx-cron-input>
 
       {{cron}}
@@ -75,7 +77,7 @@
     <ngx-codemirror mode="javascript" readOnly="true" ngNonBindable>
     <![CDATA[
     import {Component} from '@angular/core';
-    import { CronService } from './ngx-cron.service';
+    import { NgxCronService } from './ngx-cron.service';
 
     @Component({
       selector: 'cron-example',
@@ -84,10 +86,18 @@
     })
     export class CronExample {
       cron = '* * * * *';
-      allowedPeriods = CronService.PERIODS;
+      allowedPeriods = NgxCronService.PERIODS;
       disabled = false;
       allowQuartz = true;
       language = 'es';
+      cronValidateConfigOverrides = {
+        useLastDayOfMonth: true,
+        useLastDayOfWeek: true,
+        useAliases: true,
+        useNthWeekdayOfMonth: true,
+        useNearestWeekday: true,
+        useBlankDay: true
+      };
     }
     ]]>
     </ngx-codemirror>

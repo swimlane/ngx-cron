@@ -10,8 +10,6 @@ import {
 } from '@angular/core';
 
 import { NgxCronService, ICronData, Period, Weekday, Month } from './ngx-cron.service';
-import { default as CronValidate } from 'cron-validate';
-import { cronValidateConfig } from './cron-validate-config';
 
 @Component({
   selector: 'ngx-cron-input',
@@ -39,6 +37,9 @@ export class NgxCronComponent implements OnChanges {
 
   @Input()
   language = 'en';
+
+  @Input()
+  cronValidateConfigOverrides = NgxCronService.CRON_VALIDATE_CONFIG_OVERRIDES;
 
   @HostBinding('attr.disabled')
   @Input()
@@ -125,14 +126,14 @@ export class NgxCronComponent implements OnChanges {
   }
 
   private setDescription(cron: string) {
-    const c = this.cronService.getCronData(cron, this.cronData.period, this.language);
+    const c = this.cronService.getCronData(cron, this.cronData.period, this.language, this.cronValidateConfigOverrides);
 
     if (this.cronData.period !== 'Custom') {
       this.cronData.period = c.period;
     }
 
     if (c.isQuartz && !this.allowQuartz) {
-      const { error, isValid } = this.cronService.validateCronExpression(cron, false);
+      const { error, isValid } = this.cronService.validateCronExpression(cron, false, this.cronValidateConfigOverrides);
       c.description = error;
       c.valid = isValid;
     }
@@ -148,14 +149,19 @@ export class NgxCronComponent implements OnChanges {
    * Set the component state based on the cron
    */
   private setCron(cron: string) {
-    const data = this.cronService.getCronData(cron, this.cronData.period, this.language);
+    const data = this.cronService.getCronData(
+      cron,
+      this.cronData.period,
+      this.language,
+      this.cronValidateConfigOverrides
+    );
 
     if (this.cronData.period !== 'Custom') {
       this.cronData.period = data.period;
     }
 
     if (data.isQuartz && !this.allowQuartz) {
-      const { error, isValid } = this.cronService.validateCronExpression(cron, false);
+      const { error, isValid } = this.cronService.validateCronExpression(cron, false, this.cronValidateConfigOverrides);
       data.description = error;
       data.valid = isValid;
     }
