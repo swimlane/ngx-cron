@@ -132,8 +132,9 @@ export class NgxCronComponent implements OnChanges {
     }
 
     if (c.isQuartz && !this.allowQuartz) {
-      c.description = `Expected 5 values, but got 6. (Input cron: ${cron})`;
-      c.valid = false;
+      const { error, isValid } = this.cronService.validateCronExpression(cron, false);
+      c.description = error;
+      c.valid = isValid;
     }
 
     this.cronData.description = c.description;
@@ -154,8 +155,9 @@ export class NgxCronComponent implements OnChanges {
     }
 
     if (data.isQuartz && !this.allowQuartz) {
-      data.description = `Expected 5 values, but got 6. (Input cron: ${cron})`;
-      data.valid = false;
+      const { error, isValid } = this.cronService.validateCronExpression(cron, false);
+      data.description = error;
+      data.valid = isValid;
     }
 
     // copy only defined to local state
