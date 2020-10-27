@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.4 (2020-10-23)
+## UNRELEASED
 
 - Breaking: Added 'timezone' input. It sets the timezone for the 'current' button on the datetime input.
 
