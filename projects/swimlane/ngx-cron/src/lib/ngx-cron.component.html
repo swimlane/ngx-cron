@@ -79,7 +79,13 @@
       "
     >
       At
-      <ngx-date-time [(ngModel)]="cronData.time" (change)="cronDataChanged()" inputType="time" [disabled]="disabled">
+      <ngx-date-time
+        [(ngModel)]="cronData.time"
+        (change)="cronDataChanged()"
+        inputType="time"
+        [disabled]="disabled"
+        [timezone]="timezone"
+      >
       </ngx-date-time>
     </span>
     <span *ngIf="cronData.period === 'Monthly' || cronData.period === 'Yearly'"
