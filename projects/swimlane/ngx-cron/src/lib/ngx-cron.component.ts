@@ -9,6 +9,8 @@ import {
   SimpleChanges
 } from '@angular/core';
 
+import moment from 'moment-timezone';
+
 import { NgxCronService, ICronData, Period, Weekday, Month } from './ngx-cron.service';
 
 @Component({
@@ -50,26 +52,13 @@ export class NgxCronComponent implements OnChanges {
     this._disabled = val;
   }
 
+  @Input()
+  timezone = 'utc';
+
   periods = NgxCronService.PERIODKEYS;
   dows = NgxCronService.DOWS;
   months = NgxCronService.MONTHS;
   predefined = NgxCronService.PERIODS;
-
-  cronData: ICronData = {
-    description: this.cronService.toString('0 * * * *'),
-    period: undefined,
-    valid: true,
-    seconds: 0,
-    secondInterval: 1,
-    minute: 0,
-    minuteInterval: 1,
-    weekday: 'Sunday',
-    day: 1,
-    month: 'January',
-    time: NgxCronService.MIDNIGHT,
-    isQuartz: false,
-    daysMax: 31
-  };
 
   @HostBinding('class.invalid')
   invalid = false;
@@ -85,14 +74,37 @@ export class NgxCronComponent implements OnChanges {
 
   disableCustomInput = false;
 
+  cronData: ICronData;
+
   private _cron = '0 * * * *';
   private _disabled = false;
 
-  constructor(public cronService: NgxCronService) {}
+  constructor(public cronService: NgxCronService) {
+    this.cronService.setTimezone(this.timezone);
+    this.cronData = {
+      description: this.cronService.toString('0 * * * *'),
+      period: undefined,
+      valid: true,
+      seconds: 0,
+      secondInterval: 1,
+      minute: 0,
+      minuteInterval: 1,
+      weekday: 'Sunday',
+      day: 1,
+      month: 'January',
+      time: cronService.getMidnight(),
+      isQuartz: false,
+      daysMax: 31
+    };
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     this._cron = this.getCron();
     this.setDescription(this._cron);
+
+    if ('timezone' in changes) {
+      this.cronService.setTimezone(this.timezone);
+    }
 
     if ('allowedPeriods' in changes || 'allowQuartz' in changes || 'language' in changes) {
       this._allowedPeriods = this.allowedPeriods.filter(k => {
@@ -118,7 +130,7 @@ export class NgxCronComponent implements OnChanges {
   }
 
   cronDataChanged() {
-    this.cronData.time = this.cronData.time || NgxCronService.MIDNIGHT;
+    this.cronData.time = moment.tz(this.cronData.time, this.timezone) || this.cronService.getMidnight();
     this._cron = this.getCron();
     this.setDescription(this._cron);
     this.cronChange.emit(this._cron);
