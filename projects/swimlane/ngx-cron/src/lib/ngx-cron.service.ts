@@ -179,7 +179,7 @@ export class NgxCronService {
       const { error: _err } = this.validateCronExpression(cron, false, configOverrides);
       return {
         description: _err || e.i18n.anErrorOccuredWhenGeneratingTheExpressionD(),
-        period: Period.Custom,
+        period: this.getPeriod(e.expression),
         valid: false,
         isQuartz: false
       };
