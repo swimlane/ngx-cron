@@ -19,6 +19,16 @@
     <ngx-select-option [name]="period" [value]="period" *ngFor="let period of periods"></ngx-select-option>
   </ngx-select>
 
+  <ngx-select
+    label="Available languages"
+    class="ngx-scroll"
+    [ngModel]="[language]"
+    (change)="language = $event[0]"
+    [allowClear]="false"
+  >
+  <ngx-select-option *ngFor="let lang of languages" [name]="lang.name" [value]="lang.value"> </ngx-select-option>
+</ngx-select>
+
   <ngx-select label="Available Timezones" [ngModel]="[timezone]" (ngModelChange)="timezone = $event[0]">
     <ngx-select-option [name]="tz" [value]="tz" *ngFor="let tz of allowedTimezones"></ngx-select-option>
   </ngx-select>
@@ -27,14 +37,6 @@
 
   <ngx-toggle #disabledQuartz label="Disable Quartz"> </ngx-toggle>
 
-  <ngx-select
-    class="ngx-scroll"
-    [ngModel]="[language]"
-    (change)="language = $event[0]"
-    [allowClear]="false"
->
-  <ngx-select-option *ngFor="let lang of languages" [name]="lang.name" [value]="lang.value"> </ngx-select-option>
-</ngx-select>
 </ngx-section>
 
 <section class="component">
@@ -69,7 +71,7 @@
         [disabled]="disabled"
         [allowQuartz]="allowQuartz"
         [language]="language"
-        [cronValidateConfigOverrides]="cronValidateConfigOverrides">
+        [cronValidateConfigOverrides]="cronValidateConfigOverrides"
         [timezone]="timezone">
       </ngx-cron-input>
 
@@ -95,6 +97,7 @@
       disabled = false;
       allowQuartz = true;
       language = 'es';
+      timezone = 'UTC';
       cronValidateConfigOverrides = {
         useLastDayOfMonth: true,
         useLastDayOfWeek: true,
@@ -103,7 +106,6 @@
         useNearestWeekday: true,
         useBlankDay: true
       };
-      timezone = 'UTC';
     }
     ]]>
     </ngx-codemirror>
