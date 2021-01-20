@@ -1,9 +1,4 @@
-<ngx-section
-  #inputsSection
-  class="shadow"
-  [sectionTitle]="'Inputs'"
-  [sectionCollapsed]="true"
->
+<ngx-section #inputsSection class="shadow" [sectionTitle]="'Inputs'" [sectionCollapsed]="true">
   <ngx-input
     *ngIf="!inputsSection.sectionCollapsed"
     #cronInput
@@ -21,12 +16,18 @@
     label="Available Periods"
     [(ngModel)]="allowedPeriods"
   >
-    <ngx-select-option
-      [name]="period"
-      [value]="period"
-      *ngFor="let period of periods"
-    ></ngx-select-option>
+    <ngx-select-option [name]="period" [value]="period" *ngFor="let period of periods"></ngx-select-option>
   </ngx-select>
+
+  <ngx-select
+    label="Available languages"
+    class="ngx-scroll"
+    [ngModel]="[language]"
+    (change)="language = $event[0]"
+    [allowClear]="false"
+  >
+  <ngx-select-option *ngFor="let lang of languages" [name]="lang.name" [value]="lang.value"> </ngx-select-option>
+</ngx-select>
 
   <ngx-select label="Available Timezones" [ngModel]="[timezone]" (ngModelChange)="timezone = $event[0]">
     <ngx-select-option [name]="tz" [value]="tz" *ngFor="let tz of allowedTimezones"></ngx-select-option>
@@ -35,6 +36,7 @@
   <ngx-toggle #disabledToggle label="Disabled"> </ngx-toggle>
 
   <ngx-toggle #disabledQuartz label="Disable Quartz"> </ngx-toggle>
+
 </ngx-section>
 
 <section class="component">
@@ -44,6 +46,8 @@
     [allowedPeriods]="allowedPeriods"
     [disabled]="disabledToggle?.value"
     [allowQuartz]="!disabledQuartz?.value"
+    [language]="language"
+    [cronValidateConfigOverrides]="cronValidateConfigOverrides"
   ></ngx-cron-input>
 </section>
 
@@ -66,6 +70,8 @@
         [allowedPeriods]="allowedPeriods"
         [disabled]="disabled"
         [allowQuartz]="allowQuartz"
+        [language]="language"
+        [cronValidateConfigOverrides]="cronValidateConfigOverrides"
         [timezone]="timezone">
       </ngx-cron-input>
 
@@ -78,7 +84,7 @@
     <ngx-codemirror mode="javascript" readOnly="true" ngNonBindable>
     <![CDATA[
     import {Component} from '@angular/core';
-    import { CronService } from './ngx-cron.service';
+    import { NgxCronService } from './ngx-cron.service';
 
     @Component({
       selector: 'cron-example',
@@ -87,10 +93,19 @@
     })
     export class CronExample {
       cron = '* * * * *';
-      allowedPeriods = CronService.PERIODS;
+      allowedPeriods = NgxCronService.PERIODS;
       disabled = false;
       allowQuartz = true;
+      language = 'es';
       timezone = 'UTC';
+      cronValidateConfigOverrides = {
+        useLastDayOfMonth: true,
+        useLastDayOfWeek: true,
+        useAliases: true,
+        useNthWeekdayOfMonth: true,
+        useNearestWeekday: true,
+        useBlankDay: true
+      };
     }
     ]]>
     </ngx-codemirror>

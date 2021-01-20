@@ -37,6 +37,12 @@ export class NgxCronComponent implements OnChanges {
   @Input()
   allowQuartz = true;
 
+  @Input()
+  language = 'en';
+
+  @Input()
+  cronValidateConfigOverrides = NgxCronService.CRON_VALIDATE_CONFIG_OVERRIDES;
+
   @HostBinding('attr.disabled')
   @Input()
   get disabled() {
@@ -93,10 +99,14 @@ export class NgxCronComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this._cron = this.getCron();
+    this.setDescription(this._cron);
+
     if ('timezone' in changes) {
       this.cronService.setTimezone(this.timezone);
     }
-    if ('allowedPeriods' in changes || 'allowQuartz' in changes) {
+
+    if ('allowedPeriods' in changes || 'allowQuartz' in changes || 'language' in changes) {
       this._allowedPeriods = this.allowedPeriods.filter(k => {
         const i = this.periods.indexOf(k);
         if (i < 0) {
@@ -128,15 +138,16 @@ export class NgxCronComponent implements OnChanges {
   }
 
   private setDescription(cron: string) {
-    const c = this.cronService.getCronData(cron, this.cronData.period);
+    const c = this.cronService.getCronData(cron, this.cronData.period, this.language, this.cronValidateConfigOverrides);
 
     if (this.cronData.period !== 'Custom') {
       this.cronData.period = c.period;
     }
 
     if (c.isQuartz && !this.allowQuartz) {
-      c.valid = false;
-      c.description = 'Quartz not allowed';
+      const { error, isValid } = this.cronService.validateCronExpression(cron, false, this.cronValidateConfigOverrides);
+      c.description = error;
+      c.valid = isValid;
     }
 
     this.cronData.description = c.description;
@@ -150,15 +161,21 @@ export class NgxCronComponent implements OnChanges {
    * Set the component state based on the cron
    */
   private setCron(cron: string) {
-    const data = this.cronService.getCronData(cron, this.cronData.period);
+    const data = this.cronService.getCronData(
+      cron,
+      this.cronData.period,
+      this.language,
+      this.cronValidateConfigOverrides
+    );
 
     if (this.cronData.period !== 'Custom') {
       this.cronData.period = data.period;
     }
 
     if (data.isQuartz && !this.allowQuartz) {
-      data.valid = false;
-      data.description = 'Quartz not allowed';
+      const { error, isValid } = this.cronService.validateCronExpression(cron, false, this.cronValidateConfigOverrides);
+      data.description = error;
+      data.valid = isValid;
     }
 
     // copy only defined to local state

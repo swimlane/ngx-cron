@@ -11,6 +11,9 @@ export class AppComponent {
   cron = '* * * * *';
   periods = Object.keys(NgxCronService.PERIODS);
   allowedPeriods = Object.keys(NgxCronService.PERIODS);
+  languages = NgxCronService.LANGUAGES;
+  language = 'es';
+  cronValidateConfigOverrides = NgxCronService.CRON_VALIDATE_CONFIG_OVERRIDES;
   allowedTimezones = NgxCronService.TIMEZONES;
   timezone = 'UTC';
 }

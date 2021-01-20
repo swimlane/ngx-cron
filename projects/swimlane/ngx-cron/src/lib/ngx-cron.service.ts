@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { default as ExpressionDescriptor } from 'cronstrue';
+import ExpressionDescriptor from 'cronstrue/i18n';
+import CronValidate from 'cron-validate';
 import moment from 'moment-timezone';
 
 export enum Period {
@@ -57,6 +58,9 @@ export interface ICronData {
   weekday?: keyof typeof Weekday;
 }
 
+const MAX_MINUTES = 59;
+const MAX_DAYS_OF_MONTH = 31;
+
 // @dynamic
 @Injectable()
 export class NgxCronService {
@@ -98,6 +102,51 @@ export class NgxCronService {
     Custom: { cron: '* * * * *', regex: /^.*$/, quartz: false }
   };
 
+  static LANGUAGES = [
+    { name: 'English', value: 'en' },
+    { name: 'Spanish', value: 'es' },
+    { name: 'Catalan', value: 'ca' },
+    { name: 'Czech', value: 'cs' },
+    { name: 'Danish', value: 'da' },
+    { name: 'German', value: 'de' },
+    { name: 'Finnish', value: 'fi' },
+    { name: 'Farsi', value: 'fa' },
+    { name: 'Hebrew', value: 'he' },
+    { name: 'Italian', value: 'it' },
+    { name: 'Japanese', value: 'ja' },
+    { name: 'Korean', value: 'ko' },
+    { name: 'Norwegian', value: 'nb' },
+    { name: 'Dutch', value: 'nl' },
+    { name: 'Polish', value: 'pl' },
+    { name: 'Portuguese Brazil', value: 'pt_BR' },
+    { name: 'Romanian', value: 'ro' },
+    { name: 'Russian', value: 'ru' },
+    { name: 'Slovakian', value: 'sk' },
+    { name: 'Sloveanian', value: 'sl' },
+    { name: 'Swahili', value: 'sw' },
+    { name: 'Swedish', value: 'sv' },
+    { name: 'Turkish', value: 'tr' },
+    { name: 'Ukranian', value: 'uk' },
+    { name: 'Chinese (Simplified)', value: 'zh_CN' },
+    { name: 'Chinese (Traditional)', value: 'zh_TW' }
+  ];
+
+  private cronValidateConfig = {
+    preset: 'default',
+    override: {
+      useSeconds: false
+    }
+  };
+
+  static CRON_VALIDATE_CONFIG_OVERRIDES = {
+    useLastDayOfMonth: true,
+    useLastDayOfWeek: true,
+    useAliases: true,
+    useNthWeekdayOfMonth: true,
+    useNearestWeekday: true,
+    useBlankDay: true
+  };
+
   static PERIODKEYS = Object.keys(Period) as Period[];
 
   static TIMEZONES = moment.tz.names();
@@ -122,7 +171,13 @@ export class NgxCronService {
     }
   }
 
-  getCronData(cron: string, period: Period): ICronData {
+  getCronData(
+    cron: string,
+    period: Period,
+    lang: string,
+    configOverrides: typeof NgxCronService.CRON_VALIDATE_CONFIG_OVERRIDES
+  ): ICronData {
+    this.expressionDescriptorOptions.locale = lang || 'en';
     const e: any = new ExpressionDescriptor(cron, this.expressionDescriptorOptions);
 
     let data: ICronData;
@@ -136,8 +191,10 @@ export class NgxCronService {
       };
     } catch (err) {
       return {
-        description: err || e.i18n.anErrorOccuredWhenGeneratingTheExpressionD(),
-        period: Period.Custom,
+        description:
+          this.validateCronExpression(cron, false, configOverrides)?.error ||
+          e.i18n.anErrorOccuredWhenGeneratingTheExpressionD(),
+        period: period === Period.Custom ? Period.Custom : this.getPeriod(e.expression),
         valid: false,
         isQuartz: false
       };
@@ -154,10 +211,11 @@ export class NgxCronService {
     data.daysMax = this.getDaysMax(e.expressionParts);
     data.time = this.getTime(e.expressionParts);
     data.isQuartz = e.expressionParts[0] !== '';
-    data.valid = this.validate(data);
+    const { isValid, error } = this.validate(data, e.expression, configOverrides);
+    data.valid = isValid;
 
     if (!data.valid) {
-      data.description = `${data.description} - Invalid expression`;
+      data.description = error;
     }
 
     return data;
@@ -215,35 +273,51 @@ export class NgxCronService {
     this.timezone = timezone;
   }
 
-  private validate(data: any): boolean {
-    if (data.min || data.minuteInterval > 59 || data.minuteInterval === 0) {
-      return false;
-    }
-    if (data.hour > 24) {
-      return false;
+  validateCronExpression(cron, isQuartz, configOverrides) {
+    this.cronValidateConfig.override = {
+      useSeconds: isQuartz,
+      ...NgxCronService.CRON_VALIDATE_CONFIG_OVERRIDES,
+      ...configOverrides
+    };
+
+    // coerce cron to string when undefined or null to prevent CronValidate from failing
+    if (cron == null) {
+      cron = '';
     }
 
-    if (data.secondInterval > 59 || data.secondInterval === 0) {
-      return false;
+    const cronResult = CronValidate(cron, this.cronValidateConfig);
+
+    if (cronResult.isError()) {
+      const [error] = cronResult.getError();
+      return { isValid: false, error };
+    }
+  }
+
+  private validate(data: any, cron, configOverrides) {
+    const err = this.validateCronExpression(cron, data.isQuartz, configOverrides);
+    if (err) return err;
+
+    if (data.minuteInterval > MAX_MINUTES || data.minuteInterval === 0 || data.minute > MAX_MINUTES) {
+      const error = this.secondOrMinutesErrorDescription('minutes', cron);
+      return { isValid: false, error };
     }
 
-    if (data.minute > 59) {
-      return false;
-    }
-
-    if (data.weekday === undefined) {
-      return false;
-    }
-
-    if (data.month === undefined) {
-      return false;
+    if (data.secondInterval > MAX_MINUTES || data.secondInterval === 0) {
+      const error = this.secondOrMinutesErrorDescription('seconds', cron);
+      return { isValid: false, error };
     }
 
     const daysMax = data.daysMax;
-    if ((daysMax !== null && data.day > daysMax) || data.day > 31 || data.day === 0) {
-      return false;
+    if ((daysMax !== null && data.day > daysMax) || data.day > MAX_DAYS_OF_MONTH || data.day === 0) {
+      const error = `Day of the month does not exist for current month selected (Input cron: ${cron})`;
+      return { isValid: false, error };
     }
-    return true;
+
+    return { isValid: true, error: null };
+  }
+
+  private secondOrMinutesErrorDescription(period: 'seconds' | 'minutes', cron) {
+    return `Number of ${period} should be between 1 and 59 (Input cron: ${cron})`;
   }
 
   private getPeriod(expression: string): Period {
