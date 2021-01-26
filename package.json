@@ -35,7 +35,7 @@
     "@angular/platform-browser": "~10.1.0",
     "@angular/platform-browser-dynamic": "~10.1.0",
     "@angular/router": "~10.1.0",
-    "@swimlane/ngx-ui": "^29.1.0",
+    "@swimlane/ngx-ui": "^34.1.0",
     "codemirror": "^5.49.2",
     "cron-validate": "^1.4.0",
     "cronstrue": "^1.103.0",
