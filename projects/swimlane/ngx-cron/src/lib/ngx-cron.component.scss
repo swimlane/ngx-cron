@@ -31,6 +31,7 @@ ngx-cron-input {
     width: 90px;
     min-width: initial;
     vertical-align: middle;
+    height: 25px;
 
     .ngx-input {
       margin-top: 0;
@@ -65,7 +66,6 @@ ngx-cron-input {
 
     .date-selection {
       display: inline-block;
-      height: 30px;
       align-items: baseline;
     }
   }
@@ -82,5 +82,9 @@ ngx-cron-input {
 
   p.language-expression {
     margin-top: 0;
+
+    &.hint-margin-top {
+      margin-top: 1em;
+    }
   }
 }

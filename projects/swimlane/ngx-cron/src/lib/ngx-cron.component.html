@@ -133,7 +133,11 @@
       {{ cronData.description }}
     </p>
 
-    <p class="language-expression" *ngIf="language !== 'en' && cronData.valid && cronData.period !== 'Custom'">
+    <p
+      class="language-expression"
+      [ngClass]="{ 'hint-margin-top': cronData.period === 'Daily' }"
+      *ngIf="language !== 'en' && cronData.valid && cronData.period !== 'Custom'"
+    >
       {{ cronData.description }}
     </p>
   </div>
