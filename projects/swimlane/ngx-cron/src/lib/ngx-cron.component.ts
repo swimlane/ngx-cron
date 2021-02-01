@@ -137,6 +137,21 @@ export class NgxCronComponent implements OnChanges {
     this.invalidState.emit(this.invalid);
   }
 
+  onBlurDateTimeChanged(event: any) {
+    const dateTime = event?.currentTarget?.value;
+    if (!dateTime) {
+      this.cronData.time = this.cronService.getMidnight();
+    }
+    this.cronDataChanged();
+  }
+
+  onDateTimeSelected(dateTime: Date) {
+    if (!dateTime) {
+      this.cronData.time = this.cronService.getMidnight();
+    }
+    this.cronDataChanged();
+  }
+
   private setDescription(cron: string) {
     const c = this.cronService.getCronData(cron, this.cronData.period, this.language, this.cronValidateConfigOverrides);
 
