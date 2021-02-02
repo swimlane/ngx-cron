@@ -93,4 +93,31 @@ describe('NgxCronComponent', () => {
     expect(selections.textContent).toContain('Every 4 seconds, on day 30 of the month');
     expect(component.description).toContain('Every 4 seconds, on day 30 of the month');
   });
+
+  it('should detect invalidad minutes', () => {
+    component.cron = '100 * * * *';
+    fixture.detectChanges();
+    expect(selections.textContent).toContain(
+      "Number 100 of minutes field is bigger than upper limit '59' (Input cron: '100 * * * *')"
+    );
+    expect(component.description).toContain(
+      "Number 100 of minutes field is bigger than upper limit '59' (Input cron: '100 * * * *')"
+    );
+  });
+
+  it('should detect invalidad cron', () => {
+    component.cron = 'd m y m s';
+    fixture.detectChanges();
+    expect(selections.textContent).toContain("Element 'd of minutes field is invalid. (Input cron: 'd m y m s')");
+    expect(component.description).toContain("Element 'd of minutes field is invalid. (Input cron: 'd m y m s')");
+  });
+
+  it('should show description in spanish', () => {
+    component.language = 'es';
+    component.cron = '0 * * * *';
+    fixture.detectChanges();
+    expect(selections.textContent).toContain('At');
+    expect(selections.textContent).toContain('minutes past the hour');
+    expect(component.description).toContain('Cada hora');
+  });
 });
