@@ -1,7 +1,7 @@
 describe('ngx-cron demo', () => {
   before(() => {
     cy.visit('/');
-    // cy.get('.page-loader').should('not.exist', { timeout: 20000 });
+    cy.get('.loader').should('not.exist', { timeout: 20000 });
   });
 
   it('loads', () => {
