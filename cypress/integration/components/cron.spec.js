@@ -1,5 +1,3 @@
-const { find } = require('tslint/lib/utils');
-
 describe('Cron', () => {
   before(() => {
     cy.visit('/');
