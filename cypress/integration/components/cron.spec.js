@@ -1,5 +1,3 @@
-const { get } = require('http');
-
 describe('Cron', () => {
   before(() => {
     cy.visit('/');
