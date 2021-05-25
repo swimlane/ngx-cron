@@ -1,7 +1,10 @@
+const { get } = require('http');
+
 describe('Cron', () => {
   before(() => {
     cy.visit('/');
     cy.get('.loader').should('not.exist', { timeout: 20000 });
+    cy.get('.ngx-section-toggle > .icon-arrow-right').click();
   });
 
   describe('Periods', () => {
@@ -91,6 +94,50 @@ describe('Cron', () => {
           cy.get('li.ngx-select-dropdown-option').eq(10).should('contain', 'November');
           cy.get('li.ngx-select-dropdown-option').eq(11).should('contain', 'December');
         });
+    });
+  });
+
+  describe('Inputs', () => {
+    beforeEach(() => {
+      cy.get('ngx-cron-input').as('CRON');
+    });
+
+    it('Changes bellow caption after language is changed', () => {
+      cy.get('@CRON').find('.language-expression').as('CAPTION');
+      cy.get('@CAPTION').should('contain', 'A las 12:00 AM, el día 1 del mes, sólo en enero');
+      cy.get('ngx-select').eq(1).as('LANGUAGES-INPUT');
+      cy.get('@LANGUAGES-INPUT').should('contain', 'Available languages');
+      cy.get('@LANGUAGES-INPUT').find('ngx-select-input').click();
+      cy.get('@LANGUAGES-INPUT').find('.ngx-select-dropdown-option').as('LANGUAGES');
+      cy.get('@LANGUAGES').eq(5).click();
+      cy.get('@CAPTION').should('contain', 'Um 12:00 AM, an Tag 1 des Monats, nur im Januar');
+    });
+
+    it('Disables/Enables cron input when disabled/enabled', () => {
+      cy.get('.ngx-toggle').eq(0).as('DISABLE-TOGGLE');
+      cy.get('@DISABLE-TOGGLE').should('contain', 'Disabled');
+      cy.get('@DISABLE-TOGGLE').find('.ngx-x').click({ force: true });
+      cy.get('@CRON').should('have.attr', 'disabled', 'disabled');
+      cy.get('@DISABLE-TOGGLE').find('.ngx-check').click({ force: true });
+    });
+
+    it('Removes/Adds Secondly when quartz are disabled/enabled', () => {
+      cy.get('.ngx-toggle').eq(1).as('DISABLE-QUARTZ');
+      cy.get('@DISABLE-QUARTZ').should('contain', 'Disable Quartz');
+      cy.get('@CRON').find('.ngx-button').should('have.length', 8);
+      cy.get('@DISABLE-QUARTZ').find('.ngx-x').click({ force: true });
+      cy.get('@CRON').find('.ngx-button').should('have.length', 7);
+      cy.get('@DISABLE-QUARTZ').find('.ngx-check').click({ force: true });
+      cy.get('@CRON').find('.ngx-button').should('have.length', 8);
+    });
+
+    it('Changes cron periods depending on the input', () => {
+      cy.get('ngx-select').first().as('PERIODS-INPUT');
+      cy.get('@PERIODS-INPUT').should('have.attr', 'label', 'Available Periods');
+      cy.get('@PERIODS-INPUT').find('.ngx-select-input-option').as('PERIODS');
+      cy.get('@PERIODS').first().find('.ngx-select-clear').click();
+      cy.get('@PERIODS').last().find('.ngx-select-clear').click();
+      cy.get('@CRON').find('.ngx-button').should('have.length', 6);
     });
   });
 });
