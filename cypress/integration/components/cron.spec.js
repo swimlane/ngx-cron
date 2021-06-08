@@ -77,20 +77,20 @@ describe('Cron', () => {
       cy.get('@YEARLY').click();
       cy.get('@SELECTION').find('ngx-select').as('MONTHS').click();
       cy.get('@MONTHS')
-        .find('.ngx-select-dropdown-options')
-        .within(() => {
-          cy.get('li.ngx-select-dropdown-option').eq(0).should('contain', 'January');
-          cy.get('li.ngx-select-dropdown-option').eq(1).should('contain', 'February');
-          cy.get('li.ngx-select-dropdown-option').eq(2).should('contain', 'March');
-          cy.get('li.ngx-select-dropdown-option').eq(3).should('contain', 'April');
-          cy.get('li.ngx-select-dropdown-option').eq(4).should('contain', 'May');
-          cy.get('li.ngx-select-dropdown-option').eq(5).should('contain', 'June');
-          cy.get('li.ngx-select-dropdown-option').eq(6).should('contain', 'July');
-          cy.get('li.ngx-select-dropdown-option').eq(7).should('contain', 'August');
-          cy.get('li.ngx-select-dropdown-option').eq(8).should('contain', 'September');
-          cy.get('li.ngx-select-dropdown-option').eq(9).should('contain', 'October');
-          cy.get('li.ngx-select-dropdown-option').eq(10).should('contain', 'November');
-          cy.get('li.ngx-select-dropdown-option').eq(11).should('contain', 'December');
+        .find('.ngx-select-dropdown-options li.ngx-select-dropdown-option')
+        .within(e => {
+          cy.wrap(e[0]).should('contain', 'January');
+          cy.wrap(e[1]).should('contain', 'February');
+          cy.wrap(e[2]).should('contain', 'March');
+          cy.wrap(e[3]).should('contain', 'April');
+          cy.wrap(e[4]).should('contain', 'May');
+          cy.wrap(e[5]).should('contain', 'June');
+          cy.wrap(e[6]).should('contain', 'July');
+          cy.wrap(e[7]).should('contain', 'August');
+          cy.wrap(e[8]).should('contain', 'September');
+          cy.wrap(e[9]).should('contain', 'October');
+          cy.wrap(e[10]).should('contain', 'November');
+          cy.wrap(e[11]).should('contain', 'December');
         });
     });
   });
@@ -103,18 +103,23 @@ describe('Cron', () => {
     it('Changes bellow caption after language is changed', () => {
       cy.get('@CRON').find('.language-expression').as('CAPTION');
       cy.get('@CAPTION').should('contain', 'A las 12:00 AM, el día 1 del mes, sólo en enero');
-      cy.get('ngx-select').eq(1).as('LANGUAGES-INPUT');
-      cy.get('@LANGUAGES-INPUT').should('contain', 'Available languages');
-      cy.get('@LANGUAGES-INPUT').find('ngx-select-input').click();
-      cy.get('@LANGUAGES-INPUT').find('.ngx-select-dropdown-option').as('LANGUAGES');
-      cy.get('@LANGUAGES').eq(5).click();
+      cy.get('ngx-select')
+        .eq(1)
+        .should('contain', 'Available languages')
+        .within(() => {
+          cy.get('ngx-select-input').click();
+          cy.get('.ngx-select-dropdown-option').eq(5).click();
+        });
       cy.get('@CAPTION').should('contain', 'Um 12:00 AM, an Tag 1 des Monats, nur im Januar');
     });
 
     it('Disables/Enables cron input when disabled/enabled', () => {
-      cy.get('.ngx-toggle').eq(0).as('DISABLE-TOGGLE');
-      cy.get('@DISABLE-TOGGLE').should('contain', 'Disabled');
-      cy.get('@DISABLE-TOGGLE').find('.ngx-x').click({ force: true });
+      cy.get('.ngx-toggle')
+        .eq(0)
+        .as('DISABLE-TOGGLE')
+        .should('contain', 'Disabled')
+        .find('.ngx-x')
+        .click({ force: true });
       cy.get('@CRON').should('have.attr', 'disabled', 'disabled');
       cy.get('@DISABLE-TOGGLE').find('.ngx-check').click({ force: true });
     });
