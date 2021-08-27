@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## HEAD (unreleased)
+
+- Breaking: Upgrade to Angular 12 (#34)
+
 ## 2.0.0 (2021-02-02)
 
 - Breaking: Added 'timezone' input. It sets the timezone for the 'current' button on the datetime input.
