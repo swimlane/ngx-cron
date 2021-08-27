@@ -2,7 +2,7 @@ describe('Cron', () => {
   before(() => {
     cy.visit('/');
     cy.get('.loader').should('not.exist', { timeout: 20000 });
-    cy.get('.ngx-section-toggle > .icon-arrow-right').click();
+    cy.get('.ngx-section-header button').click();
   });
 
   describe('Periods', () => {
