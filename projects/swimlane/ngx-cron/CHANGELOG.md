@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+## 3.0.0 (2021-09-14)
+
 - Breaking: Upgrade to Angular 12 (#34)
 - Chore: Update script commands on package json to run cypress on CICD (#35)
 
