@@ -30,6 +30,7 @@
 </ngx-select>
 
   <ngx-select label="Available Timezones" [ngModel]="[timezone]" (ngModelChange)="timezone = $event[0]">
+    <ngx-select-option name="None" [value]="''"></ngx-select-option>
     <ngx-select-option [name]="tz" [value]="tz" *ngFor="let tz of allowedTimezones"></ngx-select-option>
   </ngx-select>
 
@@ -47,6 +48,7 @@
     [disabled]="disabledToggle?.value"
     [allowQuartz]="!disabledQuartz?.value"
     [language]="language"
+    [timezone]="timezone"
     [cronValidateConfigOverrides]="cronValidateConfigOverrides"
   ></ngx-cron-input>
 </section>

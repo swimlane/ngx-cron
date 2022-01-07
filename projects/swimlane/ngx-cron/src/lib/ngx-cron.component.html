@@ -81,10 +81,12 @@
       >
         At
         <ngx-date-time
-          [(ngModel)]="cronData.time"
+          [value]="time"
+          (valueChange)="onValueChange($event)"
           inputType="time"
           [disabled]="disabled"
           [timezone]="timezone"
+          [autosize]="true"
           (blur)="onBlurDateTimeChanged($event)"
           (dateTimeSelected)="onDateTimeSelected($event)"
         >
