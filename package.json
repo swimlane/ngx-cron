@@ -82,6 +82,6 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-security": "^1.16.0",
     "tslint-config-swimlane": "^5.0.0",
-    "typescript": "~4.3.5"
+    "typescript": "~4.5.4"
   }
 }
