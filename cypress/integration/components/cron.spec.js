@@ -101,6 +101,13 @@ describe('Cron', () => {
     });
 
     it('Changes bellow caption after language is changed', () => {
+      cy.get('ngx-select')
+        .eq(1)
+        .should('contain', 'Available languages')
+        .within(() => {
+          cy.get('ngx-select-input').click();
+          cy.get('.ngx-select-dropdown-option').eq(1).click();
+        });
       cy.get('@CRON').find('.language-expression').as('CAPTION');
       cy.get('@CAPTION').should('contain', 'A las 12:00 AM, el día 1 del mes, sólo en enero');
       cy.get('ngx-select')

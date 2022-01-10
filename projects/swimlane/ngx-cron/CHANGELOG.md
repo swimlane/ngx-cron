@@ -2,6 +2,9 @@
 
 ## HEAD (unreleased)
 
+- Feature: show timezone popup when timezone is supplied
+- Bug fix: fix timezone bug
+
 ## 3.0.0 (2021-09-14)
 
 - Breaking: Upgrade to Angular 12 (#34)
