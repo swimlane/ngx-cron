@@ -81,8 +81,8 @@
       >
         At
         <ngx-date-time
-          [value]="time"
-          (valueChange)="onValueChange($event)"
+          [ngModel]="time"
+          (ngModelChange)="onValueChange($event)"
           inputType="time"
           [disabled]="disabled"
           [timezone]="timezone"

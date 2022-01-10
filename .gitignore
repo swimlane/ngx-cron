@@ -47,3 +47,6 @@ Thumbs.db
 .ng_pkg_build/
 dist.tgz
 package.tgz
+
+cypress/videos/
+cypress/screenshots/

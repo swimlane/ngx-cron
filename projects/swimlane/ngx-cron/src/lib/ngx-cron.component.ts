@@ -152,8 +152,12 @@ export class NgxCronComponent implements OnChanges {
 
   onValueChange(value: any) {
     if (value) {
-      this.cronData.time = this.timezone ? moment.tz(value, ['h:mm A', 'h:mm A Z'], this.timezone) : moment(value, ['h:mm A']);
-      this.cronDataChanged();
+      const m = this.timezone ? moment.tz(value, ['h:mm A', 'h:mm A Z'], this.timezone) : moment(value, ['h:mm A']);
+      if (m.isValid()) {
+        this.cronData.time = m;
+        this.cronDataChanged();
+      }
+      this.time = value;
     } else {
       this.cronData.time = this.cronService.getMidnight();
     }
