@@ -2,6 +2,7 @@
 
 ## HEAD (unreleased)
 
+- Breaking: require new version of @swimlane/ngx-ui
 - Feature: show timezone popup when timezone is supplied
 - Bug fix: fix timezone bug
 
