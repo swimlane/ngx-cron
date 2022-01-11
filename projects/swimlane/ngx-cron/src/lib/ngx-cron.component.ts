@@ -55,6 +55,14 @@ export class NgxCronComponent implements OnChanges {
   @Input()
   timezone: string;
 
+  @Input()
+  set disableTimezoneDisplay(val: boolean) {
+    this._disableTimezoneDisplay = val;
+  }
+  get disableTimezoneDisplay() {
+    return this._disableTimezoneDisplay || !this.timezone;
+  }
+
   periods = NgxCronService.PERIODKEYS;
   dows = NgxCronService.DOWS;
   months = NgxCronService.MONTHS;
@@ -83,6 +91,7 @@ export class NgxCronComponent implements OnChanges {
 
   private _cron = '0 * * * *';
   private _disabled = false;
+  private _disableTimezoneDisplay;
 
   constructor(public cronService: NgxCronService) {
     this.cronService.setTimezone(this.timezone);

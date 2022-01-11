@@ -84,6 +84,7 @@
           [ngModel]="time"
           (ngModelChange)="onValueChange($event)"
           inputType="time"
+          [displayMode]="disableTimezoneDisplay ? 'local' : undefined"
           [disabled]="disabled"
           [timezone]="timezone"
           [autosize]="true"
