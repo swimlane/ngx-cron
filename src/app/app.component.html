@@ -76,8 +76,9 @@
         [disabled]="disabled"
         [allowQuartz]="allowQuartz"
         [language]="language"
-        [cronValidateConfigOverrides]="cronValidateConfigOverrides"
-        [timezone]="timezone">
+        [timezone]="timezone"
+        [disableTimezoneDisplay]="disableTimezoneDisplay"
+        [cronValidateConfigOverrides]="cronValidateConfigOverrides">
       </ngx-cron-input>
 
       {{cron}}
@@ -101,8 +102,10 @@
       allowedPeriods = NgxCronService.PERIODS;
       disabled = false;
       allowQuartz = true;
-      language = 'es';
-      timezone = 'UTC';
+      language = 'en';  // same as default
+      timezone = 'UTC';  // same as default
+      disableTimezoneDisplay = false; // same as default
+
       cronValidateConfigOverrides = {
         useLastDayOfMonth: true,
         useLastDayOfWeek: true,
