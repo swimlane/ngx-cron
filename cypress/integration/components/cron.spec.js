@@ -122,7 +122,7 @@ describe('Cron', () => {
 
     it('Disables/Enables cron input when disabled/enabled', () => {
       cy.get('.ngx-toggle')
-        .eq(0)
+        .contains('.ngx-toggle', 'Disabled')
         .as('DISABLE-TOGGLE')
         .should('contain', 'Disabled')
         .find('.ngx-x')
@@ -132,7 +132,7 @@ describe('Cron', () => {
     });
 
     it('Removes/Adds Secondly when quartz are disabled/enabled', () => {
-      cy.get('.ngx-toggle').eq(1).as('DISABLE-QUARTZ');
+      cy.get('.ngx-toggle').contains('.ngx-toggle', 'Disable Quartz').as('DISABLE-QUARTZ');
       cy.get('@DISABLE-QUARTZ').should('contain', 'Disable Quartz');
       cy.get('@CRON').find('.ngx-button').should('have.length', 8);
       cy.get('@DISABLE-QUARTZ').find('.ngx-x').click({ force: true });
