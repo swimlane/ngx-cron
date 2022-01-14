@@ -101,6 +101,13 @@ describe('Cron', () => {
     });
 
     it('Changes bellow caption after language is changed', () => {
+      cy.get('ngx-select')
+        .eq(1)
+        .should('contain', 'Available languages')
+        .within(() => {
+          cy.get('ngx-select-input').click();
+          cy.get('.ngx-select-dropdown-option').eq(1).click();
+        });
       cy.get('@CRON').find('.language-expression').as('CAPTION');
       cy.get('@CAPTION').should('contain', 'A las 12:00 AM, el día 1 del mes, sólo en enero');
       cy.get('ngx-select')
@@ -115,7 +122,7 @@ describe('Cron', () => {
 
     it('Disables/Enables cron input when disabled/enabled', () => {
       cy.get('.ngx-toggle')
-        .eq(0)
+        .contains('.ngx-toggle', 'Disabled')
         .as('DISABLE-TOGGLE')
         .should('contain', 'Disabled')
         .find('.ngx-x')
@@ -125,7 +132,7 @@ describe('Cron', () => {
     });
 
     it('Removes/Adds Secondly when quartz are disabled/enabled', () => {
-      cy.get('.ngx-toggle').eq(1).as('DISABLE-QUARTZ');
+      cy.get('.ngx-toggle').contains('.ngx-toggle', 'Disable Quartz').as('DISABLE-QUARTZ');
       cy.get('@DISABLE-QUARTZ').should('contain', 'Disable Quartz');
       cy.get('@CRON').find('.ngx-button').should('have.length', 8);
       cy.get('@DISABLE-QUARTZ').find('.ngx-x').click({ force: true });

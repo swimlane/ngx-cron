@@ -1,2 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@swimlane/ngx-ui/index.css';
+
+body {
+  max-width: 1024px;
+  margin: 10px auto;
+
+  background: #1c2029;
+  color: #cfcfcf;
+  font-family: sans-serif;
+  padding: 10px;
+  font-size: small;
+}

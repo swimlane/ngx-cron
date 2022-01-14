@@ -53,7 +53,15 @@ export class NgxCronComponent implements OnChanges {
   }
 
   @Input()
-  timezone = 'utc';
+  timezone: string;
+
+  @Input()
+  set disableTimezoneDisplay(val: boolean) {
+    this._disableTimezoneDisplay = val;
+  }
+  get disableTimezoneDisplay() {
+    return this._disableTimezoneDisplay || !this.timezone;
+  }
 
   periods = NgxCronService.PERIODKEYS;
   dows = NgxCronService.DOWS;
@@ -70,14 +78,20 @@ export class NgxCronComponent implements OnChanges {
     return this.cronData.description;
   }
 
+  get timeFormat() {
+    return this.timezone ? 'h:mm A Z' : 'h:mm A';
+  }
+
   _allowedPeriods: Period[] = NgxCronService.PERIODKEYS;
 
   disableCustomInput = false;
 
   cronData: ICronData;
+  time: string = '12:00 AM';
 
   private _cron = '0 * * * *';
   private _disabled = false;
+  private _disableTimezoneDisplay;
 
   constructor(public cronService: NgxCronService) {
     this.cronService.setTimezone(this.timezone);
@@ -130,8 +144,8 @@ export class NgxCronComponent implements OnChanges {
   }
 
   cronDataChanged() {
-    this.cronData.time = moment.tz(this.cronData.time, this.timezone) || this.cronService.getMidnight();
     this._cron = this.getCron();
+    this.time = this.cronData.time.format(this.timeFormat);
     this.setDescription(this._cron);
     this.cronChange.emit(this._cron);
     this.invalidState.emit(this.invalid);
@@ -143,6 +157,19 @@ export class NgxCronComponent implements OnChanges {
       this.cronData.time = this.cronService.getMidnight();
     }
     this.cronDataChanged();
+  }
+
+  onValueChange(value: any) {
+    if (value) {
+      const m = this.timezone ? moment.tz(value, ['h:mm A', 'h:mm A Z'], this.timezone) : moment(value, ['h:mm A']);
+      if (m.isValid()) {
+        this.cronData.time = m;
+        this.cronDataChanged();
+      }
+      this.time = value;
+    } else {
+      this.cronData.time = this.cronService.getMidnight();
+    }
   }
 
   onDateTimeSelected(dateTime: Date) {
@@ -205,7 +232,7 @@ export class NgxCronComponent implements OnChanges {
 
   /**
    * Get the cron string from component state
-   * Only used for non-custome periods
+   * Only used for non-custom periods
    */
   private getCron(): string {
     return this.cronService.getCronFromCronData({
