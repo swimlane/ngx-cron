@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+## 4.0.0 (2022-01-20)
+
 - Breaking: require new version of `@swimlane/ngx-ui`
 - Feature: show timezone popup when timezone is supplied
 - Bug fix: fix timezone bug

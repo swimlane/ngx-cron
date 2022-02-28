@@ -39,8 +39,9 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app 
 
 - Checkout master (`git checkout master`)
 - Pull master (`git pull`)
+- Refresh node modules (`npm ci`)
 - Run tests (`npm test`)
-- Examine log to determine next version (X.Y.Z)
+- Examine log to determine next version (`X.Y.Z`)
 - Run `git checkout -b release/X.Y.Z`
 - Update version in `projects/swimlane/ngx-cron/package.json`
 - Update changelog in `projects/swimlane/ngx-cron/CHANGELOG.md`
@@ -48,7 +49,6 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app 
 - Run `git tag X.Y.Z`
 - Run `git push origin HEAD --tags`
 - Run `npm run publish:lib`
-- Run `npm run deploy`
 - Submit PR
 
 ## Credits
