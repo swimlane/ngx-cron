@@ -143,6 +143,11 @@ export class NgxCronComponent implements OnChanges {
     }
   }
 
+  ngOnInit(): void {
+    // Ensures the time value is set properly based on the value of the cron @Input
+    this.time = this.cronData.time.format(this.timeFormat);
+  }
+
   cronDataChanged() {
     this._cron = this.getCron();
     this.time = this.cronData.time.format(this.timeFormat);
