@@ -2,13 +2,13 @@
 
 ## HEAD (unreleased)
 
-## 3.0.1 (2022-06-16)
-
-- Bug fix: fix bug where user-entered time values were not persisted properly
-
 - Breaking: require new version of `@swimlane/ngx-ui`
 - Feature: show timezone popup when timezone is supplied
 - Bug fix: fix timezone bug
+
+## 3.0.1 (2022-06-16)
+
+- Bug fix: fix bug where user-entered time values were not persisted properly
 
 ## 3.0.0 (2021-09-14)
 
