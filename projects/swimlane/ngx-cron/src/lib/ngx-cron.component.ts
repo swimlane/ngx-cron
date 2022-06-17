@@ -6,7 +6,8 @@ import {
   EventEmitter,
   Output,
   HostBinding,
-  SimpleChanges
+  SimpleChanges,
+  OnInit
 } from '@angular/core';
 
 import moment from 'moment-timezone';
@@ -19,7 +20,7 @@ import { NgxCronService, ICronData, Period, Weekday, Month } from './ngx-cron.se
   styleUrls: ['./ngx-cron.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class NgxCronComponent implements OnChanges {
+export class NgxCronComponent implements OnChanges, OnInit {
   @Input()
   set cron(val: string) {
     this.setCron(val);
@@ -141,6 +142,11 @@ export class NgxCronComponent implements OnChanges {
 
       this.disableCustomInput = this._allowedPeriods.indexOf(Period.Custom) < 0;
     }
+  }
+
+  ngOnInit(): void {
+    // Ensures the time value is set properly based on the value of the cron @Input
+    this.time = this.cronData.time.format(this.timeFormat);
   }
 
   cronDataChanged() {

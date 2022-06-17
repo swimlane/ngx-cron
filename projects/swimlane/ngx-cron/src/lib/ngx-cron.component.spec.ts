@@ -120,4 +120,15 @@ describe('NgxCronComponent', () => {
     expect(selections.textContent).toContain('minutes past the hour');
     expect(component.description).toContain('Cada hora');
   });
+
+  it('should display the provided time value', () => {
+    component.cron = '15 0 1 * *';
+    fixture.componentInstance.ngOnInit();
+    fixture.detectChanges();
+    expect(component.description).toBe('At 12:15 AM, on day 1 of the month');
+    expect(component.time).toBe('12:15 AM');
+    expect(selections.textContent).toContain('At');
+    expect(selections.textContent).toContain('on day');
+    expect(selections.textContent).toContain('of the month');
+  });
 });
