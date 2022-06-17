@@ -2,6 +2,10 @@
 
 ## HEAD (unreleased)
 
+## 4.0.1 (2022-06-17)
+
+- Bug fix: fix bug where user-entered time values were not persisted properly
+
 ## 4.0.0 (2022-01-20)
 
 - Breaking: require new version of `@swimlane/ngx-ui`
