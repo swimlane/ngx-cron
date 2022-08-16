@@ -4,7 +4,7 @@
   "peerDependencies": {
     "@angular/common": ">=10.0.0",
     "@angular/core": ">=10.0.0",
-    "@swimlane/ngx-ui": "^37.0.0"
+    "@swimlane/ngx-ui": ">=37.0.0"
   },
   "dependencies": {
     "cron-validate": "^1.4.0",
