@@ -2,6 +2,10 @@
 
 ## HEAD (unreleased)
 
+## 4.0.2 (2022-08-16)
+
+- Bug fix: updated ngx-ui dependency tag in package.json (`>=ngx-ui@37.0.0` => `^37.0.0`)
+
 ## 4.0.1 (2022-06-17)
 
 - Bug fix: fix bug where user-entered time values were not persisted properly
