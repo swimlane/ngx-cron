@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+- Cypress bump to version 10.6.0
+
 ## 4.0.1 (2022-06-17)
 
 - Bug fix: fix bug where user-entered time values were not persisted properly
