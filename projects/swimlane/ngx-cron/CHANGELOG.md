@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- Bump to Cypress version 10.6.0
+
 ## HEAD (unreleased)
 
 ## 4.0.1 (2022-06-17)
