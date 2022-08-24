@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+## 4.1.0 (2022-08-24)
+
 - Bump to Cypress version 10.6.0
 
 ## 4.0.1 (2022-06-17)
