@@ -43,7 +43,7 @@
     "codemirror": "^5.62.3",
     "cron-validate": "^1.4.3",
     "cronstrue": "^1.115.0",
-    "moment-timezone": "^0.5.33",
+    "moment-timezone": "^0.5.35",
     "ng-in-viewport": "^6.1.5",
     "ngx-moment": "^5.0.0",
     "resize-observer-polyfill": "^1.5.1",
