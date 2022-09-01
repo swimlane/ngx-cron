@@ -1,9 +1,9 @@
 # CHANGELOG
 
 ## HEAD (unreleased)
+- Bump to Cypress version 10.6.0
 
 ## 4.0.3 (2022-08-16)
-
 - Bug fix: updated ngx-ui dependency tag in package.json (`>=ngx-ui@37.0.0` => `>=37.0.0`)
 
 ## 4.0.1 (2022-06-17)
