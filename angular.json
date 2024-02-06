@@ -2,7 +2,9 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
     "analytics": "4bf7da0c-4716-4325-9d63-7590f203263b",
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -165,6 +167,5 @@
         }
       }
     }
-  },
-  "defaultProject": "ngx-cron"
+  }
 }

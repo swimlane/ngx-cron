@@ -11,7 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es5",
+    "target": "es2020",
     "lib": ["es2018", "dom"],
     "paths": {
       "@swimlane/ngx-cron": ["dist/swimlane/ngx-cron/swimlane-ngx-cron", "dist/swimlane/ngx-cron"]
