@@ -1,18 +1,11 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
-        ],
+        "project": ["tsconfig.json", "e2e/tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -21,9 +14,7 @@
         "plugin:@angular-eslint/template/process-inline-templates",
         "prettier"
       ],
-      "plugins": [
-        "eslint-plugin-react"
-      ],
+      "plugins": ["eslint-plugin-react"],
       "rules": {
         "@typescript-eslint/array-type": [
           "error",
@@ -65,10 +56,7 @@
           }
         ],
         "@typescript-eslint/require-await": "error",
-        "@typescript-eslint/semi": [
-          "off",
-          null
-        ],
+        "@typescript-eslint/semi": ["off", null],
         "@typescript-eslint/triple-slash-reference": [
           "off",
           {
@@ -79,14 +67,8 @@
         ],
         "@typescript-eslint/type-annotation-spacing": "off",
         "arrow-body-style": "off",
-        "arrow-parens": [
-          "off",
-          "always"
-        ],
-        "brace-style": [
-          "off",
-          "off"
-        ],
+        "arrow-parens": ["off", "always"],
+        "brace-style": ["off", "off"],
         "curly": "off",
         "eol-last": "off",
         "guard-for-in": "off",
@@ -98,6 +80,7 @@
         ],
         "import/no-internal-modules": "off",
         "import/order": "off",
+        "jsdoc/newline-after-description": "off",
         "linebreak-style": "off",
         "max-len": "off",
         "new-parens": "off",
@@ -131,19 +114,12 @@
         ],
         "react/jsx-wrap-multilines": "off",
         "space-before-function-paren": "off",
-        "space-in-parens": [
-          "off",
-          "never"
-        ]
+        "space-in-parens": ["off", "never"]
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     }
   ]
