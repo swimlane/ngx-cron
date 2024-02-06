@@ -12,22 +12,15 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
     "paths": {
-      "@swimlane/ngx-cron": [
-        "dist/swimlane/ngx-cron/swimlane-ngx-cron",
-        "dist/swimlane/ngx-cron"
-      ]
+      "@swimlane/ngx-cron": ["dist/swimlane/ngx-cron/swimlane-ngx-cron", "dist/swimlane/ngx-cron"]
     },
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "preserveWhitespaces": true,
-    "enableIvy": false
+    "preserveWhitespaces": true
   }
 }
