@@ -2,6 +2,10 @@
 
 ## HEAD (unreleased)
 
+## 5.0.1 (2024-02-06)
+
+- Bug fix: fix cronstrue import issue
+
 ## 5.0.0 (2024-02-06)
 
 - Breaking: Upgrade angular to v17
