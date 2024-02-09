@@ -42,7 +42,7 @@
     "@swimlane/ngx-ui": "^47.0.0-beta.2",
     "codemirror": "^5.62.3",
     "cron-validate": "^1.4.3",
-    "cronstrue": "^1.115.0",
+    "cronstrue": "^2.48.0",
     "moment-timezone": "^0.5.33",
     "ng-in-viewport": "^16.1.0",
     "ng2-file-upload": "^5.0.0",

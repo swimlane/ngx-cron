@@ -7,12 +7,12 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "es2020",
+    "module": "es2022",
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
-    "lib": ["es2018", "dom"],
+    "lib": ["es2022", "dom"],
     "paths": {
       "@swimlane/ngx-cron": ["dist/swimlane/ngx-cron/swimlane-ngx-cron", "dist/swimlane/ngx-cron"]
     },

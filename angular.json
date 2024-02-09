@@ -26,7 +26,7 @@
               "codemirror",
               "lodash",
               "cron-validate",
-              "cronstrue",
+              "cronstrue/i18n",
               "moment-timezone",
               "@swimlane/ngx-ui"
             ],
