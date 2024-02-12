@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/ngx-cron",
-  "version": "4.0.1",
+  "version": "5.0.1",
   "peerDependencies": {
     "@angular/common": ">=10.0.0",
     "@angular/core": ">=10.0.0",
@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "cron-validate": "^1.4.0",
-    "cronstrue": "^1.103.0",
+    "cronstrue": "^2.48.0",
     "tslib": "^2.0.0"
   }
 }

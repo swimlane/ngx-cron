@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import ExpressionDescriptor from 'cronstrue/i18n';
+import cronstrue from 'cronstrue/i18n';
 import CronValidate from 'cron-validate';
 import moment from 'moment-timezone';
 
@@ -60,6 +60,14 @@ export interface ICronData {
 
 const MAX_MINUTES = 59;
 const MAX_DAYS_OF_MONTH = 31;
+
+function createCronstrueObject(expression: string, options) {
+  if (cronstrue['default']) {
+    return new cronstrue['default'](expression, options);
+  } else {
+    return new cronstrue(expression, options);
+  }
+}
 
 // @dynamic
 @Injectable()
@@ -132,7 +140,7 @@ export class NgxCronService {
   }
 
   toString(cron: string) {
-    const e: any = new ExpressionDescriptor(cron, this.expressionDescriptorOptions);
+    const e: any = createCronstrueObject(cron, this.expressionDescriptorOptions);
 
     try {
       return e.getFullDescription();
@@ -148,7 +156,7 @@ export class NgxCronService {
     configOverrides: typeof NgxCronService.CRON_VALIDATE_CONFIG_OVERRIDES
   ): ICronData {
     this.expressionDescriptorOptions.locale = lang || 'en';
-    const e: any = new ExpressionDescriptor(cron, this.expressionDescriptorOptions);
+    const e: any = createCronstrueObject(cron, this.expressionDescriptorOptions);
 
     let data: ICronData;
 

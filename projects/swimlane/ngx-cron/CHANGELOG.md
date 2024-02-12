@@ -2,6 +2,13 @@
 
 ## HEAD (unreleased)
 
+## 5.0.1 (2024-02-06)
+
+- Bug fix: fix cronstrue import issue
+
+## 5.0.0 (2024-02-06)
+
+- Breaking: Upgrade angular to v17
 - Bump to Cypress version 10.6.0
 
 ## 4.0.1 (2022-06-17)
