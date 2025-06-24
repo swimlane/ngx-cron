@@ -15,11 +15,11 @@ import moment from 'moment-timezone';
 import { NgxCronService, ICronData, Period, Weekday, Month } from './ngx-cron.service';
 
 @Component({
-    selector: 'ngx-cron-input',
-    templateUrl: './ngx-cron.component.html',
-    styleUrls: ['./ngx-cron.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: 'ngx-cron-input',
+  templateUrl: './ngx-cron.component.html',
+  styleUrls: ['./ngx-cron.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class NgxCronComponent implements OnChanges, OnInit {
   @Input()

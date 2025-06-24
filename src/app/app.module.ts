@@ -7,6 +7,10 @@ import { NgxCronModule } from 'projects/swimlane/ngx-cron/src/public-api';
 import { NgxUIModule } from '@swimlane/ngx-ui';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-@NgModule({ declarations: [AppComponent],
-    bootstrap: [AppComponent], imports: [BrowserModule, BrowserAnimationsModule, NgxCronModule, NgxUIModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+  imports: [BrowserModule, BrowserAnimationsModule, NgxCronModule, NgxUIModule],
+  providers: [provideHttpClient(withInterceptorsFromDi())]
+})
 export class AppModule {}

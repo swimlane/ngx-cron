@@ -5,11 +5,11 @@ import moment from 'moment-timezone';
 import { NgxCronService } from 'projects/swimlane/ngx-cron/src/public-api';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class AppComponent {
   cron = '* * * * *';
