@@ -10,13 +10,13 @@ describe('NgxCronComponent', () => {
   let fixture: ComponentFixture<NgxCronComponent>;
   let selections: any;
 
-  beforeEach((() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NgxUIModule, NoopAnimationsModule],
       declarations: [NgxCronComponent],
       providers: [{ provide: NgxCronService, useClass: NgxCronService }]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NgxCronComponent);
