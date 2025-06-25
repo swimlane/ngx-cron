@@ -9,7 +9,7 @@
     "build:lib": "ng build @swimlane/ngx-cron --configuration production && npm run copy-files",
     "copy-files": "cp README.md dist/swimlane/ngx-cron/README.md && cp LICENSE dist/swimlane/ngx-cron/LICENSE",
     "package": "npm run build:lib",
-    "test": "run-s test:*",
+    "test": "run-s lint prettier:ci test:unit test:integration",
     "test:prettier": "prettier --check  \"{src,projects,cypress}/**/*.{js,ts,scss,css,md,json}\"",
     "test:lint": "ng lint",
     "test:unit": "ng test @swimlane/ngx-cron --watch=false --progress=false --browsers=ChromeHeadlessCI",
@@ -17,7 +17,7 @@
     "watch:unit": "ng test @swimlane/ngx-cron --watch",
     "cypress:run": "cypress run",
     "cypress:open": "cypress open",
-    "ci": "run-s lint prettier:ci test:ci",
+    "ci": "npm run test",
     "lint": "ng lint",
     "predeploy": "npm run build:demo",
     "deploy": "angular-cli-ghpages --dir ./dist/ngx-cron --name=Swimlane --email=developer@swimlane.com",
@@ -100,6 +100,8 @@
     "typescript": "~5.8.3"
   },
   "volta": {
-    "node": "22.16.0"
-  }
+    "node": "22.16.0",
+    "yarn": "4.9.2"
+  },
+  "packageManager": "yarn@4.9.2"
 }
