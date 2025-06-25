@@ -1,120 +1,47 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": [
+    "dist/**/*",
+    "cypress/**/*"
+  ],
+  "extends": [
+    "@swimlane",
+    "prettier"
+  ],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
+      "parser": "@typescript-eslint/parser",
       "parserOptions": {
-        "project": ["tsconfig.json", "e2e/tsconfig.json"],
-        "createDefaultProgram": true
+        "project": [
+          "./tsconfig.json"
+        ]
       },
       "extends": [
-        "plugin:@angular-eslint/ng-cli-compat",
-        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "@swimlane/eslint-config/typescript",
+        "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:@typescript-eslint/recommended",
         "prettier"
       ],
-      "plugins": ["eslint-plugin-react"],
       "rules": {
-        "@typescript-eslint/array-type": [
-          "error",
-          {
-            "default": "array-simple"
-          }
-        ],
-        "@typescript-eslint/consistent-type-assertions": "off",
-        "@typescript-eslint/dot-notation": "off",
-        "@typescript-eslint/explicit-member-accessibility": [
-          "off",
-          {
-            "accessibility": "explicit"
-          }
-        ],
-        "@typescript-eslint/member-delimiter-style": [
-          "off",
-          {
-            "multiline": {
-              "delimiter": "none",
-              "requireLast": true
-            },
-            "singleline": {
-              "delimiter": "semi",
-              "requireLast": false
-            }
-          }
-        ],
-        "@typescript-eslint/no-empty-function": "error",
-        "@typescript-eslint/no-floating-promises": "off",
-        "@typescript-eslint/no-this-alias": "error",
-        "@typescript-eslint/no-unused-expressions": "off",
-        "@typescript-eslint/prefer-for-of": "off",
-        "@typescript-eslint/quotes": [
-          "off",
-          "single",
-          {
-            "allowTemplateLiterals": true
-          }
-        ],
-        "@typescript-eslint/require-await": "error",
-        "@typescript-eslint/semi": ["off", null],
-        "@typescript-eslint/triple-slash-reference": [
-          "off",
-          {
-            "path": "always",
-            "types": "prefer-import",
-            "lib": "always"
-          }
-        ],
-        "@typescript-eslint/type-annotation-spacing": "off",
-        "arrow-body-style": "off",
-        "arrow-parens": ["off", "always"],
-        "brace-style": ["off", "off"],
-        "curly": "off",
-        "eol-last": "off",
-        "guard-for-in": "off",
-        "import/no-extraneous-dependencies": [
-          "off",
-          {
-            "devDependencies": false
-          }
-        ],
-        "import/no-internal-modules": "off",
-        "import/order": "off",
-        "jsdoc/newline-after-description": "off",
-        "linebreak-style": "off",
-        "max-len": "off",
-        "new-parens": "off",
-        "newline-per-chained-call": "off",
-        "no-bitwise": "off",
-        "no-duplicate-case": "error",
-        "no-duplicate-imports": "error",
-        "no-empty": "error",
-        "no-extra-bind": "error",
-        "no-extra-semi": "off",
-        "no-fallthrough": "off",
-        "no-irregular-whitespace": "off",
-        "no-new-func": "error",
-        "no-redeclare": "error",
-        "no-return-await": "error",
-        "no-sequences": "error",
-        "no-sparse-arrays": "error",
-        "no-template-curly-in-string": "error",
-        "no-trailing-spaces": "off",
-        "prefer-arrow/prefer-arrow-functions": "off",
-        "prefer-object-spread": "off",
-        "quote-props": "off",
-        "react/jsx-curly-spacing": "off",
-        "react/jsx-equals-spacing": "off",
-        "react/jsx-tag-spacing": [
-          "off",
-          {
-            "afterOpening": "allow",
-            "closingSlash": "allow"
-          }
-        ],
-        "react/jsx-wrap-multilines": "off",
-        "space-before-function-paren": "off",
-        "space-in-parens": ["off", "never"]
+        "@angular-eslint/directive-class-suffix": "off",
+        "@angular-eslint/component-class-suffix": "off",
+        "@angular-eslint/no-input-rename": "off",
+        "@angular-eslint/no-output-native": "off",
+        "@angular-eslint/use-lifecycle-interface": "off",
+        "@angular-eslint/no-output-on-prefix": "off",
+        "@angular-eslint/prefer-standalone": "off",
+        "@angular-eslint/prefer-inject": "off",
+        "@typescript-eslint/no-empty-object-type": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/consistent-type-imports": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-duplicate-enum-values": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
       }
     },
     {

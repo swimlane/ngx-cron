@@ -1,13 +1,14 @@
 <ngx-section #inputsSection class="shadow" [sectionTitle]="'Inputs'" [sectionCollapsed]="true">
-  <ngx-input
-    *ngIf="!inputsSection.sectionCollapsed"
-    #cronInput
-    type="text"
-    label="CRON Input"
-    [autofocus]="true"
-    [(ngModel)]="cron"
-  >
-  </ngx-input>
+  @if (!inputsSection.sectionCollapsed) {
+    <ngx-input
+      #cronInput
+      type="text"
+      label="CRON Input"
+      [autofocus]="true"
+      [(ngModel)]="cron"
+      >
+    </ngx-input>
+  }
 
   <ngx-select
     [filterable]="false"
@@ -15,8 +16,10 @@
     [multiple]="true"
     label="Available Periods"
     [(ngModel)]="allowedPeriods"
-  >
-    <ngx-select-option [name]="period" [value]="period" *ngFor="let period of periods"></ngx-select-option>
+    >
+    @for (period of periods; track period) {
+      <ngx-select-option [name]="period" [value]="period"></ngx-select-option>
+    }
   </ngx-select>
 
   <ngx-select
@@ -25,13 +28,17 @@
     [ngModel]="[language]"
     (change)="language = $event[0]"
     [allowClear]="false"
-  >
-  <ngx-select-option *ngFor="let lang of languages" [name]="lang.name" [value]="lang.value"> </ngx-select-option>
-</ngx-select>
+    >
+    @for (lang of languages; track lang) {
+      <ngx-select-option [name]="lang.name" [value]="lang.value"> </ngx-select-option>
+    }
+  </ngx-select>
 
   <ngx-select label="Available Timezones" [ngModel]="[timezone]" (ngModelChange)="timezone = $event[0]">
     <ngx-select-option name="None" [value]="''"></ngx-select-option>
-    <ngx-select-option [name]="tz" [value]="tz" *ngFor="let tz of allowedTimezones"></ngx-select-option>
+    @for (tz of allowedTimezones; track tz) {
+      <ngx-select-option [name]="tz" [value]="tz"></ngx-select-option>
+    }
   </ngx-select>
 
   <ngx-toggle #disabledTimezone label="Disable Timezone Display"> </ngx-toggle>
@@ -60,9 +67,9 @@
   <label>Output</label>
 
   <pre><code>
-  {{cron}}
-  {{cronComp.description}}
-</code></pre>
+    {{cron}}
+    {{cronComp.description}}
+  </code></pre>
 </section>
 
 <ngx-tabs>
@@ -88,16 +95,16 @@
   </ngx-tab>
   <ngx-tab title="TypeScript">
     <ngx-codemirror mode="javascript" readOnly="true" ngNonBindable>
-    <![CDATA[
-    import {Component} from '@angular/core';
-    import { NgxCronService } from './ngx-cron.service';
+      <![CDATA[
+      import {Component} from '@angular/core';
+      import { NgxCronService } from './ngx-cron.service';
 
-    @Component({
+      @Component({
       selector: 'cron-example',
       templateUrl: 'cron-example.html',
       styleUrls: ['cron-example.css'],
-    })
-    export class CronExample {
+      })
+      export class CronExample {
       cron = '* * * * *';
       allowedPeriods = NgxCronService.PERIODS;
       disabled = false;
@@ -107,15 +114,15 @@
       disableTimezoneDisplay = false; // same as default
 
       cronValidateConfigOverrides = {
-        useLastDayOfMonth: true,
-        useLastDayOfWeek: true,
-        useAliases: true,
-        useNthWeekdayOfMonth: true,
-        useNearestWeekday: true,
-        useBlankDay: true
+      useLastDayOfMonth: true,
+      useLastDayOfWeek: true,
+      useAliases: true,
+      useNthWeekdayOfMonth: true,
+      useNearestWeekday: true,
+      useBlankDay: true
       };
     }
     ]]>
-    </ngx-codemirror>
-  </ngx-tab>
+  </ngx-codemirror>
+</ngx-tab>
 </ngx-tabs>
