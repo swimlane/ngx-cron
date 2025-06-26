@@ -33,14 +33,14 @@ Add the `ngx-cron` component to your page:
 
 ## Development server
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Release
 
 - Checkout master (`git checkout master`)
 - Pull master (`git pull`)
-- Refresh node modules (`npm ci`)
-- Run tests (`npm test`)
+- Refresh node modules (`yarn install --frozen-lockfile`)
+- Run tests (`yarn test`)
 - Examine log to determine next version (`X.Y.Z`)
 - Run `git checkout -b release/X.Y.Z`
 - Update version in `projects/swimlane/ngx-cron/package.json`
@@ -48,7 +48,7 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app 
 - Run `git commit -am "(release): X.Y.Z"`
 - Run `git tag X.Y.Z`
 - Run `git push origin HEAD --tags`
-- Run `npm run publish:lib`
+- Run `yarn publish:lib`
 - Submit PR
 
 ## Credits
