@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+- Fix: Pinned construe to a version compatible with Vite and Angular CLI
+
 ## 6.0.0-alpha.0
 
 - Enhancement: Added support for Angular 20
