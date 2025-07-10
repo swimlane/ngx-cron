@@ -1,13 +1,13 @@
 {
   "name": "@swimlane/ngx-cron",
-  "version": "6.0.0-alpha.0",
+  "version": "6.0.0-alpha.1",
   "peerDependencies": {
-    "@angular/common": ">=18.0.0",
-    "@angular/core": ">=18.0.0",
+    "@angular/common": "18.x || 19.x || 20.x",
+    "@angular/core": "18.x || 19.x || 20.x",
     "@swimlane/ngx-ui": ">=ngx-ui@50.0.0"
   },
   "dependencies": {
-    "cron-validate": "^1.4.0",
+    "cron-validate": "1.4.5",
     "cronstrue": "^2.48.0",
     "tslib": "^2.0.0"
   }

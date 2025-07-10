@@ -41,7 +41,7 @@
     "@angular/router": "^20.0.4",
     "@swimlane/ngx-ui": "50.0.0-alpha.0",
     "codemirror": "^5.62.3",
-    "cron-validate": "^1.4.3",
+    "cron-validate": "1.4.5",
     "cronstrue": "^2.48.0",
     "moment-timezone": "^0.5.33",
     "ng-in-viewport": "^16.1.0",
