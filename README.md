@@ -48,6 +48,7 @@ Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app
 - Run `git commit -am "(release): X.Y.Z"`
 - Run `git tag X.Y.Z`
 - Run `git push origin HEAD --tags`
+- Run `yarn build:lib`
 - Run `yarn publish:lib`
 - Submit PR
 
