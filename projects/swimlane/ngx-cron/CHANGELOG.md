@@ -2,6 +2,10 @@
 
 ## HEAD (unreleased)
 
+## 6.0.0-alpha.2
+
+- Bug fix: Update minute interval to 1 when `*` is provided
+
 ## 6.0.0-alpha.1
 
 - Bug fix: Pinned construe to a version compatible with Vite and Angular CLI
