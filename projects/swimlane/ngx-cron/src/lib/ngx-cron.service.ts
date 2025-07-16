@@ -361,8 +361,8 @@ export class NgxCronService {
   }
 
   private getSegment(value: string): Array<Array<string | number>> {
-    if (value === undefined) {
-      value = '*';
+    if (value === undefined || value === '*') {
+      return [['*', 1]];
     }
     return value.split(',').map(s => {
       if (s === undefined) {
