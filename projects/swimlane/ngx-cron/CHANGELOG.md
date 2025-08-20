@@ -2,6 +2,11 @@
 
 ## HEAD (unreleased)
 
+## 6.0.0 (2025-08-20)
+
+- Enhancement: Added support for Angular 20
+- Breaking: Removed support for Angular 17 and earlier versions
+
 ## 6.0.0-alpha.2
 
 - Bug fix: Update minute interval to 1 when `*` is provided
