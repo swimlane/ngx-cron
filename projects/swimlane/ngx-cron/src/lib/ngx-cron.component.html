@@ -125,6 +125,7 @@
           <ngx-select
             class="ngx-scroll"
             [filterable]="false"
+            [forceDownwardOpening]="true"
             [ngModel]="[cronData.month]"
             [disabled]="disabled"
             (change)="cronData.month = $event[0]; cronDataChanged()"
@@ -141,6 +142,7 @@
           , only on
           <ngx-select
             [filterable]="false"
+            [forceDownwardOpening]="true"
             [ngModel]="[cronData.weekday]"
             (change)="cronData.weekday = $event[0]; cronDataChanged()"
             [allowClear]="false"
