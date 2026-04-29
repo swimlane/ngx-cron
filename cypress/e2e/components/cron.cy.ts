@@ -1,5 +1,6 @@
 describe('Cron', () => {
   before(() => {
+    cy.viewport(1280, 800);
     cy.visit('/');
     cy.get('.loader').should('not.exist', { timeout: 20000 });
     cy.get('.ngx-section-header button').click();
