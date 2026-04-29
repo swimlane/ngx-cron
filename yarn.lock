@@ -5036,9 +5036,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swimlane/ngx-ui@npm:52.0.0-alpha.0":
-  version: 52.0.0-alpha.0
-  resolution: "@swimlane/ngx-ui@npm:52.0.0-alpha.0"
+"@swimlane/ngx-ui@npm:52.0.0-alpha.1":
+  version: 52.0.0-alpha.1
+  resolution: "@swimlane/ngx-ui@npm:52.0.0-alpha.1"
   dependencies:
     date-fns: "npm:4.1.0"
     mousetrap: "npm:^1.6.2"
@@ -5061,7 +5061,7 @@ __metadata:
     ng-in-viewport: 13.0.0
     ngx-autosize-input: ^2.3.7
     rxjs: 7.x
-  checksum: 10c0/48c6ab429f052077ed99621994078553367bd77ae7b4494dab2a7536f430a551b1d2ae1da09cc7a942d9af82d939cc45970b19aa81d411d763304014deb1e17e
+  checksum: 10c0/f3f11f3557ab3096fe8cb7383f6923fb72272418a025e38e158f3dc0de99aba0957b79d112d70bd878e32be9789252e827838c9d3f668149cb35bb469ebb2ef5
   languageName: node
   linkType: hard
 
@@ -12361,7 +12361,7 @@ __metadata:
     "@angular/platform-browser-dynamic": "npm:^21.2.9"
     "@angular/router": "npm:^21.2.9"
     "@swimlane/eslint-config": "npm:^2.0.0"
-    "@swimlane/ngx-ui": "npm:52.0.0-alpha.0"
+    "@swimlane/ngx-ui": "npm:52.0.0-alpha.1"
     "@swimlane/prettier-config-swimlane": "npm:4.0.0-alpha.0"
     "@types/node": "npm:^22.10.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.59.1"
