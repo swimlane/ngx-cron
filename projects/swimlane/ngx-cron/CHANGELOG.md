@@ -2,6 +2,9 @@
 
 ## HEAD (unreleased)
 
+- Enhancement: Added support for Angular 21
+- Enhancement: Migrating from karma to vitest
+
 ## 6.0.0 (2025-08-20)
 
 - Enhancement: Added support for Angular 20
