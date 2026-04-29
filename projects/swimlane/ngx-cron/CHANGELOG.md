@@ -4,6 +4,7 @@
 
 - Enhancement: Added support for Angular 21
 - Enhancement: Migrating from karma to vitest
+- Breaking: Removed support for Angular 18
 
 ## 6.0.0 (2025-08-20)
 
