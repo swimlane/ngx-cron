@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+## 7.0.0-alpha.0 (2026-04-29)
+
 - Enhancement: Added support for Angular 21
 - Enhancement: Migrating from karma to vitest
 - Breaking: Removed support for Angular 18
