@@ -101,15 +101,11 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
-            "scripts": []
+            "buildTarget": "ngx-cron:build",
+            "browsers": ["ChromiumHeadless"]
           }
         },
         "e2e": {
@@ -139,7 +135,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/swimlane/ngx-cron/tsconfig.lib.json",
             "project": "projects/swimlane/ngx-cron/ng-package.json"
@@ -151,11 +147,11 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "main": "projects/swimlane/ngx-cron/src/test.ts",
             "tsConfig": "projects/swimlane/ngx-cron/tsconfig.spec.json",
-            "karmaConfig": "projects/swimlane/ngx-cron/karma.conf.js"
+            "buildTarget": "@swimlane/ngx-cron:build",
+            "browsers": ["ChromiumHeadless"]
           }
         }
       }

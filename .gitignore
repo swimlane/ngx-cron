@@ -52,3 +52,6 @@ package.tgz
 
 cypress/videos/
 cypress/screenshots/
+
+# Vitest browser mode failure screenshots
+**/__screenshots__/
