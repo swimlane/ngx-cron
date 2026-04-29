@@ -16,7 +16,8 @@
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": [
-          "./tsconfig.json"
+          "./tsconfig.json",
+          "./projects/swimlane/ngx-cron/tsconfig.json"
         ]
       },
       "extends": [

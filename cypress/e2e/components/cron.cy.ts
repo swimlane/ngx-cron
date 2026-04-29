@@ -1,5 +1,6 @@
 describe('Cron', () => {
   before(() => {
+    cy.viewport(1280, 800);
     cy.visit('/');
     cy.get('.loader').should('not.exist', { timeout: 20000 });
     cy.get('.ngx-section-header button').click();
@@ -49,6 +50,7 @@ describe('Cron', () => {
       cy.get('@SELECTION').find('ngx-select').as('DAYS_OF_WEEK').click();
       cy.get('@DAYS_OF_WEEK')
         .find('.ngx-select-dropdown-options')
+        .first()
         .within(() => {
           cy.get('li.ngx-select-dropdown-option').eq(0).should('contain', 'Sunday');
           cy.get('li.ngx-select-dropdown-option').eq(1).should('contain', 'Monday');
@@ -76,21 +78,27 @@ describe('Cron', () => {
     it('Displays months', () => {
       cy.get('@YEARLY').click();
       cy.get('@SELECTION').find('ngx-select').as('MONTHS').click();
+      const monthNames = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ];
       cy.get('@MONTHS')
         .find('.ngx-select-dropdown-options li.ngx-select-dropdown-option')
-        .within(e => {
-          cy.wrap(e[0]).should('contain', 'January');
-          cy.wrap(e[1]).should('contain', 'February');
-          cy.wrap(e[2]).should('contain', 'March');
-          cy.wrap(e[3]).should('contain', 'April');
-          cy.wrap(e[4]).should('contain', 'May');
-          cy.wrap(e[5]).should('contain', 'June');
-          cy.wrap(e[6]).should('contain', 'July');
-          cy.wrap(e[7]).should('contain', 'August');
-          cy.wrap(e[8]).should('contain', 'September');
-          cy.wrap(e[9]).should('contain', 'October');
-          cy.wrap(e[10]).should('contain', 'November');
-          cy.wrap(e[11]).should('contain', 'December');
+        .should($lis => {
+          expect($lis).to.have.length(12);
+          monthNames.forEach((name, i) => {
+            expect($lis.eq(i), `month ${i}`).to.contain(name);
+          });
         });
     });
   });

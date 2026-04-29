@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@swimlane/ngx-ui/index';
+@use '@swimlane/ngx-ui/index' as *;
 
 body {
   max-width: 1024px;

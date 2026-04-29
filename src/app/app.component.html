@@ -14,6 +14,7 @@
     [filterable]="false"
     [allowClear]="true"
     [multiple]="true"
+    [forceDownwardOpening]="true"
     label="Available Periods"
     [(ngModel)]="allowedPeriods"
     >
@@ -25,6 +26,7 @@
   <ngx-select
     label="Available languages"
     class="ngx-scroll"
+    [forceDownwardOpening]="true"
     [ngModel]="[language]"
     (change)="language = $event[0]"
     [allowClear]="false"
@@ -34,7 +36,12 @@
     }
   </ngx-select>
 
-  <ngx-select label="Available Timezones" [ngModel]="[timezone]" (ngModelChange)="timezone = $event[0]">
+  <ngx-select
+    label="Available Timezones"
+    [forceDownwardOpening]="true"
+    [ngModel]="[timezone]"
+    (ngModelChange)="timezone = $event[0]"
+    >
     <ngx-select-option name="None" [value]="''"></ngx-select-option>
     @for (tz of allowedTimezones; track tz) {
       <ngx-select-option [name]="tz" [value]="tz"></ngx-select-option>

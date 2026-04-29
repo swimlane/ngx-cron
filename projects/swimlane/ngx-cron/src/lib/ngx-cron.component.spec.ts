@@ -10,8 +10,8 @@ describe('NgxCronComponent', () => {
   let fixture: ComponentFixture<NgxCronComponent>;
   let selections: any;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [NgxUIModule, NoopAnimationsModule],
       declarations: [NgxCronComponent],
       providers: [{ provide: NgxCronService, useClass: NgxCronService }]
@@ -116,8 +116,9 @@ describe('NgxCronComponent', () => {
     component.language = 'es';
     component.cron = '0 * * * *';
     fixture.detectChanges();
-    expect(selections.textContent).toContain('At');
-    expect(selections.textContent).toContain('minutes past the hour');
+    const text = selections.textContent?.replace(/\s+/g, ' ') ?? '';
+    expect(text).toContain('At');
+    expect(text).toContain('minutes past the hour');
     expect(component.description).toContain('Cada hora');
   });
 

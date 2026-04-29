@@ -9,7 +9,7 @@
     "experimentalDecorators": true,
     "module": "es2022",
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "lib": ["es2022", "dom"],
@@ -22,5 +22,11 @@
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "preserveWhitespaces": true
-  }
+  },
+  "exclude": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/*.spec.ts",
+    "projects/swimlane/ngx-cron/**"
+  ]
 }
