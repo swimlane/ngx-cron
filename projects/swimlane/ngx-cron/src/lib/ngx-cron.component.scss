@@ -52,11 +52,15 @@ ngx-cron-input {
 
   .ngx-button {
     padding: 0.35rem;
-    margin-right: 5px;
     font-size: 0.8em;
   }
 
-  .period-selection,
+  .period-selection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
   .selections {
     margin-top: 16px;
     height: 70px;
@@ -64,8 +68,10 @@ ngx-cron-input {
     flex-direction: column;
 
     .date-selection {
-      display: inline-block;
+      display: inline-flex;
       align-items: baseline;
+      flex-wrap: wrap;
+      gap: 5px;
     }
   }
 

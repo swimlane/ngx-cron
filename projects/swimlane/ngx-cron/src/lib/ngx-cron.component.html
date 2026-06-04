@@ -1,6 +1,6 @@
 <div>
   @if (_allowedPeriods.length > 1) {
-    <div>
+    <div class="period-selection">
       @for (key of _allowedPeriods; track key) {
         <ngx-button
           class="btn"
@@ -23,8 +23,7 @@
         </span>
       }
       @if (cronData.period === 'Hourly') {
-        <span>
-          At
+          <span>At</span>
           <ngx-input
             type="number"
             [(ngModel)]="cronData.minute"
@@ -33,19 +32,18 @@
             min="0"
             max="59"
             [disabled]="disabled"
+            [withHint]="false"
             >
           </ngx-input>
           <span [ngPlural]="cronData.minute">
             <ng-template ngPluralCase="=1">minute</ng-template>
             <ng-template ngPluralCase="other">minutes</ng-template>
           </span>
-          past the hour
-        </span>
+          <span>past the hour</span>
       }
 
       @if (cronData.period === 'Secondly') {
-        <span class="every">
-          Every
+          <span>Every</span>
           <ngx-input
             type="number"
             [ngModel]="cronData.secondInterval"
@@ -54,17 +52,16 @@
             min="1"
             max="59"
             [disabled]="disabled"
+            [withHint]="false"
             >
           </ngx-input>
           <span [ngPlural]="cronData.secondInterval">
             <ng-template ngPluralCase="=1">second</ng-template>
             <ng-template ngPluralCase="other">seconds</ng-template>
           </span>
-        </span>
       }
       @if (cronData.period === 'Minutely') {
-        <span class="every">
-          Every
+          <span>Every</span>
           <ngx-input
             type="number"
             [ngModel]="cronData.minuteInterval"
@@ -73,13 +70,13 @@
             min="1"
             max="59"
             [disabled]="disabled"
+            [withHint]="false"
             >
           </ngx-input>
           <span [ngPlural]="cronData.minuteInterval">
             <ng-template ngPluralCase="=1">minute</ng-template>
             <ng-template ngPluralCase="other">minutes</ng-template>
           </span>
-        </span>
       }
       @if (
         cronData.period === 'Daily' ||
@@ -87,9 +84,7 @@
         cronData.period === 'Monthly' ||
         cronData.period === 'Yearly'
         ) {
-        <span
-          >
-          At
+          <span>At</span>
           <ngx-date-time
             [ngModel]="time"
             (ngModelChange)="onValueChange($event)"
@@ -102,11 +97,9 @@
             (dateTimeSelected)="onDateTimeSelected($event)"
             >
           </ngx-date-time>
-        </span>
       }
       @if (cronData.period === 'Monthly' || cronData.period === 'Yearly') {
-        <span
-          >, on day
+          <span>, on day</span>
           <ngx-input
             type="number"
             [(ngModel)]="cronData.day"
@@ -114,14 +107,14 @@
             min="1"
             [max]="cronData.period === 'Yearly' ? cronData.daysMax : 31"
             [disabled]="disabled"
+            [withHint]="false"
             >
           </ngx-input>
-          of the month
-        </span>
+          <span>of the month</span>
       }
       @if (cronData.period === 'Yearly') {
         <span
-          >, only in
+          >, only in</span>
           <ngx-select
             class="ngx-scroll"
             [filterable]="false"
@@ -135,11 +128,10 @@
               <ngx-select-option [name]="month" [value]="month"></ngx-select-option>
             }
           </ngx-select>
-        </span>
       }
       @if (cronData.period === 'Weekly') {
         <span>
-          , only on
+          , only on</span>
           <ngx-select
             [filterable]="false"
             [forceDownwardOpening]="true"
@@ -152,7 +144,6 @@
               <ngx-select-option [name]="day" [value]="day"></ngx-select-option>
             }
           </ngx-select>
-        </span>
       }
     </div>
     @if (!cronData.valid && cronData.period !== 'Custom') {
