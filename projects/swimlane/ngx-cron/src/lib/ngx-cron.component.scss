@@ -2,6 +2,7 @@ ngx-cron-input {
   display: block;
   border: 1px solid transparent;
   padding: 10px;
+  font-family: Source Sans Pro;
 
   .ngx-input,
   .ngx-select,
@@ -26,23 +27,29 @@ ngx-cron-input {
     min-width: 200px;
   }
 
-  ngx-date-time {
+  ngx-date-time.ngx-date-time.autosize.no-label {
     display: inline-block !important;
     min-width: 90px;
     vertical-align: middle;
     height: 25px;
 
-    .ngx-input {
-      margin-top: 0;
+    > div {
+      position: relative;
 
-      .ngx-input-wrap .ngx-input-hint {
-        height: 0;
-        min-height: 0;
+      .ngx-input {
+        margin-top: 0;
+
+        .ngx-input-wrap .ngx-input-hint {
+          height: 0;
+          min-height: 0;
+        }
       }
-    }
-    .calendar-dialog-btn {
-      font-size: 0.8em;
-      margin-top: -2px;
+      // Style to position button in the middle of the input
+      button.calendar-dialog-btn {
+        margin-top: -4px; // Input has a margin of 8px to position the button in middle we have a margin of -4px to position the button in the middle
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
   }
 
@@ -62,10 +69,13 @@ ngx-cron-input {
   }
 
   .selections {
-    margin-top: 16px;
-    height: 70px;
+    margin-top: var(--spacing-8);
     display: flex;
     flex-direction: column;
+
+    .cron-input__text {
+      font-size: var(--font-size-s);
+    }
 
     .date-selection {
       display: inline-flex;
