@@ -104,8 +104,7 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "tsconfig.spec.json",
-            "buildTarget": "ngx-cron:build",
-            "browsers": ["ChromiumHeadless"]
+            "buildTarget": "ngx-cron:build"
           }
         },
         "e2e": {
@@ -151,7 +150,8 @@
           "options": {
             "tsConfig": "projects/swimlane/ngx-cron/tsconfig.spec.json",
             "buildTarget": "@swimlane/ngx-cron:build",
-            "browsers": ["ChromiumHeadless"]
+            "runnerConfig": "vitest.config.ts",
+            "setupFiles": ["projects/swimlane/ngx-cron/src/test-setup/jsdom-polyfills.setup.ts"]
           }
         }
       }
