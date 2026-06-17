@@ -20,9 +20,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Install chromium
-        run: npx playwright install --with-deps chromium
-
       - name: Build
         run: |
           yarn build
