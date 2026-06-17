@@ -1,173 +1,147 @@
 <div>
   @if (_allowedPeriods.length > 1) {
-    <div>
-      @for (key of _allowedPeriods; track key) {
-        <ngx-button
-          class="btn"
-          [class.btn-primary]="cronData.period === key"
-          (click)="cronData.period = key; cronDataChanged()"
-          [disabled]="disabled"
-          >
-          {{ key }}
-        </ngx-button>
-      }
-    </div>
+  <div class="period-selection">
+    @for (key of _allowedPeriods; track key) {
+    <ngx-button
+      class="btn"
+      [class.btn-primary]="cronData.period === key"
+      (click)="cronData.period = key; cronDataChanged()"
+      [disabled]="disabled"
+    >
+      {{ key }}
+    </ngx-button>
+    }
+  </div>
   }
 
   <div class="selections">
     <div class="date-selection">
       @if (cronData.period === 'Custom') {
-        <span>
-          <ngx-input [(ngModel)]="cron" [hint]="cronData.description" [disabled]="disabled || disableCustomInput">
-          </ngx-input>
-        </span>
-      }
-      @if (cronData.period === 'Hourly') {
-        <span>
-          At
-          <ngx-input
-            type="number"
-            [(ngModel)]="cronData.minute"
-            (ngModelChange)="cronData.minute = +$event"
-            (change)="cronDataChanged()"
-            min="0"
-            max="59"
-            [disabled]="disabled"
-            >
-          </ngx-input>
-          <span [ngPlural]="cronData.minute">
-            <ng-template ngPluralCase="=1">minute</ng-template>
-            <ng-template ngPluralCase="other">minutes</ng-template>
-          </span>
-          past the hour
-        </span>
-      }
-
-      @if (cronData.period === 'Secondly') {
-        <span class="every">
-          Every
-          <ngx-input
-            type="number"
-            [ngModel]="cronData.secondInterval"
-            (ngModelChange)="cronData.secondInterval = +$event"
-            (change)="cronDataChanged()"
-            min="1"
-            max="59"
-            [disabled]="disabled"
-            >
-          </ngx-input>
-          <span [ngPlural]="cronData.secondInterval">
-            <ng-template ngPluralCase="=1">second</ng-template>
-            <ng-template ngPluralCase="other">seconds</ng-template>
-          </span>
-        </span>
-      }
-      @if (cronData.period === 'Minutely') {
-        <span class="every">
-          Every
-          <ngx-input
-            type="number"
-            [ngModel]="cronData.minuteInterval"
-            (ngModelChange)="cronData.minuteInterval = +$event"
-            (change)="cronDataChanged()"
-            min="1"
-            max="59"
-            [disabled]="disabled"
-            >
-          </ngx-input>
-          <span [ngPlural]="cronData.minuteInterval">
-            <ng-template ngPluralCase="=1">minute</ng-template>
-            <ng-template ngPluralCase="other">minutes</ng-template>
-          </span>
-        </span>
-      }
-      @if (
-        cronData.period === 'Daily' ||
-        cronData.period === 'Weekly' ||
-        cronData.period === 'Monthly' ||
-        cronData.period === 'Yearly'
-        ) {
-        <span
-          >
-          At
-          <ngx-date-time
-            [ngModel]="time"
-            (ngModelChange)="onValueChange($event)"
-            inputType="time"
-            [displayMode]="disableTimezoneDisplay ? 'local' : undefined"
-            [disabled]="disabled"
-            [timezone]="timezone"
-            [autosize]="true"
-            (blur)="onBlurDateTimeChanged($event)"
-            (dateTimeSelected)="onDateTimeSelected($event)"
-            >
-          </ngx-date-time>
-        </span>
-      }
-      @if (cronData.period === 'Monthly' || cronData.period === 'Yearly') {
-        <span
-          >, on day
-          <ngx-input
-            type="number"
-            [(ngModel)]="cronData.day"
-            (change)="cronDataChanged()"
-            min="1"
-            [max]="cronData.period === 'Yearly' ? cronData.daysMax : 31"
-            [disabled]="disabled"
-            >
-          </ngx-input>
-          of the month
-        </span>
-      }
-      @if (cronData.period === 'Yearly') {
-        <span
-          >, only in
-          <ngx-select
-            class="ngx-scroll"
-            [filterable]="false"
-            [forceDownwardOpening]="true"
-            [ngModel]="[cronData.month]"
-            [disabled]="disabled"
-            (change)="cronData.month = $event[0]; cronDataChanged()"
-            [allowClear]="false"
-            >
-            @for (month of months; track month) {
-              <ngx-select-option [name]="month" [value]="month"></ngx-select-option>
-            }
-          </ngx-select>
-        </span>
-      }
-      @if (cronData.period === 'Weekly') {
-        <span>
-          , only on
-          <ngx-select
-            [filterable]="false"
-            [forceDownwardOpening]="true"
-            [ngModel]="[cronData.weekday]"
-            (change)="cronData.weekday = $event[0]; cronDataChanged()"
-            [allowClear]="false"
-            [disabled]="disabled"
-            >
-            @for (day of dows; track day) {
-              <ngx-select-option [name]="day" [value]="day"></ngx-select-option>
-            }
-          </ngx-select>
-        </span>
+      <span>
+        <ngx-input [(ngModel)]="cron" [hint]="cronData.description" [disabled]="disabled || disableCustomInput">
+        </ngx-input>
+      </span>
+      } @if (cronData.period === 'Hourly') {
+      <span class="cron-input__text">At</span>
+      <ngx-input
+        type="number"
+        [(ngModel)]="cronData.minute"
+        (ngModelChange)="cronData.minute = +$event"
+        (change)="cronDataChanged()"
+        min="0"
+        max="59"
+        [disabled]="disabled"
+        [withHint]="false"
+      >
+      </ngx-input>
+      <span class="cron-input__text" [ngPlural]="cronData.minute">
+        <ng-template ngPluralCase="=1">minute</ng-template>
+        <ng-template ngPluralCase="other">minutes</ng-template>
+      </span>
+      <span class="cron-input__text">past the hour</span>
+      } @if (cronData.period === 'Secondly') {
+      <span class="cron-input__text">Every</span>
+      <ngx-input
+        type="number"
+        [ngModel]="cronData.secondInterval"
+        (ngModelChange)="cronData.secondInterval = +$event"
+        (change)="cronDataChanged()"
+        min="1"
+        max="59"
+        [disabled]="disabled"
+        [withHint]="false"
+      >
+      </ngx-input>
+      <span class="cron-input__text" [ngPlural]="cronData.secondInterval">
+        <ng-template ngPluralCase="=1">second</ng-template>
+        <ng-template ngPluralCase="other">seconds</ng-template>
+      </span>
+      } @if (cronData.period === 'Minutely') {
+      <span class="cron-input__text">Every</span>
+      <ngx-input
+        type="number"
+        [ngModel]="cronData.minuteInterval"
+        (ngModelChange)="cronData.minuteInterval = +$event"
+        (change)="cronDataChanged()"
+        min="1"
+        max="59"
+        [disabled]="disabled"
+        [withHint]="false"
+      >
+      </ngx-input>
+      <span class="cron-input__text" [ngPlural]="cronData.minuteInterval">
+        <ng-template ngPluralCase="=1">minute</ng-template>
+        <ng-template ngPluralCase="other">minutes</ng-template>
+      </span>
+      } @if ( cronData.period === 'Daily' || cronData.period === 'Weekly' || cronData.period === 'Monthly' ||
+      cronData.period === 'Yearly' ) {
+      <span class="cron-input__text">At</span>
+      <ngx-date-time
+        [ngModel]="time"
+        (ngModelChange)="onValueChange($event)"
+        inputType="time"
+        [displayMode]="disableTimezoneDisplay ? 'local' : undefined"
+        [disabled]="disabled"
+        [timezone]="timezone"
+        [autosize]="true"
+        (blur)="onBlurDateTimeChanged($event)"
+        (dateTimeSelected)="onDateTimeSelected($event)"
+      >
+      </ngx-date-time>
+      } @if (cronData.period === 'Monthly' || cronData.period === 'Yearly') {
+      <span class="cron-input__text">, on day</span>
+      <ngx-input
+        type="number"
+        [(ngModel)]="cronData.day"
+        (change)="cronDataChanged()"
+        min="1"
+        [max]="cronData.period === 'Yearly' ? cronData.daysMax : 31"
+        [disabled]="disabled"
+        [withHint]="false"
+      >
+      </ngx-input>
+      <span class="cron-input__text">of the month</span>
+      } @if (cronData.period === 'Yearly') {
+      <span class="cron-input__text">, only in</span>
+      <ngx-select
+        class="ngx-scroll"
+        [filterable]="false"
+        [forceDownwardOpening]="true"
+        [ngModel]="[cronData.month]"
+        [disabled]="disabled"
+        (change)="cronData.month = $event[0]; cronDataChanged()"
+        [allowClear]="false"
+        [withHint]="false"
+      >
+        @for (month of months; track month) {
+        <ngx-select-option [name]="month" [value]="month"></ngx-select-option>
+        }
+      </ngx-select>
+      } @if (cronData.period === 'Weekly') {
+      <span class="cron-input__text">, only on</span>
+      <ngx-select
+        [filterable]="false"
+        [forceDownwardOpening]="true"
+        [ngModel]="[cronData.weekday]"
+        (change)="cronData.weekday = $event[0]; cronDataChanged()"
+        [allowClear]="false"
+        [disabled]="disabled"
+        [withHint]="false"
+      >
+        @for (day of dows; track day) {
+        <ngx-select-option [name]="day" [value]="day"></ngx-select-option>
+        }
+      </ngx-select>
       }
     </div>
     @if (!cronData.valid && cronData.period !== 'Custom') {
-      <p class="invalid-expression">
-        {{ cronData.description }}
-      </p>
-    }
-
-    @if (language !== 'en' && cronData.valid && cronData.period !== 'Custom') {
-      <p
-        class="language-expression"
-        [ngClass]="{ 'hint-margin-top': cronData.period === 'Daily' }"
-        >
-        {{ cronData.description }}
-      </p>
+    <p class="invalid-expression">
+      {{ cronData.description }}
+    </p>
+    } @if (language !== 'en' && cronData.valid && cronData.period !== 'Custom') {
+    <p class="language-expression" [ngClass]="{ 'hint-margin-top': cronData.period === 'Daily' }">
+      {{ cronData.description }}
+    </p>
     }
   </div>
 </div>
