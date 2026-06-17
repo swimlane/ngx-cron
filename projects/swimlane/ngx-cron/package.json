@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/ngx-cron",
-  "version": "7.0.0-alpha.0",
+  "version": "7.0.0-alpha.1",
   "peerDependencies": {
     "@angular/common": "19.x || 20.x || 21.x",
     "@angular/core": "19.x || 20.x || 21.x",

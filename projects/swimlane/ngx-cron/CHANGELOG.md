@@ -2,6 +2,10 @@
 
 ## HEAD (unreleased)
 
+## 7.0.0-alpha.1 (2026-06-17)
+
+- Bug fix: Fixed styling and layout inconsistencies
+
 ## 7.0.0-alpha.0 (2026-04-29)
 
 - Enhancement: Added support for Angular 21
