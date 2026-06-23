@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+- Bug Fix: Update time when cron value changed 
+
 ## 7.0.0
 
 - Enhancement: Added support for Angular 21
