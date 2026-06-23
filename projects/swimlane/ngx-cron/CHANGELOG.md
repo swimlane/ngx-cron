@@ -2,7 +2,7 @@
 
 ## HEAD (unreleased)
 
-- Bug Fix: Update time when cron value changed 
+- Bug Fix: Update time when cron value changed
 
 ## 7.0.0
 
