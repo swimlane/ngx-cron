@@ -143,6 +143,10 @@ export class NgxCronComponent implements OnChanges, OnInit {
 
       this.disableCustomInput = this._allowedPeriods.indexOf(Period.Custom) < 0;
     }
+
+    if ('cron' in changes && this.cronData.time) {
+      this.time = this.cronData.time.format(this.timeFormat);
+    }
   }
 
   ngOnInit(): void {

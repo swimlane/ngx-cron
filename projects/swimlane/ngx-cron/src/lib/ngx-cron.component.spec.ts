@@ -132,4 +132,15 @@ describe('NgxCronComponent', () => {
     expect(selections.textContent).toContain('on day');
     expect(selections.textContent).toContain('of the month');
   });
+
+  it('should update the displayed time when the cron input changes', () => {
+    fixture.componentRef.setInput('cron', '0 6 * * *');
+    fixture.detectChanges();
+    expect(component.time).toBe('6:00 AM');
+
+    fixture.componentRef.setInput('cron', '0 7 * * *');
+    fixture.detectChanges();
+    expect(component.time).toBe('7:00 AM');
+    expect(component.description).toBe('At 07:00 AM');
+  });
 });
