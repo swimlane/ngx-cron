@@ -2,9 +2,11 @@
 
 ## HEAD (unreleased)
 
+# 7.0.1 (2026-06-23)
+
 - Bug Fix: Update time when cron value changed
 
-## 7.0.0
+## 7.0.0 (2026-06-17)
 
 - Enhancement: Added support for Angular 21
 - Enhancement: Migrating from karma to vitest
