@@ -7,7 +7,8 @@ import {
   Output,
   HostBinding,
   SimpleChanges,
-  OnInit
+  OnInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import moment from 'moment-timezone';
@@ -19,6 +20,7 @@ import { NgxCronService, ICronData, Period, Weekday, Month } from './ngx-cron.se
   templateUrl: './ngx-cron.component.html',
   styleUrls: ['./ngx-cron.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class NgxCronComponent implements OnChanges, OnInit {

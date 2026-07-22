@@ -6,13 +6,17 @@
     "declaration": true,
     "inlineSources": true,
     "types": [],
-    "lib": ["dom", "es2022"]
+    "lib": ["dom", "es2022"],
+    "strict": false,
+    "skipLibCheck": true,
+    "ignoreDeprecations": "6.0"
   },
   "angularCompilerOptions": {
     "compilationMode": "partial",
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
-    "enableResourceInlining": true
+    "enableResourceInlining": true,
+    "strictTemplates": false
   },
   "exclude": ["src/test.ts", "**/*.spec.ts"]
 }
