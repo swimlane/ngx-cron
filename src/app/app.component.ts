@@ -14,8 +14,8 @@ import { NgxCronService } from 'projects/swimlane/ngx-cron/src/public-api';
 })
 export class AppComponent {
   cron = '* * * * *';
-  periods = NgxCronService.PERIODKEYS;
-  allowedPeriods = NgxCronService.PERIODKEYS;
+  periods = [...NgxCronService.PERIODKEYS];
+  allowedPeriods = [...NgxCronService.PERIODKEYS];
 
   languages = [
     { name: 'English', value: 'en' },
