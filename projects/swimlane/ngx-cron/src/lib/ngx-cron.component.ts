@@ -12,7 +12,7 @@ import {
 
 import moment from 'moment-timezone';
 
-import { NgxCronService, ICronData, Period, Weekday, Month } from './ngx-cron.service';
+import { NgxCronService, ICronData, Period } from './ngx-cron.service';
 
 @Component({
   selector: 'ngx-cron-input',
@@ -89,7 +89,7 @@ export class NgxCronComponent implements OnChanges, OnInit {
   disableCustomInput = false;
 
   cronData: ICronData;
-  time: string = '12:00 AM';
+  time = '12:00 AM';
 
   private _cron = '0 * * * *';
   private _disabled = false;
