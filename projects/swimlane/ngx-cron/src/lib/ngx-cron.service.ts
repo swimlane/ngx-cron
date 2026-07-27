@@ -54,7 +54,7 @@ export interface ICronData {
   day?: number;
   month?: keyof typeof Month;
   daysMax?: number;
-  time?: moment.Moment;
+  time?: moment.Moment | null;
   weekday?: keyof typeof Weekday;
 }
 
@@ -136,7 +136,8 @@ export class NgxCronService {
   private timezone = '';
 
   getMidnight() {
-    return moment.tz([1990, 0, 1, 0, 0, 0], this.timezone);
+    const now = moment.tz(this.timezone);
+    return moment.tz([now.year(), now.month(), now.date(), 0, 0, 0], this.timezone);
   }
 
   toString(cron: string) {
@@ -167,7 +168,7 @@ export class NgxCronService {
         valid: true,
         isQuartz: e.expressionParts[0] !== ''
       };
-    } catch (err) {
+    } catch {
       return {
         description:
           this.validateCronExpression(cron, false, configOverrides)?.error ||
@@ -337,11 +338,14 @@ export class NgxCronService {
     return typeof v === 'number' ? v : null;
   }
 
-  private getTime(expressionParts: string[]): moment.Moment {
+  private getTime(expressionParts: string[]): moment.Moment | null {
     const s = this.getSeconds(expressionParts);
     const h = this.getHour(expressionParts);
     const m = this.getMin(expressionParts);
-    return typeof h === 'number' && typeof m === 'number' ? moment.tz([1990, 1, 1, h, m, s || 0], this.timezone) : null;
+    const now = moment.tz(this.timezone);
+    return typeof h === 'number' && typeof m === 'number'
+      ? moment.tz([now.year(), now.month(), now.date(), h, m, s || 0], this.timezone)
+      : null;
   }
 
   private getMonth(expressionParts: string[]): keyof typeof Month {
