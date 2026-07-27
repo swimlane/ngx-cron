@@ -2,6 +2,10 @@
 
 ## HEAD (unreleased)
 
+# 7.0.2 (2026-07-28)
+
+- Bug Fix: Fix Infinite onChange loop.
+
 # 7.0.1 (2026-06-23)
 
 - Bug Fix: Update time when cron value changed
