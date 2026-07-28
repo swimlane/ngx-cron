@@ -7,7 +7,8 @@ import {
   Output,
   HostBinding,
   SimpleChanges,
-  OnInit
+  OnInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import moment from 'moment-timezone';
@@ -19,6 +20,7 @@ import { NgxCronService, ICronData, Period } from './ngx-cron.service';
   templateUrl: './ngx-cron.component.html',
   styleUrls: ['./ngx-cron.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class NgxCronComponent implements OnChanges, OnInit {
@@ -34,7 +36,7 @@ export class NgxCronComponent implements OnChanges, OnInit {
   }
 
   @Input()
-  allowedPeriods = NgxCronService.PERIODKEYS;
+  allowedPeriods = [...NgxCronService.PERIODKEYS];
 
   @Input()
   allowQuartz = true;
@@ -65,7 +67,7 @@ export class NgxCronComponent implements OnChanges, OnInit {
     return this._disableTimezoneDisplay || !this.timezone;
   }
 
-  periods = NgxCronService.PERIODKEYS;
+  periods = [...NgxCronService.PERIODKEYS];
   dows = NgxCronService.DOWS;
   months = NgxCronService.MONTHS;
   predefined = NgxCronService.PERIODS;
@@ -84,7 +86,7 @@ export class NgxCronComponent implements OnChanges, OnInit {
     return this.timezone ? 'h:mm A Z' : 'h:mm A';
   }
 
-  _allowedPeriods: Period[] = NgxCronService.PERIODKEYS;
+  _allowedPeriods: Period[] = [...NgxCronService.PERIODKEYS];
 
   disableCustomInput = false;
 
