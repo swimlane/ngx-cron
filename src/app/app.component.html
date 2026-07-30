@@ -61,9 +61,9 @@
     #cronComp
     [(cron)]="cron"
     [allowedPeriods]="allowedPeriods"
-    [disabled]="$safeNavigationMigration(disabledToggle?.value)"
+    [disabled]="disabledToggle?.value"
     [allowQuartz]="!disabledQuartz?.value"
-    [disableTimezoneDisplay]="$safeNavigationMigration(disabledTimezone?.value)"
+    [disableTimezoneDisplay]="disabledTimezone?.value"
     [language]="language"
     [timezone]="timezone"
     [cronValidateConfigOverrides]="cronValidateConfigOverrides"

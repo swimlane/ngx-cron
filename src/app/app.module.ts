@@ -5,12 +5,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NgxCronModule } from 'projects/swimlane/ngx-cron/src/public-api';
 import { NgxUIModule } from '@swimlane/ngx-ui';
-import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   bootstrap: [AppComponent],
   imports: [BrowserModule, BrowserAnimationsModule, NgxCronModule, NgxUIModule],
-  providers: [provideHttpClient(withInterceptorsFromDi(), withXhr())]
+  providers: [provideHttpClient(withInterceptorsFromDi())]
 })
 export class AppModule {}

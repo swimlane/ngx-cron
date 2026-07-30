@@ -5,8 +5,5 @@
     "types": ["vitest/globals", "node"]
   },
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"],
-  "exclude": [],
-  "angularCompilerOptions": {
-    "strictTemplates": false
-  }
+  "exclude": []
 }

@@ -2,9 +2,6 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "sourceMap": false,
-    "types": ["cypress"],
-    "rootDir": "..",
-    "isolatedModules": true
-  },
-  "include": ["**/*.ts", "../cypress.config.ts"]
+    "types": ["cypress"]
+  }
 }
