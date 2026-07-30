@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 import moment from 'moment-timezone';
 
@@ -9,13 +9,12 @@ import { NgxCronService } from 'projects/swimlane/ngx-cron/src/public-api';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class AppComponent {
   cron = '* * * * *';
-  periods = [...NgxCronService.PERIODKEYS];
-  allowedPeriods = [...NgxCronService.PERIODKEYS];
+  periods = Object.keys(NgxCronService.PERIODS);
+  allowedPeriods = Object.keys(NgxCronService.PERIODS);
 
   languages = [
     { name: 'English', value: 'en' },

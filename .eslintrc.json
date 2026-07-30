@@ -1,0 +1,54 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "dist/**/*",
+    "cypress/**/*"
+  ],
+  "extends": [
+    "@swimlane",
+    "prettier"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": [
+          "./tsconfig.json",
+          "./projects/swimlane/ngx-cron/tsconfig.json"
+        ]
+      },
+      "extends": [
+        "@swimlane/eslint-config/typescript",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+      ],
+      "rules": {
+        "@angular-eslint/directive-class-suffix": "off",
+        "@angular-eslint/component-class-suffix": "off",
+        "@angular-eslint/no-input-rename": "off",
+        "@angular-eslint/no-output-native": "off",
+        "@angular-eslint/use-lifecycle-interface": "off",
+        "@angular-eslint/no-output-on-prefix": "off",
+        "@angular-eslint/prefer-standalone": "off",
+        "@angular-eslint/prefer-inject": "off",
+        "@typescript-eslint/no-empty-object-type": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/consistent-type-imports": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-duplicate-enum-values": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
+    }
+  ]
+}
