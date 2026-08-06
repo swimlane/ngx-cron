@@ -75,6 +75,7 @@ export class NgxCronService {
   static DOWS = Array.from({ length: 7 }, (_, i) => Weekday[i]) as Array<keyof typeof Weekday>;
   static MONTHS = Array.from({ length: 12 }, (_, i) => Month[i]) as Array<keyof typeof Month>;
 
+  /* eslint-disable security/detect-unsafe-regex -- fixed cron period pattern matchers; not user-supplied input */
   static PERIODS = {
     Secondly: {
       cron: '* * * * * *',
@@ -109,6 +110,7 @@ export class NgxCronService {
     Yearly: { cron: '0 0 1 1 *', regex: /^(\d+\s){4,5}\*$/, quartz: false },
     Custom: { cron: '* * * * *', regex: /^.*$/, quartz: false }
   };
+  /* eslint-enable security/detect-unsafe-regex */
 
   private cronValidateConfig = {
     preset: 'default',
@@ -220,6 +222,7 @@ export class NgxCronService {
         break;
       case 'Weekly':
         dow = Weekday[cron.weekday];
+      // falls through — Weekly shares Daily time fields
       case 'Daily':
         cron.time = cron.time || this.getMidnight();
         min = cron.time.minutes();
@@ -230,6 +233,7 @@ export class NgxCronService {
         if (cron.month === undefined) {
           month = Month.January;
         }
+      // falls through — Yearly shares Monthly day/time fields
       case 'Monthly':
         min = cron.time.minutes();
         hour = cron.time.hours();

@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 import moment from 'moment-timezone';
 
@@ -9,12 +9,14 @@ import { NgxCronService } from 'projects/swimlane/ngx-cron/src/public-api';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection -- Angular 22 migration: preserve pre-v22 check-always behavior until OnPush
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class AppComponent {
   cron = '* * * * *';
-  periods = Object.keys(NgxCronService.PERIODS);
-  allowedPeriods = Object.keys(NgxCronService.PERIODS);
+  periods = [...NgxCronService.PERIODKEYS];
+  allowedPeriods = [...NgxCronService.PERIODKEYS];
 
   languages = [
     { name: 'English', value: 'en' },

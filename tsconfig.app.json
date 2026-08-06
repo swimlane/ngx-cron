@@ -5,7 +5,8 @@
     "types": []
   },
   "angularCompilerOptions": {
-    "preserveWhitespaces": true
+    "preserveWhitespaces": true,
+    "strictTemplates": false
   },
   "files": ["src/main.ts", "src/polyfills.ts"],
   "include": ["src/**/*.d.ts"]

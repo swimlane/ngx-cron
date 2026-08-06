@@ -4,6 +4,15 @@
 
 ![](https://content.screencast.com/users/hypercubed/folders/Snagit/media/6ae021c1-738b-4744-a1d1-654578400844/2018-04-19_15-33-16.png)
 
+## Compatibility
+
+| `@swimlane/ngx-cron` | Angular |
+| -------------------- | ------- |
+| HEAD (unreleased) | 22.x |
+| 7.x | 19.x – 21.x |
+
+HEAD requires Angular 22 and drops support for Angular 19–21.
+
 ## Installation instructions
 
 Install `@swimlane/ngx-cron` and peers from `npm`:

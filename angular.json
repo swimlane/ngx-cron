@@ -122,7 +122,12 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html",
+              "projects/swimlane/ngx-cron/**/*.ts",
+              "projects/swimlane/ngx-cron/**/*.html"
+            ]
           }
         }
       }
