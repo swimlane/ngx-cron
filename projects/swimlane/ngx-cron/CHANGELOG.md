@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+# 8.0.0 (2026-08-10)
+
 - Enhancement: Added support for Angular 22 / TypeScript 6.
 - Breaking: Requires Angular 22; dropped support for Angular 19, 20, and 21
 
