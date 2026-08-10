@@ -2,6 +2,9 @@
 
 ## HEAD (unreleased)
 
+- Enhancement: Added support for Angular 22 / TypeScript 6.
+- Breaking: Requires Angular 22; dropped support for Angular 19, 20, and 21
+
 # 7.0.2 (2026-07-28)
 
 - Bug Fix: Fix Infinite onChange loop.
