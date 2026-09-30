@@ -86,6 +86,8 @@
         [autosize]="true"
         (blur)="onBlurDateTimeChanged($event)"
         (dateTimeSelected)="onDateTimeSelected($event)"
+        precision="minute"
+        [hideDisabledTimeUnits]="true"
       >
       </ngx-date-time>
       } @if (cronData.period === 'Monthly' || cronData.period === 'Yearly') {

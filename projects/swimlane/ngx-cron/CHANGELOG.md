@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+- Bug Fix: Hide Seconds and milli-seconds time units in cron configuration.
+
 # 8.0.0 (2026-08-10)
 
 - Enhancement: Added support for Angular 22 / TypeScript 6.
