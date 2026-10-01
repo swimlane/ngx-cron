@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+# 8.0.1 (2026-10-01)
+
 - Bug Fix: Hide Seconds and milli-seconds time units in cron configuration.
 
 # 8.0.0 (2026-08-10)
